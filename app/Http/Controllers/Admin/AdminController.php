@@ -120,7 +120,7 @@ class AdminController extends Controller
             }
 
             //update admin details
-            Admin::where('email', Auth::guard('admin')->user()->email)->update(['name' => $data['adminName'], 'mobile' => $data['adminMobile']]);
+            Admin::where('email', Auth::guard('admin')->user()->email)->update(['name' => $data['adminName'], 'mobile' => $data['adminMobile'], 'image' => $imageName]);
             Session::flash('successMessage', 'Admin Details Updated Successfully.');
             return redirect()->back();
         }

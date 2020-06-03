@@ -81,13 +81,19 @@
                                         <label for="exampleInputPassword1">Mobile</label>
                                         <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="adminMobile" placeholder="Enter mobile number" name="adminMobile" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Image</label>
-                                        <input type="file" class="form-control" id="newPass" name="adminImage">
-                                        @if(!empty(Auth::guard('admin')->user()->image))
-                                            <a href="#">View Image</a>
-                                            <input type="hidden" name="adminCurrentImage" value="{{ Auth::guard('admin')->user()->image }}">
-                                        @endif
+                                    <div class="row">
+                                        <div class="col col-md-10">
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Image</label>
+                                                <input type="file" class="form-control" id="newPass" name="adminImage">
+                                                @if(!empty(Auth::guard('admin')->user()->image))
+                                                    <input type="hidden" name="adminCurrentImage" value="{{ Auth::guard('admin')->user()->image }}">
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <img src="{{ url('images/adminPhoto/'.Auth::guard('admin')->user()->image) }}" alt="image!" class="updateImage">
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
