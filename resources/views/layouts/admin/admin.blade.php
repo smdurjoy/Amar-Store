@@ -80,5 +80,7 @@
 <script src="{{asset('js/adminJS/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('js/adminJS/demo.js')}}"></script>
+{{--custom admin js--}}
+<script src="{{asset('js/adminJS/script.js')}}"></script>
 </body>
 </html>

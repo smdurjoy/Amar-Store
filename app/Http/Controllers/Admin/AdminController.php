@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -44,5 +46,42 @@ class AdminController extends Controller
     function logout() {
         Auth::guard('admin')->logout();
         return redirect('/admin');
+    }
+
+    function settings() {
+        $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first();
+        return view('admin.settings')->with(compact('adminDetails'));
+    }
+
+    function checkCurrentPass(Request $request) {
+        $data = $request->all();
+//        echo "<pre>"; print_r($data); die;
+//        echo "<pre>"; print_r(Auth::guard('admin')->user()->password); die;
+        if(Hash::check($data['currentPass'], Auth::guard('admin')->user()->password)) {
+            echo "true";
+        } else {
+            echo "false";
+        }
+    }
+
+    function updateCurrentPass(Request $request) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            // check if current pass in correct
+            if(Hash::check($data['currentPass'], Auth::guard('admin')->user()->password)) {
+            // check if new pass and confirm pass is matching
+                if($data['newPass'] == $data['confirmPass']) {
+                    Admin::where( 'id', Auth::guard('admin')->user()->id )->update(['password' => bcrypt($data['newPass'])]);
+                    Session::flash('successMessage', 'Password has been updated.');
+                    return redirect()->back();
+                } else {
+                    Session::flash('errorMessage', 'Password did not matched!');
+                    return redirect()->back();
+                }
+            } else {
+                Session::flash('errorMessage', 'Your current password is incorrect!');
+                return redirect()->back();
+            }
+        }
     }
 }

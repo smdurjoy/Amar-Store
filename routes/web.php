@@ -27,6 +27,9 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
 
     Route::group(['middleware' => ['admin']], function() {
         Route::get('dashboard', 'AdminController@index');
+        Route::get('settings', 'AdminController@settings');
         Route::get('logout', 'AdminController@logout');
+        Route::post('checkCurrentPass', 'AdminController@checkCurrentPass');
+        Route::post('updateCurrentPass', 'AdminController@updateCurrentPass');
     });
 });
