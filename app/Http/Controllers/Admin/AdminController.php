@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Admin;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -18,7 +19,6 @@ class AdminController extends Controller
     function login(Request $request) {
         if($request->isMethod('post')) {
             $data = $request->all();
-//            echo "<pre>"; print_r($data); die;
 
             $rules = [
                 'email' => 'required',
@@ -73,15 +73,57 @@ class AdminController extends Controller
                 if($data['newPass'] == $data['confirmPass']) {
                     Admin::where( 'id', Auth::guard('admin')->user()->id )->update(['password' => bcrypt($data['newPass'])]);
                     Session::flash('successMessage', 'Password has been updated.');
-                    return redirect()->back();
                 } else {
                     Session::flash('errorMessage', 'Password did not matched!');
-                    return redirect()->back();
                 }
             } else {
                 Session::flash('errorMessage', 'Your current password is incorrect!');
-                return redirect()->back();
             }
+            return redirect()->back();
         }
+    }
+
+    function updateAdminDetails(Request $request) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            $rules = [
+                'adminName' => 'required|regex:/^[\pL\s\-]+$/u',
+                'adminMobile' => 'required|numeric',
+                'adminImage' => 'image'
+            ];
+            $errorMessages = [
+                'adminName.required' => 'Name is required.',
+                'adminName.alpha' => 'Please enter valid name.',
+                'adminMobile.required' => 'Mobile Number is required.',
+                'adminMobile.numeric' => 'Please enter valid mobile number.',
+                'adminImage.image' => 'Please choose an image!'
+            ];
+
+            $this->validate($request, $rules, $errorMessages);
+
+            //upload image
+            if($request->hasFile('adminImage')) {
+                $imageTmp = $request->file('adminImage');
+                if($imageTmp->isValid()) {
+                    //get image extension
+                    $extension = $imageTmp->getClientOriginalExtension();
+                    // generate new image name
+                    $imageName = rand(111, 99999).'.'.$extension;
+                    $imagePath = 'images/adminPhoto/'.$imageName;
+                    //upload the image
+                    Image::make($imageTmp)->save($imagePath);
+                } else if(!empty($data['adminCurrentImage'])) {
+                    $imageName = $data['adminCurrentImage'];
+                } else {
+                    $imageName = "";
+                }
+            }
+
+            //update admin details
+            Admin::where('email', Auth::guard('admin')->user()->email)->update(['name' => $data['adminName'], 'mobile' => $data['adminMobile']]);
+            Session::flash('successMessage', 'Admin Details Updated Successfully.');
+            return redirect()->back();
+        }
+        return view('admin.updateAdminDetails');
     }
 }
