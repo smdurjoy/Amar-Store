@@ -27,6 +27,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Sections</h3>
+                                    <a href="{{ url('admin/add-edit-category ') }}" class="btn btn-dark" style="float: right">Add Sections</a>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">

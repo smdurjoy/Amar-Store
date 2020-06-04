@@ -42,7 +42,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a href="{{ url('/admin/sections') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sections</p>

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Section;
+use Illuminate\Support\Facades\Session;
 
 class SectionController extends Controller
 {
     function index() {
         $sections = Section::all();
+        Session::put('page', 'sections');
         return view('admin.sections')->with(compact('sections'));
     }
 
