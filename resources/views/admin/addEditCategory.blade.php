@@ -23,6 +23,18 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                @if($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                        <ul>
+                            @foreach( $errors->all() as $error )
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+            @endif
                 <!-- Add Category form -->
                 <form method="post" action="{{ url('admin/add-edit-category') }}" id="addCategoryForm" enctype="multipart/form-data">@csrf
                     <div class="card card-default">

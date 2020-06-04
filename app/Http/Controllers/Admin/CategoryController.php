@@ -46,6 +46,21 @@ class CategoryController extends Controller
 
         if($request->isMethod('post')) {
             $data = $request->all();
+            $rules = [
+                'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'section_id' => 'required',
+                'url' => 'required',
+                'category_image' => 'image'
+            ];
+            $errorMessages = [
+                'category_name.required' => 'Please add category name.',
+                'adminName.regex' => 'Please enter valid category name.',
+                'section_id.required' => 'Section Name is required.',
+                'url' => 'Category url is required.',
+                'category_image.image' => 'Valid image is required!'
+            ];
+
+            $this->validate($request, $rules, $errorMessages);
 
             //upload image
             if($request->hasFile('category_image')) {
