@@ -41,9 +41,6 @@ class CategoryController extends Controller
             //edit category functionality
         }
 
-        //get all sections
-        $getSections = Section::get();
-
         if($request->isMethod('post')) {
             $data = $request->all();
             $rules = [
@@ -55,7 +52,7 @@ class CategoryController extends Controller
             $errorMessages = [
                 'category_name.required' => 'Please add category name.',
                 'adminName.regex' => 'Please enter valid category name.',
-                'section_id.required' => 'Section Name is required.',
+                'section_id.required' => 'Section is required.',
                 'url' => 'Category url is required.',
                 'category_image.image' => 'Valid image is required!'
             ];
@@ -78,6 +75,22 @@ class CategoryController extends Controller
                 }
             }
 
+            if(empty($data['category_discount'])) {
+                $data['category_discount'] = "";
+            }
+            if(empty($data['description'])) {
+                $data['description'] = "";
+            }
+            if(empty($data['meta_title'])) {
+                $data['meta_title'] = "";
+            }
+            if(empty($data['meta_description'])) {
+                $data['meta_description'] = "";
+            }
+            if(empty($data['meta_keywords'])) {
+                $data['meta_keywords'] = "";
+            }
+
             $category->parent_id = $data['parent_id'];
             $category->section_id = $data['section_id'];
             $category->category_name = $data['category_name'];
@@ -90,7 +103,23 @@ class CategoryController extends Controller
             $category->status = 1;
 
             $category->save();
+
+            Session::flash('successMessage', 'Category Added Successfully!');
+            return redirect('admin/categories');
         }
+        //get all sections
+        $getSections = Section::all();
+
         return view('admin.addEditCategory')->with(compact('title', 'getSections'));
+    }
+
+    function categoriesLevel(Request $request) {
+        if($request->ajax()) {
+            $data = $request->all();
+
+            $getCategories = Category::with('subCategories')->where(['section_id' => $data['section_id'], 'parent_id' => 0, 'status' => 1 ])->get();
+            $categoriesArray = json_decode(json_encode($getCategories), true);
+            return view('admin.categoriesLevel')->with(compact('categoriesArray'));
+        }
     }
 }

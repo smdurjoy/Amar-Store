@@ -12,8 +12,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Categories</li>
+                            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="{{ url('admin/add-edit-category') }}">Add Categories</a></li>
                         </ol>
                     </div>
                 </div>
@@ -43,7 +43,6 @@
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -54,11 +53,8 @@
                                         <label for="category_name">Category Name</label>
                                         <input type="text" class="form-control" name="category_name" id="categoryName" placeholder="Enter Category Name">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Select Category Label</label>
-                                        <select name="parent_id" class="form-control select2" style="width: 100%;" id="parent_id">
-                                            <option value="0">Main Category</option>
-                                        </select>
+                                    <div id="categoriesLevel">
+                                        @include('admin.categoriesLevel')
                                     </div>
                                 </div>
                                 <!-- /.col -->

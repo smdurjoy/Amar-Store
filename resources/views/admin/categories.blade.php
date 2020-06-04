@@ -19,6 +19,14 @@
             </div><!-- /.container-fluid -->
         </section>
 
+        @if(Session::has('successMessage'))
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                {{ Session::get('successMessage')  }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -27,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Categories</h3>
-                                <a href="{{ url('admin/addCategory ') }}" class="btn btn-dark" style="float: right">Add Category</a>
+                                <a href="{{ url('admin/add-edit-category ') }}" class="btn btn-dark" style="float: right">Add Category</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -36,7 +44,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Description</th>
+                                        <th>URL</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -45,7 +53,7 @@
                                         <tr>
                                             <td>{{ $category->id }}</td>
                                             <td>{{ $category->category_name }}</td>
-                                            <td>{{ $category->description }}</td>
+                                            <td>{{ $category->url }}</td>
                                             <td>
                                                 @if($category->status == 1)
                                                     <a class="updateCategoryStatus" id="category-{{$category->id}}" href="javascript:void(0)" category_id="{{ $category->id  }}"> Active </a>

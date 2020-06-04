@@ -1,5 +1,5 @@
 $(document).ready(function () {
-//check admin password is correct or not
+    //check admin password is correct or not
     $("#currentPass").keyup(function () {
         let currentPass = $("#currentPass").val();
         $.ajax({
@@ -19,6 +19,8 @@ $(document).ready(function () {
         });
     });
 
+
+    //update seciton status
     $(".updateSectionStatus").click(function () {
         let status = $(this).text();
         let section_id = $(this).attr("section_id");
@@ -39,6 +41,8 @@ $(document).ready(function () {
         });
     });
 
+
+    //update category status
     $(".updateCategoryStatus").click(function () {
         let status = $(this).text();
         let category_id = $(this).attr("category_id");
@@ -60,4 +64,20 @@ $(document).ready(function () {
     });
 
 
+    //Append category level
+    $("#section_id").change(function () {
+        let section_id = $(this).val();
+        $.ajax({
+            type: 'post',
+            url: '/admin/categoriesLevel',
+            data: {section_id:section_id},
+            success:function (response) {
+                $("#categoriesLevel").html(response);
+            },
+            error:function () {
+                alert("error!")
+            }
+        })
+    })
+z``
 });
