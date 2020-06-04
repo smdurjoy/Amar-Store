@@ -35,6 +35,29 @@
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Catalogues
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/sections') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sections</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/categories') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Categories</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Settings
@@ -43,7 +66,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('/admin/updateAdminDetails')  }}" class="nav-link active">
+                            <a href="{{ url('/admin/updateAdminDetails')  }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Update Profile</p>
                             </a>

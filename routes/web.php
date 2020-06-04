@@ -35,5 +35,6 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
 
         //section
         Route::get('sections', 'SectionController@index');
+        Route::post('updateSectionStatus', 'SectionController@updateSectionStatus');
     });
 });
