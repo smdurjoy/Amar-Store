@@ -44,19 +44,20 @@ $(document).ready(function () {
         let category_id = $(this).attr("category_id");
         $.ajax({
             type: 'post',
-            url: 'admin/updateCategoryStatus',
+            url: '/admin/catStatus',
             data: {status:status, category_id:category_id},
             success:function (response) {
                 if(response['status'] == 0) {
-                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)\'> Inactive </a>");
+                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'> Inactive </a>");
                 } else if(response['status'] == 1) {
-                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)\'> Active </a>");
+                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'> Active </a>");
                 }
             },
             error:function () {
-                alert("Error!");
+                alert("Error!!");
             }
         });
     });
+
 
 });

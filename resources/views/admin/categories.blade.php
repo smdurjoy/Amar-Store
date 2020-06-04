@@ -3,7 +3,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <category class="content-header">
+        <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
@@ -17,10 +17,10 @@
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
-        </category>
+        </section>
 
         <!-- Main content -->
-        <category class="content">
+        <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
@@ -47,9 +47,9 @@
                                             <td>{{ $category->description }}</td>
                                             <td>
                                                 @if($category->status == 1)
-                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" href="javascript:void(0)" category_id="{{ $category->id  }}">Active</a>
+                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" href="javascript:void(0)" category_id="{{ $category->id  }}"> Active </a>
                                                 @else
-                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" href="javascript:void(0)" category_id="{{ $category->id  }}">Inactive</a>
+                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" href="javascript:void(0)" category_id="{{ $category->id  }}"> Inactive </a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -66,7 +66,7 @@
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
-        </category>
+        </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->

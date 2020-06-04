@@ -39,6 +39,6 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
 
         //categories
         Route::get('categories', 'CategoryController@index');
-        Route::post('updateCategoryStatus', 'CategoryController@updateCategoryStatus');
+        Route::post('catStatus', 'CategoryController@updateCategoryStatus');
     });
 });
