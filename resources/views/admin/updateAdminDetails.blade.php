@@ -12,7 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href=" {{url('/admin/dashboard')}} ">Home</a></li>
-                            <li class="breadcrumb-item active"><a href=" {{url('/admin/settings')}} ">Admin Settings</a></li>
+                            <li class="breadcrumb-item active"><a href=" {{url('/admin/updateAdminDetails')}} ">Settings</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
