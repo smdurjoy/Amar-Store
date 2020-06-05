@@ -35,14 +35,24 @@ class CategoryController extends Controller
 
     function addEditCategory(Request $request, $id= null) {
         if($id == "") {
-            $title = "Add Category";
             //add category functionality
+            $title = "Add Category";
             $category = new Category;
+            $categoryData = array();
+            $getCategories = array();
+            $successMessage = "Category Added Successfully!";
         } else {
-            $title = "Edit Category";
             //edit category functionality
+            $title = "Edit Category";
+            $categoryData = Category::where('id', $id)->first();
+            $getCategories = Category::with('subCategories')->where(['parent_id' =>0, 'section_id' => $categoryData['section_id']])->get();
+            $category = Category::find($id);
+            $successMessage = "Category Updated Successfully!";
+//            $getCategories = json_decode(json_encode($getCategories), true);
+//            echo "<pre>"; print_r($getCategories); die();
         }
 
+        //Add category validation
         if($request->isMethod('post')) {
             $data = $request->all();
             $rules = [
@@ -77,6 +87,7 @@ class CategoryController extends Controller
                 }
             }
 
+            // if fields are empty
             if(empty($data['category_discount'])) {
                 $data['category_discount'] = "";
             }
@@ -93,6 +104,7 @@ class CategoryController extends Controller
                 $data['meta_keywords'] = "";
             }
 
+            // get data and save into database
             $category->parent_id = $data['parent_id'];
             $category->section_id = $data['section_id'];
             $category->category_name = $data['category_name'];
@@ -106,13 +118,14 @@ class CategoryController extends Controller
 
             $category->save();
 
-            Session::flash('successMessage', 'Category Added Successfully!');
+            // flash message
+            Session::flash('successMessage', $successMessage);
             return redirect('admin/categories');
         }
         //get all sections
-        $getSections = Section::all();
+        $getSections = Section::get();
 
-        return view('admin.addEditCategory')->with(compact('title', 'getSections'));
+        return view('admin.addEditCategory')->with(compact('title', 'getSections', 'categoryData', 'getCategories'));
     }
 
     function categoriesLevel(Request $request) {
@@ -120,8 +133,8 @@ class CategoryController extends Controller
             $data = $request->all();
 
             $getCategories = Category::with('subCategories')->where(['section_id' => $data['section_id'], 'parent_id' => 0, 'status' => 1 ])->get();
-            $categoriesArray = json_decode(json_encode($getCategories), true);
-            return view('admin.categoriesLevel')->with(compact('categoriesArray'));
+            $getCategories = json_decode(json_encode($getCategories), true);
+            return view('admin.categoriesLevel')->with(compact('getCategories'));
         }
     }
 }
