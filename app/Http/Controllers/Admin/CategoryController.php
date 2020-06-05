@@ -13,7 +13,9 @@ class CategoryController extends Controller
 {
     function index() {
         Session::put('page', 'categories');
-        $categories = Category::all();
+        $categories = Category::with(['section', 'parentCategory'])->get();
+//        $categories = json_decode(json_encode($categories));
+//        echo "<pre>"; print_r($categories); die();
         return view('admin.categories')->with(compact('categories'));
     }
 
