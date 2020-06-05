@@ -79,7 +79,7 @@ class CategoryController extends Controller
                     $extension = $imageTmp->getClientOriginalExtension();
                     // generate new image name
                     $imageName = rand(111, 99999).'.'.$extension;
-                    $imagePath = 'images/adminPhoto/'.$imageName;
+                    $imagePath = 'images/categoryImages/'.$imageName;
                     //upload the image
                     Image::make($imageTmp)->save($imagePath);
                     //save image in db
@@ -136,5 +136,19 @@ class CategoryController extends Controller
             $getCategories = json_decode(json_encode($getCategories), true);
             return view('admin.categoriesLevel')->with(compact('getCategories'));
         }
+    }
+
+    function deleteCategoryImage($id) {
+        $categoryImage = Category::select('category_image')->where('id', $id)->first();
+
+        $categoryImagePath = "images/categoryImages/";
+
+        if(file_exists($categoryImagePath.$categoryImage->category_image)) {
+            unlink($categoryImagePath.$categoryImage->category_image);
+        }
+
+        Category::where('id', $id)->update(['category_image' => '']);
+
+        return redirect()->back();
     }
 }

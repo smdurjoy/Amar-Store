@@ -80,6 +80,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div>
+                                        @if(!empty($categoryData['category_image']))
+                                            <img src="{{ asset('images/categoryImages/'.$categoryData['category_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a href="{{ url('admin/delete-category-image/'.$categoryData['id']) }}">Delete Photo</a>
+                                        @endif
+                                    </div>
                                     <!-- /.form-group -->
                                 </div>
                                 <!-- /.col -->
