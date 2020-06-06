@@ -108,5 +108,7 @@
 <script src="{{asset('js/adminJS/demo.js')}}"></script>
 {{--custom admin js--}}
 <script src="{{asset('js/adminJS/script.js')}}"></script>
+{{--sweetalert--}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </body>
 </html>

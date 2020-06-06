@@ -143,12 +143,24 @@ class CategoryController extends Controller
 
         $categoryImagePath = "images/categoryImages/";
 
+        //if the image file exists delete image from folder
         if(file_exists($categoryImagePath.$categoryImage->category_image)) {
             unlink($categoryImagePath.$categoryImage->category_image);
         }
 
+        //delete image from database
         Category::where('id', $id)->update(['category_image' => '']);
 
+        $message = "Photo Deleted Successfully!";
+        Session::flash('successMessage', $message);
+        return redirect()->back();
+    }
+
+    function deleteCategory($id) {
+        Category::where('id', $id)->delete();
+
+        $message = "Category Deleted Successfully!";
+        Session::flash('successMessage', $message);
         return redirect()->back();
     }
 }

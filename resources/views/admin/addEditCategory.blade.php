@@ -34,7 +34,18 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-            @endif
+                @endif
+
+                //delete photo success message
+                @if(Session::has('successMessage'))
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                        {{ Session::get('successMessage')  }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
                 <!-- Add Category form -->
                 <form method="post" @if(empty($categoryData['id'])) action="{{ url('admin/add-edit-category') }}" @else action="{{ url('admin/add-edit-category/'.$categoryData['id']) }}" @endif id="addCategoryForm" enctype="multipart/form-data">@csrf
                     <div class="card card-default">
@@ -82,7 +93,7 @@
                                     </div>
                                     <div>
                                         @if(!empty($categoryData['category_image']))
-                                            <img src="{{ asset('images/categoryImages/'.$categoryData['category_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a href="{{ url('admin/delete-category-image/'.$categoryData['id']) }}">Delete Photo</a>
+                                            <img src="{{ asset('images/categoryImages/'.$categoryData['category_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <?php /* <a href="{{ url('admin/delete-category-image/'.$categoryData['id']) }}"> */?><a class="confirmDelete" href="javascript:void(0)" record="category-image" recordId="{{ $categoryData['id'] }}">Delete Photo</a>
                                         @endif
                                     </div>
                                     <!-- /.form-group -->
