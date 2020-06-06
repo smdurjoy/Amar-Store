@@ -43,6 +43,10 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::match(['get', 'post'],'add-edit-category/{id?}', 'CategoryController@addEditCategory');
         Route::post('categoriesLevel', 'CategoryController@categoriesLevel');
         Route::get('delete-category-image/{id}', 'CategoryController@deleteCategoryImage');
-        Route::get('delete-category/{id}', 'CategoryController@deleteCategory');
-    });
+        Route::get('delete-category/{id}', 'CategoryController@deleteCategory');});
+
+        //products
+        Route::get('products', 'ProductController@index');
+    Route::post('proStatus', 'ProductController@updateProductStatus');
+    Route::match(['get', 'post'],'add-edit-product/{id?}', 'ProductController@addEditProduct');
 });

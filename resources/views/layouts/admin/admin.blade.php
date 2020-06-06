@@ -94,7 +94,7 @@
 <!-- page script -->
 <script>
     $(function () {
-        $("#sectionTable, #categoryTable").DataTable({
+        $("#sectionTable, #categoryTable, #productTable").DataTable({
             "responsive": true,
             "autoWidth": false,
         });

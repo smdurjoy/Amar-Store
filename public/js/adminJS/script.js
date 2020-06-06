@@ -19,7 +19,6 @@ $(document).ready(function () {
         });
     });
 
-
     //update seciton status
     $(".updateSectionStatus").click(function () {
         let status = $(this).text();
@@ -41,7 +40,6 @@ $(document).ready(function () {
         });
     });
 
-
     //update category status
     $(".updateCategoryStatus").click(function () {
         let status = $(this).text();
@@ -62,7 +60,6 @@ $(document).ready(function () {
             }
         });
     });
-
 
     //Append category level
     $("#section_id").change(function () {
@@ -107,4 +104,25 @@ $(document).ready(function () {
             }
         });
     })
+
+    //update product status
+    $(".updateProductStatus").click(function () {
+        let status = $(this).text();
+        let product_id = $(this).attr("product_id");
+        $.ajax({
+            type: 'post',
+            url: '/admin/proStatus',
+            data: {status:status, product_id:product_id},
+            success:function (response) {
+                if(response['status'] == 0) {
+                    $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'> Inactive </a>");
+                } else if(response['status'] == 1) {
+                    $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'> Active </a>");
+                }
+            },
+            error:function () {
+                alert("Error!!");
+            }
+        });
+    });
 });
