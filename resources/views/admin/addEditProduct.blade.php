@@ -36,7 +36,6 @@
                     </div>
                 @endif
 
-                //delete photo success message
                 @if(Session::has('successMessage'))
                     <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                         {{ Session::get('successMessage')  }}
@@ -64,6 +63,19 @@
                                         <label>Select Category</label>
                                         <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
                                             <option selected="selected">Select</option>
+                                            @foreach($categories as $section)
+                                                <optgroup label="{{ $section['name'] }}"></optgroup>
+                                                @foreach($section['categories'] as $category)
+                                                    <option value="{{ $category['id'] }}">&nbsp;--&nbsp;
+                                                        {{ $category->sub_categories['category_name'] }}
+                                                    </option>
+                                                    @foreach($category['sub_categories'] as $subcategory)
+                                                        <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;--&nbsp;
+                                                            {{ $subcategory['category_name'] }}
+                                                        </option>
+                                                    @endforeach
+                                                @endforeach
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -169,9 +181,9 @@
                                     <div class="form-group">
                                         <label>Select Fabric</label>
                                         <select name="fabric" class="form-control select2" style="width: 100%;" id="category_id">
-                                            <option selected="selected">Select</option>
+                                            <option value="" selected>Select</option>
                                             @foreach($fabricArray as $fabric)
-                                                <option>{{ $fabric }}</option>
+                                                <option value="{{ $fabric }}">{{ $fabric }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -181,9 +193,9 @@
                                     <div class="form-group">
                                         <label>Select Category</label>
                                         <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
-                                            <option selected="selected">Select</option>
+                                            <option value="" selected>Select</option>
                                             @foreach($sleeveArray as $sleeve)
-                                                <option>{{ $sleeve }}</option>
+                                                <option value="{{ $sleeve }}">{{ $sleeve }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -193,9 +205,9 @@
                                     <div class="form-group">
                                         <label>Select Fabric</label>
                                         <select name="fabric" class="form-control select2" style="width: 100%;" id="category_id">
-                                            <option selected="selected">Select</option>
+                                            <option value="" selected>Select</option>
                                             @foreach($patternArray as $pattern)
-                                                <option>{{ $pattern }}</option>
+                                                <option value="{{ $pattern }}">{{ $pattern }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -205,9 +217,9 @@
                                     <div class="form-group">
                                         <label>Select Fit</label>
                                         <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
-                                            <option selected="selected">Select</option>
+                                            <option value="" selected>Select</option>
                                             @foreach($fitArray as $fit)
-                                                <option>{{ $fit }}</option>
+                                                <option value="{{ $fit }}">{{ $fit }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -217,9 +229,9 @@
                                     <div class="form-group">
                                         <label>Select Occasion</label>
                                         <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
-                                            <option selected="selected">Select</option>
+                                            <option value="" selected>Select</option>
                                             @foreach($occasionArray as $occasion)
-                                                <option>{{ $occasion }}</option>
+                                                <option value="{{ $occasion }}">{{ $occasion }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -236,6 +248,10 @@
                                     <div class="form-group">
                                         <label for="meta_keywords">Meta Keyword</label>
                                         <input type="text" class="form-control" placeholder="Enter Meta Keyword" name="meta_keywords" id="productUrl" @if(!empty($productData['meta_keywords'])) value="{{ $productData['meta_keywords'] }}" @else value="{{ old('$meta_keywords') }}" @endif>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="meta_keywords">Featured Item</label>
+                                        <input type="checkbox" id="is_featured" name="is_featured" value="1">
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
