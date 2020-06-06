@@ -41,16 +41,39 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @if(Session::get('page')=="sections")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
                         <li class="nav-item active">
-                            <a href="{{ url('/admin/sections') }}" class="nav-link">
+                            <a href="{{ url('/admin/sections') }}" class="nav-link {{ $active }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sections</p>
                             </a>
                         </li>
+
+                        @if(Session::get('page')=="categories")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
                         <li class="nav-item">
-                            <a href="{{ url('/admin/categories') }}" class="nav-link">
+                            <a href="{{ url('/admin/categories') }}" class="nav-link {{ $active }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Categories</p>
+                            </a>
+                        </li>
+
+                        @if(Session::get('page')=="products")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/products') }}" class="nav-link {{ $active }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Products</p>
                             </a>
                         </li>
                     </ul>
@@ -64,14 +87,24 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @if(Session::get('page')=="updateAdminDetails")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
                         <li class="nav-item">
-                            <a href="{{ url('/admin/updateAdminDetails')  }}" class="nav-link">
+                            <a href="{{ url('/admin/updateAdminDetails')  }}" class="nav-link {{ $active }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Update Profile</p>
                             </a>
                         </li>
+                        @if(Session::get('page')=="settings")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
                         <li class="nav-item">
-                            <a href="{{ url('/admin/settings')  }}" class="nav-link">
+                            <a href="{{ url('/admin/settings')  }}" class="nav-link {{ $active }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Change Password</p>
                             </a>

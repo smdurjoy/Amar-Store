@@ -31,7 +31,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::get('logout', 'AdminController@logout');
         Route::post('checkCurrentPass', 'AdminController@checkCurrentPass');
         Route::post('updateCurrentPass', 'AdminController@updateCurrentPass');
-        Route::match(['get', 'post'],'updateAdminDetails', 'AdminController@updateAdminDetails');
+        Route::match(['get', 'post'], 'updateAdminDetails', 'AdminController@updateAdminDetails');
 
         //section
         Route::get('sections', 'SectionController@index');
@@ -40,13 +40,16 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         //categories
         Route::get('categories', 'CategoryController@index');
         Route::post('catStatus', 'CategoryController@updateCategoryStatus');
-        Route::match(['get', 'post'],'add-edit-category/{id?}', 'CategoryController@addEditCategory');
+        Route::match(['get', 'post'], 'add-edit-category/{id?}', 'CategoryController@addEditCategory');
         Route::post('categoriesLevel', 'CategoryController@categoriesLevel');
         Route::get('delete-category-image/{id}', 'CategoryController@deleteCategoryImage');
-        Route::get('delete-category/{id}', 'CategoryController@deleteCategory');});
+        Route::get('delete-category/{id}', 'CategoryController@deleteCategory');
 
         //products
         Route::get('products', 'ProductController@index');
-    Route::post('proStatus', 'ProductController@updateProductStatus');
-    Route::match(['get', 'post'],'add-edit-product/{id?}', 'ProductController@addEditProduct');
+        Route::post('proStatus', 'ProductController@updateProductStatus');
+        Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductController@addEditProduct');
+        Route::get('delete-product/{id}', 'ProductController@deleteProduct');
+        Route::match(['get', 'post'], '/add-edit-product/{id?}', 'ProductController@addEditProduct');
+    });
 });

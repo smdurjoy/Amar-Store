@@ -49,6 +49,7 @@ class AdminController extends Controller
     }
 
     function settings() {
+        Session::put('page', 'settings');
         $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first();
         return view('admin.settings')->with(compact('adminDetails'));
     }
@@ -84,6 +85,7 @@ class AdminController extends Controller
     }
 
     function updateAdminDetails(Request $request) {
+        Session::put('page', 'updateAdminDetails');
         if($request->isMethod('post')) {
             $data = $request->all();
             $rules = [
