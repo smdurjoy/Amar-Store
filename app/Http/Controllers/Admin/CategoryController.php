@@ -48,13 +48,14 @@ class CategoryController extends Controller
             $getCategories = Category::with('subCategories')->where(['parent_id' =>0, 'section_id' => $categoryData['section_id']])->get();
             $category = Category::find($id);
             $successMessage = "Category Updated Successfully!";
-//            $getCategories = json_decode(json_encode($getCategories), true);
+            $getCategories = json_decode(json_encode($getCategories), true);
 //            echo "<pre>"; print_r($getCategories); die();
         }
 
-        //Add category validation
         if($request->isMethod('post')) {
             $data = $request->all();
+
+            //Add category validation
             $rules = [
                 'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'section_id' => 'required',

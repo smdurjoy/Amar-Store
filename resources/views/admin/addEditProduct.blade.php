@@ -43,7 +43,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-            @endif
+                @endif
 
             <!-- Add Product form -->
                 <form method="post" @if(empty($productData['id'])) action="{{ url('admin/add-edit-product') }}" @else action="{{ url('admin/add-edit-product/'.$productData['id']) }}" @endif id="addProductForm" enctype="multipart/form-data">@csrf
@@ -61,16 +61,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Select Category</label>
-                                        <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
+                                        <select name="category_id" class="form-control select2" style="width: 100%;" id="categoryId">
                                             <option selected="selected">Select</option>
                                             @foreach($categories as $section)
                                                 <optgroup label="{{ $section['name'] }}"></optgroup>
                                                 @foreach($section['categories'] as $category)
-                                                    <option value="{{ $category['id'] }}">&nbsp;--&nbsp;
-                                                        {{ $category->sub_categories['category_name'] }}
+                                                    <option value="{{ $category['id'] }}" @if(!empty(@old('category_id')) && $category['id'] == @old('category_id')) selected @endif>&nbsp;&nbsp;--&nbsp;
+                                                        {{ $category['category_name'] }}
                                                     </option>
                                                     @foreach($category['sub_categories'] as $subcategory)
-                                                        <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;--&nbsp;
+                                                        <option value="{{ $subcategory['id'] }}" @if(!empty(@old('category_id')) && $subcategory['id'] == @old('category_id')) selected @endif>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;
                                                             {{ $subcategory['category_name'] }}
                                                         </option>
                                                     @endforeach
@@ -87,7 +87,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_code">Product Code</label>
-                                        <input type="text" class="form-control" code="product_code" id="productCode" placeholder="Enter Product Code" @if(!empty($productData['product_code'])) value="{{ $productData['product_code'] }}" @else value="{{ old('$product_code') }}" @endif>
+                                        <input type="text" class="form-control" name="product_code" id="productCode" placeholder="Enter Product Code" @if(!empty($productData['product_code'])) value="{{ $productData['product_code'] }}" @else value="{{ old('$product_code') }}" @endif>
                                     </div>
                                     <!-- /.form-group -->
                                     <div class="form-group">
@@ -114,14 +114,14 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="product_color">Product Color</label>
-                                        <input type="text" class="form-control" placeholder="Enter Product Color" name="color" id="productColor" @if(!empty($productData['color'])) value="{{ $productData['color'] }}" @else value="{{ old('$color') }}" @endif>
+                                        <input type="text" class="form-control" placeholder="Enter Product Color" name="product_color" id="productColor" @if(!empty($productData['product_color'])) value="{{ $productData['product_color'] }}" @else value="{{ old('$color') }}" @endif>
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="product_weight">Product Weight</label>
-                                        <input type="text" class="form-control" placeholder="Enter Product Weight" name="weight" id="productWeight" @if(!empty($productData['weight'])) value="{{ $productData['weight'] }}" @else value="{{ old('$weight') }}" @endif>
+                                        <input type="text" class="form-control" placeholder="Enter Product Weight" name="product_weight" id="productWeight" @if(!empty($productData['weight'])) value="{{ $productData['weight'] }}" @else value="{{ old('$weight') }}" @endif>
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
@@ -166,7 +166,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="product_description">Product Description</label>
-                                        <textarea class="form-control" rows="3" placeholder="Enter Product Description ..." name="description" id="productDes">@if(!empty($productData['description'])) {{$productData['description']}} @else {{old('$description')}} @endif</textarea>
+                                        <textarea class="form-control" rows="3" placeholder="Enter Product Description ..." name="product_description" id="productDes">@if(!empty($productData['description'])) {{$productData['description']}} @else {{old('$description')}} @endif</textarea>
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
@@ -191,8 +191,8 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                        <label>Select Category</label>
-                                        <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
+                                        <label>Select Sleeve</label>
+                                        <select name="sleeve" class="form-control select2" style="width: 100%;" id="sleeve">
                                             <option value="" selected>Select</option>
                                             @foreach($sleeveArray as $sleeve)
                                                 <option value="{{ $sleeve }}">{{ $sleeve }}</option>
@@ -203,8 +203,8 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                        <label>Select Fabric</label>
-                                        <select name="fabric" class="form-control select2" style="width: 100%;" id="category_id">
+                                        <label>Select Pattern</label>
+                                        <select name="pattern" class="form-control select2" style="width: 100%;" id="pattern">
                                             <option value="" selected>Select</option>
                                             @foreach($patternArray as $pattern)
                                                 <option value="{{ $pattern }}">{{ $pattern }}</option>
@@ -216,7 +216,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label>Select Fit</label>
-                                        <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
+                                        <select name="fit" class="form-control select2" style="width: 100%;" id="fit">
                                             <option value="" selected>Select</option>
                                             @foreach($fitArray as $fit)
                                                 <option value="{{ $fit }}">{{ $fit }}</option>
@@ -228,7 +228,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label>Select Occasion</label>
-                                        <select name="category_id" class="form-control select2" style="width: 100%;" id="category_id">
+                                        <select name="occasion" class="form-control select2" style="width: 100%;" id="occasion">
                                             <option value="" selected>Select</option>
                                             @foreach($occasionArray as $occasion)
                                                 <option value="{{ $occasion }}">{{ $occasion }}</option>
@@ -250,8 +250,8 @@
                                         <input type="text" class="form-control" placeholder="Enter Meta Keyword" name="meta_keywords" id="productUrl" @if(!empty($productData['meta_keywords'])) value="{{ $productData['meta_keywords'] }}" @else value="{{ old('$meta_keywords') }}" @endif>
                                     </div>
                                     <div class="form-group">
-                                        <label for="meta_keywords">Featured Item</label>
-                                        <input type="checkbox" id="is_featured" name="is_featured" value="1">
+                                        <label for="featured">Featured Item</label>
+                                        <input type="checkbox" id="is_featured" name="is_featured" value="Yes">
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
