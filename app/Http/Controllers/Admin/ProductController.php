@@ -8,6 +8,7 @@ use App\Product;
 use App\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -119,8 +120,50 @@ class ProductController extends Controller
             if(empty($data['product_description'])) {
                 $data['product_description'] = "";
             }
+            if(empty($data['product_discount'])) {
+                $data['product_discount'] = "";
+            }
             if(empty($data['wash_care'])) {
                 $data['wash_care'] = "";
+            }
+
+            //upload image
+            if($request->hasFile('product_image')) {
+                // take the image
+                $imageTmp = $request->file('product_image');
+                // if image is valid
+                if($imageTmp->isValid()) {
+                    // get image original name
+                    $image_name = $imageTmp->getClientOriginalName();
+                    // get image extension
+                    $imageExtension = $imageTmp->getClientOriginalExtension();
+                    // generate new image name
+                    $imageName = $image_name.'-'.rand(111, 99999).'.'.$imageExtension;
+                    // set image path for both large, medium and small image
+                    $largeImagePath = 'images/productImages/large/'.$imageName;
+                    $mediumImagePath = 'images/productImages/medium/'.$imageName;
+                    $smallImagePath = 'images/productImages/small/'.$imageName;
+                    // resize and save the image into that paths
+                    Image::make($imageTmp)->save($largeImagePath);
+                    Image::make($imageTmp)->resize(520, 600)->save($mediumImagePath);
+                    Image::make($imageTmp)->resize(260, 300)->save($smallImagePath);
+                    //save image in database
+                    $products->product_image = $imageName;
+                }
+            }
+
+            //upload video
+            if($request->hasFile('product_video')) {
+                $videoTmp = $request->file('product_video');
+                if($videoTmp->isValid()) {
+                    $video_name = $videoTmp->getClientOriginalName();
+                    $videoExtension = $videoTmp->getClientOriginalExtension();
+                    $videoName = $video_name.'-'.rand(111, 99999).'.'.$videoExtension;
+                    $videoPath = 'videos/productVideos/';
+                    $videoTmp->move($videoPath, $videoName);
+                    // save video in db
+                    $products->product_video = $videoName;
+                }
             }
 
             //save product details to product table

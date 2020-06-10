@@ -98,6 +98,7 @@
                                                 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                             </div>
                                         </div>
+                                        <div>Recommended size Width: 1040px, Height:1200px</div>
                                     </div>
                                     <div>
                                         @if(!empty($productData['product_image']))
