@@ -46,8 +46,16 @@ class ProductController extends Controller
         if($id == "") {
             $title = "Add Product";
             $products = new Product;
+            $productData = array();
+            $message = "Product Added Successfully";
         } else {
+            //product edit functionality if id is coming
             $title = "Edit Product";
+            $productData = Product::find($id);
+            $productData = json_decode(json_encode($productData), true);
+//            echo "<pre>"; print_r($productData); die();
+            $products = Product::find($id);
+            $message = "Product Updated Successfully";
         }
 
         if($request->isMethod('post')) {
@@ -194,7 +202,7 @@ class ProductController extends Controller
             $products->status = 1;
             $products->save();
 
-            Session::flash('successMessage', 'Product Added Successfully.');
+            Session::flash('successMessage', $message);
             return redirect('admin/products');
         }
 
@@ -211,6 +219,6 @@ class ProductController extends Controller
 //        echo "<pre>"; print_r($categories); die();
 
 
-        return view('admin.addEditProduct')->with(compact('title',  'fabricArray', 'sleeveArray','patternArray', 'fitArray', 'occasionArray', 'categories'));
+        return view('admin.addEditProduct')->with(compact('title',  'fabricArray', 'sleeveArray','patternArray', 'fitArray', 'occasionArray', 'categories', 'productData'));
     }
 }
