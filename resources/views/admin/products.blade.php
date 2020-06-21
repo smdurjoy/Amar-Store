@@ -77,9 +77,9 @@
                                                     <a class="updateProductStatus" id="product-{{$product->id}}" href="javascript:void(0)" product_id="{{ $product->id  }}"> Inactive </a>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a href="{{ url('admin/add-edit-product/'.$product->id) }}">Edit</a>
-                                                <a class="confirmDelete" record="product" recordId="{{ $product->id }}" href="javascript:void(0)">Delete</a>
+                                            <td class="text-center">
+                                                <a href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
+                                                <a class="confirmDelete" record="product" recordId="{{ $product->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -221,4 +221,50 @@ class ProductController extends Controller
 
         return view('admin.addEditProduct')->with(compact('title',  'fabricArray', 'sleeveArray','patternArray', 'fitArray', 'occasionArray', 'categories', 'productData'));
     }
+
+    function deleteProductImage($id) {
+        // Get product image
+        $productImage = Product::select('product_image')->where('id', $id)->first();
+
+        // Get product image path
+        $smallImagePath = "images/productImages/small/";
+        $mediumImagePath = "images/productImages/medium/";
+        $largeImagePath = "images/productImages/large/";
+
+        // if the images exists then delete from folder
+        if(file_exists($smallImagePath.$productImage->product_image)) {
+            unlink($smallImagePath.$productImage->product_image);
+        }
+        if(file_exists($mediumImagePath.$productImage->product_image)) {
+            unlink($mediumImagePath.$productImage->product_image);
+        }
+        if(file_exists($largeImagePath.$productImage->product_image)) {
+            unlink($largeImagePath.$productImage->product_image);
+        }
+
+        // Delete image from products table
+        Product::where('id', $id)->update(['product_image' => '']);
+        $message = "Photo Deleted Successfully!";
+        Session::flash('successMessage', $message);
+        return redirect()->back();
+    }
+
+    function deleteProductVideo($id) {
+        // Get product video
+        $productVideo = Product::select('product_video')->where('id', $id)->first();
+
+        // Get product video path
+        $videoPath = "videos/productVideos/";
+
+        // if the videos exists then delete from folder
+        if(file_exists($videoPath.$productVideo->product_video)) {
+            unlink($videoPath.$productVideo->product_video);
+        }
+
+        // Delete video from products table
+        Product::where('id', $id)->update(['product_video' => '']);
+        $message = "Video Deleted Successfully!";
+        Session::flash('successMessage', $message);
+        return redirect()->back();
+    }
 }

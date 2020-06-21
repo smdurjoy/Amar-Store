@@ -102,7 +102,7 @@
                                     </div>
                                     <div>
                                         @if(!empty($productData['product_image']))
-                                            <img src="{{ asset('images/productImages/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <?php /* <a href="{{ url('admin/delete-product-image/'.$productData['id']) }}"> */?><a class="confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}">Delete Photo</a>
+                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a class="confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}">Delete Photo</a>
                                         @endif
                                     </div>
                                     <!-- /.form-group -->
@@ -150,11 +150,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        @if(!empty($productData['product_video']))
-                                            <img src="{{ asset('videos/productVideos/'.$productData['product_video']) }}" alt="video!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <?php /* <a href="{{ url('admin/delete-product-video/'.$productData['id']) }}"> */?><a class="confirmDelete" href="javascript:void(0)" record="product-video" recordId="{{ $productData['id'] }}">Delete Photo</a>
-                                        @endif
-                                    </div>
+                                    @if(!empty($productData['product_video']))
+                                        <a href="{{ url('videos/productVideos/'.$productData['product_video']) }}" download>Download Video</a>
+                                        ||
+                                        <a class="confirmDelete" href="javascript:void(0)" record="product-video" recordId="{{ $productData['id'] }}">Delete Video</a>
+                                    @endif
                                     <!-- /.form-group -->
                                 </div>
                                 <div class="col-12 col-sm-6">

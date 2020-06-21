@@ -2,3 +2,13 @@
     height: 130px;
     width: 150px;
 }
+
+.fa-edit {
+    font-size: 22px;
+    color: #031a9a;
+}
+
+.fa-trash {
+    font-size: 22px;
+    color: #c40000;
+}

@@ -26,6 +26,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
     Route::match(['get', 'post'],'/', 'AdminController@login');
 
     Route::group(['middleware' => ['admin']], function() {
+        // Admin routes
         Route::get('dashboard', 'AdminController@index');
         Route::get('settings', 'AdminController@settings');
         Route::get('logout', 'AdminController@logout');
@@ -33,11 +34,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::post('updateCurrentPass', 'AdminController@updateCurrentPass');
         Route::match(['get', 'post'], 'updateAdminDetails', 'AdminController@updateAdminDetails');
 
-        //section
+        // Section routes
         Route::get('sections', 'SectionController@index');
         Route::post('updateSectionStatus', 'SectionController@updateSectionStatus');
 
-        //categories
+        // Category routes
         Route::get('categories', 'CategoryController@index');
         Route::post('catStatus', 'CategoryController@updateCategoryStatus');
         Route::match(['get', 'post'], 'add-edit-category/{id?}', 'CategoryController@addEditCategory');
@@ -45,11 +46,13 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::get('delete-category-image/{id}', 'CategoryController@deleteCategoryImage');
         Route::get('delete-category/{id}', 'CategoryController@deleteCategory');
 
-        //products
+        // Product routes
         Route::get('products', 'ProductController@index');
         Route::post('proStatus', 'ProductController@updateProductStatus');
         Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductController@addEditProduct');
         Route::get('delete-product/{id}', 'ProductController@deleteProduct');
         Route::match(['get', 'post'], '/add-edit-product/{id?}', 'ProductController@addEditProduct');
+        Route::get('delete-product-image/{id}', 'ProductController@deleteProductImage');
+        Route::get('delete-product-video/{id}', 'ProductController@deleteProductVideo');
     });
 });
