@@ -31,8 +31,11 @@
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-{{--    custom css--}}
+    <!-- custom css -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/css/mdb.min.css" rel="stylesheet">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -110,5 +113,9 @@
 <script src="{{asset('js/adminJS/script.js')}}"></script>
 {{--sweetalert--}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/js/mdb.min.js"></script>
+
+@yield('script')
 </body>
 </html>

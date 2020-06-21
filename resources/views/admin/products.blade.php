@@ -46,6 +46,7 @@
                                         <th>Product Name</th>
                                         <th>Product Code</th>
                                         <th>Product Colour</th>
+                                        <th>Product Image</th>
                                         <th>Category</th>
                                         <th>Section</th>
                                         <th>Status</th>
@@ -59,6 +60,14 @@
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ $product->product_code }}</td>
                                             <td>{{ $product->product_color }}</td>
+                                            <td>
+                                                <?php $imgPath = "images/productImages/small/".$product->product_image; ?>
+                                                @if(!empty($product->product_image) && file_exists($imgPath))
+                                                    <img class="w-100" src="{{ asset('images/productImages/small/'.$product->product_image)  }}">
+                                                @else
+                                                    <img class="w-100" src="{{ asset('images/productImages/small/smallDummyImg.png') }}">
+                                                @endif
+                                            </td>
                                             <td>{{ $product->category->category_name }}</td>
                                             <td>{{ $product->section->name }}</td>
                                             <td>
@@ -69,8 +78,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href={{ url('admin/add-edit-product/'.$product->id) }}>Edit</a>
-                                                &nbsp;&nbsp;
+                                                <a href="{{ url('admin/add-edit-product/'.$product->id) }}">Edit</a>
                                                 <a class="confirmDelete" record="product" recordId="{{ $product->id }}" href="javascript:void(0)">Delete</a>
                                             </td>
                                         </tr>
@@ -91,7 +99,6 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
 @endsection
 
 
