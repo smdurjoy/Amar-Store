@@ -131,7 +131,7 @@ $(document).ready(function () {
         var maxField = 10; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
         var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div class="field_wrapper col-md-12 d-flex"><input class="form-control mx-1" style="width:125px" type="text" name="size" id="size" placeholder="Size"/><input class="form-control mx-1" style="width:125px" type="text" name="sku" id="sku" placeholder="SKU"/><input class="form-control mx-1" style="width:125px" type="text" name="price" id="price" placeholder="Price"/><input class="form-control mx-1" style="width:125px" type="text" name="stock" id="stock" placeholder="Stock"/><a href="javascript:void(0);" class="remove_button btn btn-danger btn-sm">Delete</a></div>'; //New input field html 
+        var fieldHTML = '<div class="d-flex"><input class="form-control mx-1" style="width:125px" type="text" name="size[]" id="size" placeholder="Size" required/><input class="form-control mx-1" style="width:125px" type="text" name="sku[]" id="sku" placeholder="SKU" required/><input class="form-control mx-1" style="width:125px" type="text" name="price[]" id="price" placeholder="Price" required/><input class="form-control mx-1" style="width:125px" type="text" name="stock[]" id="stock" placeholder="Stock" required/><a href="javascript:void(0);" class="remove_button btn btn-danger btn-sm">Delete</a></div>'; //New input field html 
         var x = 1; //Initial field counter is 1
         
         //Once add button is clicked

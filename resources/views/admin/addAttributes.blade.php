@@ -23,21 +23,8 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                @if($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                        <ul>
-                            @foreach( $errors->all() as $error )
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
-
                 @if(Session::has('successMessage'))
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                         {{ Session::get('successMessage')  }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -45,8 +32,17 @@
                     </div>
                 @endif
 
-            <!-- Add Product form -->
-                <form method="post" @if(empty($productData['id'])) action="{{ url('admin/add-edit-product') }}" @else action="{{ url('admin/add-edit-product/'.$productData['id']) }}" @endif id="addProductForm" enctype="multipart/form-data">@csrf
+                @if(Session::has('errorMessage'))
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                        {{ Session::get('errorMessage')  }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+            <!-- Add Product Attribute Form -->
+                <form method="post" action="{{ url('admin/add-attributes/'.$productData['id']) }}">@csrf
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title"> {{ $title }} </h3>
@@ -87,10 +83,10 @@
                             <div class="row">
                                 <div class="field_wrapper col-md-12">
                                     <div class="d-flex">
-                                        <input class="form-control mx-1" style="width:125px" type="text" name="size" id="size" placeholder="Size"/>
-                                        <input class="form-control mx-1" style="width:125px" type="text" name="sku" id="sku" placeholder="SKU"/>
-                                        <input class="form-control mx-1" style="width:125px" type="text" name="price" id="price" placeholder="Price"/>
-                                        <input class="form-control mx-1" style="width:125px" type="text" name="stock" id="stock" placeholder="Stock"/>
+                                        <input class="form-control mx-1" style="width:125px" type="text" name="size[]" id="size" placeholder="Size" required/>
+                                        <input class="form-control mx-1" style="width:125px" type="text" name="sku[]" id="sku" placeholder="SKU" required/>
+                                        <input class="form-control mx-1" style="width:125px" type="text" name="price[]" id="price" placeholder="Price" required/>
+                                        <input class="form-control mx-1" style="width:125px" type="text" name="stock[]" id="stock" placeholder="Stock" required/>
                                         <a href="javascript:void(0);" class="add_button btn btn-primary btn-sm" title="Add field"> Add</a>
                                     </div>
                                 </div>
@@ -98,6 +94,9 @@
                             <!-- /.row -->
                         </div>
                         <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
                     </div>
                     <!-- /.card -->
                 </form>

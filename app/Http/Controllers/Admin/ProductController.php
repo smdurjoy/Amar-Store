@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Section;
+use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
@@ -268,7 +269,44 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    function addAttributes($id) {
+    function addAttributes(Request $request, $id) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            foreach ($data['sku'] as $key => $value) {
+                if(!empty($value)) {
+
+                    // If sku already exist
+                    $attrCountSku = ProductsAttribute::where('sku', $value)->count();
+                    if($attrCountSku > 0) {
+                        $msg = 'SKU already exists ! Please try another one.';
+                        Session::flash('errorMessage', $msg);
+                        return redirect()->back();
+                    }
+                    
+                    // If size already exist of the same product id
+                    $attrCountSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
+                    if($attrCountSize > 0) {
+                        $msg = 'Size already exists of this product ! Please try another one.';
+                        Session::flash('errorMessage', $msg);
+                        return redirect()->back();
+                    }
+
+                    $attributes =  new ProductsAttribute;
+                    $attributes->product_id = $id;
+                    $attributes->sku = $value;
+                    $attributes->size = $data['size'][$key];
+                    $attributes->price = $data['price'][$key];
+                    $attributes->stock = $data['stock'][$key];
+                    $attributes->save();
+
+                    $msg = 'Attributes Added Successfully !';
+                    Session::flash('successMessage', $msg);
+                    return redirect()->back();
+                }  
+            }
+        }
         $productData = Product::find($id);
         // $productData = json_decode(json_encode($productData));
 //        echo "<pre>"; print_r($productData); die;
