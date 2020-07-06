@@ -101,6 +101,44 @@
                     <!-- /.card -->
                 </form>
                 <!-- /.Add product form -->
+
+                <!-- Added product attributes -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Added Product Attributes</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="productTable" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Size</th>
+                                <th>SKU</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($productData['attributes'] as $attribute)
+                                <tr>
+                                    <td>{{ $attribute['id'] }}</td>
+                                    <td>{{ $attribute['size'] }}</td>
+                                    <td>{{ $attribute['sku'] }}</td>
+                                    <td>{{ $attribute['price'] }}</td>
+                                    <td>{{ $attribute['stock'] }}</td>
+                                    <td class="text-center">
+                                        <a title="Edit Product" href="#"><i class="fas fa-edit"></i></a>
+                                        <a title="Delete Product" class="confirmDelete" record="product" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
             </div>
             <!-- /.container-fluid -->
         </section>

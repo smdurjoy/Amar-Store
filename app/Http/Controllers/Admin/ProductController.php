@@ -307,9 +307,9 @@ class ProductController extends Controller
                 }  
             }
         }
-        $productData = Product::find($id);
-        // $productData = json_decode(json_encode($productData));
-//        echo "<pre>"; print_r($productData); die;
+        $productData = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_image')->with('attributes')->find($id);
+        $productData = json_decode(json_encode($productData), true);
+        // echo "<pre>"; print_r($productData); die;
         $title = "Product Attributes";
         return view('admin.addAttributes')->with(compact('productData', 'title'));
     }
