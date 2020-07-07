@@ -95,50 +95,61 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-primary btn-sm" type="submit">Add Attributes</button>
                         </div>
                     </div>
                     <!-- /.card -->
                 </form>
                 <!-- /.Add product form -->
 
-                <!-- Added product attributes -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Added Product Attributes</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="productTable" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Size</th>
-                                <th>SKU</th>
-                                <th>Price</th>
-                                <th>Stock</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($productData['attributes'] as $attribute)
+                <!-- update-attribute-form -->
+                <form method="post" action="{{ url('admin/edit-attributes/'.$productData['id']) }}">@csrf
+                    <!-- Added product attributes -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Added Product Attributes</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="productTable" class="table table-bordered table-striped">
+                                <thead>
                                 <tr>
-                                    <td>{{ $attribute['id'] }}</td>
-                                    <td>{{ $attribute['size'] }}</td>
-                                    <td>{{ $attribute['sku'] }}</td>
-                                    <td>{{ $attribute['price'] }}</td>
-                                    <td>{{ $attribute['stock'] }}</td>
-                                    <td class="text-center">
-                                        <a title="Edit Product" href="#"><i class="fas fa-edit"></i></a>
-                                        <a title="Delete Product" class="confirmDelete" record="product" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
-                                    </td>
+                                    <th>Id</th>
+                                    <th>Size</th>
+                                    <th>SKU</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach($productData['attributes'] as $attribute)
+                                    <input class="form-control d-none" name="attrId[]" value="{{ $attribute['id'] }}"/>
+                                    <tr>
+                                        <td>{{ $attribute['id'] }}</td>
+                                        <td>{{ $attribute['size'] }}</td>
+                                        <td>{{ $attribute['sku'] }}</td>
+                                        <td>
+                                            <input class="form-control" type="text" name="price[]" id="size" placeholder="Size" value="{{ $attribute['price'] }}" required/>
+                                        </td>  
+                                        <td>
+                                            <input class="form-control" type="text" name="stock[]" id="stock" placeholder="Stock" value="{{ $attribute['stock'] }}" required/>
+                                        </td>
+                                        <td class="text-center">
+                                            <a title="Delete Product" class="confirmDelete" record="product" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button class="btn btn-primary btn-sm" type="submit">Update Attributes</button>
+                        </div>
                     </div>
-                    <!-- /.card-body -->
-                </div>
+                </form>
+                <!-- /.update-attribute-form -->
             </div>
             <!-- /.container-fluid -->
         </section>

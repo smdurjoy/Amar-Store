@@ -313,4 +313,19 @@ class ProductController extends Controller
         $title = "Product Attributes";
         return view('admin.addAttributes')->with(compact('productData', 'title'));
     }
+
+    function editAttributes(Request $request, $id) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+            foreach($data['attrId'] as $key => $attr) {
+                if(!empty($attr)) {
+                    ProductsAttribute::where(['id' => $data['attrId'][$key]])->update(['price' => $data['price'][$key], 'stock' => $data['stock'][$key]]);
+                }
+            }
+            $message = "Product Attribute Updated Successfully!";
+            Session::flash('successMessage', $message);
+            return redirect()->back();
+        }
+    }
 }
