@@ -13,6 +13,7 @@ use Intervention\Image\Facades\Image;
 class AdminController extends Controller
 {
     function index() {
+        Session::put('page', 'dashboard');
         return view('admin.dashboard');
     }
 

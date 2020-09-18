@@ -71,9 +71,10 @@
                                 <!-- /.col -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_image">Product Image</label>
+                                        <label for="product_image">Product Main Image</label>
                                         @if(!empty($productData['product_image']))
-                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a class="confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}">Delete Photo</a>
+                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; 
+                                            <a class="confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}">Delete <i class="fas fa-trash"></i></a>
                                         @endif         
                                     </div>  
                                     <!-- /.form-group -->
@@ -135,9 +136,6 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button class="btn btn-primary btn-sm" type="submit">Update images</button>
-                        </div>
                     </div>
                 </form>
                 <!-- /.update-image-form -->

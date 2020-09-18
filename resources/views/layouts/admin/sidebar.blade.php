@@ -24,16 +24,28 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
+                @if(Session::get('page') == 'dashboard')
+                    <?php $active = "active"; ?>
+                @else
+                    <?php $active = ""; ?>
+                @endif
                 <li class="nav-item">
-                    <a href=" {{url('/admin/dashboard')}} " class="nav-link">
+                    <a href=" {{url('/admin/dashboard')}} " class="nav-link {{ $active }}">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
+
+                <!-- Catalogues -->
+                @if(Session::get('page') == 'sections' || Session::get('page') == 'brands' || Session::get('page') == 'categories' || Session::get('page') == 'products')
+                    <?php $active = "active"; ?>
+                @else
+                    <?php $active = ""; ?>
+                @endif
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link {{ $active }}">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Catalogues
@@ -41,7 +53,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @if(Session::get('page')=="sections")
+                        @if(Session::get('page') == "sections")
                             <?php $active = "active"; ?>
                         @else
                             <?php $active = ""; ?>
@@ -53,7 +65,19 @@
                             </a>
                         </li>
 
-                        @if(Session::get('page')=="categories")
+                        @if(Session::get('page') == "brands")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item active">
+                            <a href="{{ url('/admin/brands') }}" class="nav-link {{ $active }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Brands</p>
+                            </a>
+                        </li>
+
+                        @if(Session::get('page') == "categories")
                             <?php $active = "active"; ?>
                         @else
                             <?php $active = ""; ?>
@@ -65,7 +89,7 @@
                             </a>
                         </li>
 
-                        @if(Session::get('page')=="products")
+                        @if(Session::get('page') == "products")
                             <?php $active = "active"; ?>
                         @else
                             <?php $active = ""; ?>
@@ -78,8 +102,14 @@
                         </li>
                     </ul>
                 </li>
+
+                @if(Session::get('page') == 'settings' || Session::get('page') == 'updateCurrentPass' || Session::get('page') == 'updateAdminDetails')
+                    <?php $active = "active"; ?>
+                @else
+                    <?php $active = ""; ?>
+                @endif
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link {{ $active }}">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Settings
@@ -98,7 +128,8 @@
                                 <p>Update Profile</p>
                             </a>
                         </li>
-                        @if(Session::get('page')=="settings")
+
+                        @if(Session::get('page') == "settings")
                             <?php $active = "active"; ?>
                         @else
                             <?php $active = ""; ?>
