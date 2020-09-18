@@ -17,5 +17,7 @@ class VerifyCsrfToken extends Middleware
         "/admin/catStatus",
         "/admin/categoriesLevel",
         "/admin/proStatus",
+        "/admin/attributeStatus",
+        "/admin/imageStatus",
     ];
 }

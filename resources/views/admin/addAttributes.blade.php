@@ -119,6 +119,7 @@
                                     <th>SKU</th>
                                     <th>Price</th>
                                     <th>Stock</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -135,8 +136,15 @@
                                         <td>
                                             <input class="form-control" type="text" name="stock[]" id="stock" placeholder="Stock" value="{{ $attribute['stock'] }}" required/>
                                         </td>
+                                        <td>
+                                            @if($attribute['status'] == 1)
+                                                <a class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" href="javascript:void(0)" attribute_id="{{ $attribute['id'] }}"> Active </a>
+                                            @else
+                                                <a class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" href="javascript:void(0)" attribute_id="{{ $attribute['id'] }}"> Inactive </a>
+                                            @endif
+                                        </td>
                                         <td class="text-center">
-                                            <a title="Delete Product" class="confirmDelete" record="product" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                            <a title="Delete attribute" class="confirmDelete" record="attribute" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -77,16 +77,7 @@ $(document).ready(function () {
         })
     })
 
-    //delete method
-    // $(".confirmDelete").click(function () {
-    //     let name = $(this).attr("name");
-    //     if(confirm("Are you sure you want to delete this "+name+"?")) {
-    //         return true;
-    //     }
-    //     return false;
-    // })
-
-    //delete with sweetaleart2
+    // Common delete method for all action !!
     $(".confirmDelete").click(function () {
         let record = $(this).attr("record");
         let recordId = $(this).attr("recordId");
@@ -149,5 +140,48 @@ $(document).ready(function () {
             $(this).parent('div').remove(); //Remove field html
             x--; //Decrement field counter
         });
+    });
+
+    
+    //update attribute status
+    $(".updateAttributeStatus").click(function () {
+        let status = $(this).text();
+        let attribute_id = $(this).attr("attribute_id");
+        $.ajax({
+            type: 'post',
+            url: '/admin/attributeStatus',
+            data: {status:status, attribute_id:attribute_id},
+            success:function (response) {
+                if(response['status'] == 0) {
+                    $("#attribute-"+attribute_id).html("Inactive");
+                } else if(response['status'] == 1) {
+                    $("#attribute-"+attribute_id).html("Active");
+                }
+            },
+            error:function () {
+                alert("Error!!");
+            }
+        });
+    });
+
+    //update product image status
+    $(".updateProductImageStatus").click(function () {
+        const status = $(this).text();
+        const image_id = $(this).attr("image_id");
+        $.ajax({
+            type: 'post',
+            url: '/admin/imageStatus',
+            data: {status:status, image_id:image_id},
+            success:function (response) {
+                if(response['status'] == 0) {
+                    $("#image-"+image_id).html("Inactive");
+                } else if(response['status'] == 1) {
+                    $("#image-"+image_id).html("Active");
+                }
+            },
+            error:function () {
+                alert("Error!!");
+            }
+        }); 
     });
 });

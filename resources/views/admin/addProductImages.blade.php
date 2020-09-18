@@ -79,7 +79,7 @@
                                     <!-- /.form-group -->
                                 </div>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="file" multiple="" name="image" id="image" required/>
+                                    <input class="form-control" type="file" name="images[]" id="images" multiple="" required/>
                                 </div>
                             </div>
                             <!-- /.row -->
@@ -119,9 +119,15 @@
                                         <td>
                                             <img src="{{ asset('images/productImages/small/'.$image['image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">
                                         </td>
-                                        <td>{{ $image['status'] }}</td>
+                                        <td>
+                                            @if($image['status'] == 1)
+                                                <a class="updateProductImageStatus" id="image-{{$image['id']}}" href="javascript:void(0)" image_id="{{ $image['id']  }}"> Active </a>
+                                            @else
+                                                <a class="updateProductImageStatus" id="image-{{$image['id']}}" href="javascript:void(0)" image_id="{{ $image['id']  }}"> Inactive </a>
+                                            @endif
+                                        </td> 
                                         <td class="text-center">
-                                            <a title="Delete Product" class="confirmDelete" record="product" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                            <a title="Delete Product" class="confirmDelete" record="productImage" recordId="{{$image['id']}}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
