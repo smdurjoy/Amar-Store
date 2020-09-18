@@ -3,12 +3,19 @@
     width: 150px;
 }
 
-.fa-edit {
-    font-size: 22px;
-    color: #031a9a;
+.productImage {
+    width: 80px;
+    object-fit: contain;
 }
 
-.fa-trash {
-    font-size: 22px;
-    color: #c40000;
+.productActions {
+    display: flex;
+}
+
+.productActions a {
+    margin: 5px !important;
+}
+
+.productActions i {
+    font-size: 15px;
 }

@@ -16,8 +16,8 @@ class ProductController extends Controller
     function index() {
         Session::put('page', 'products');
         $products = Product::with(['category', 'section'])->get();
-//        $products = json_decode(json_encode($products), true);
-//        echo "<pre>"; print_r($products); die();
+        // $products = json_decode(json_encode($products), true);
+        // echo "<pre>"; print_r($products); die();
         return view('admin.products')->with(compact('products'));
     }
 
@@ -92,50 +92,6 @@ class ProductController extends Controller
                 $is_featured = "Yes";
             }
 
-            //if optional fields are empty
-            if(empty($data['fabric'])) {
-                $data['fabric'] = "";
-            }
-            if(empty($data['sleeve'])) {
-                $data['sleeve'] = "";
-            }
-            if(empty($data['pattern'])) {
-                $data['pattern'] = "";
-            }
-            if(empty($data['fit'])) {
-                $data['fit'] = "";
-            }
-            if(empty($data['occasion'])) {
-                $data['occasion'] = "";
-            }
-            if(empty($data['meta_title'])) {
-                $data['meta_title'] = "";
-            }
-            if(empty($data['meta_keywords'])) {
-                $data['meta_keywords'] = "";
-            }
-            if(empty($data['meta_description'])) {
-                $data['meta_description'] = "";
-            }
-            if(empty($data['product_video'])) {
-                $data['product_video'] = "";
-            }
-            if(empty($data['product_image'])) {
-                $data['product_image'] = "";
-            }
-            if(empty($data['product_weight'])) {
-                $data['product_weight'] = "";
-            }
-            if(empty($data['product_description'])) {
-                $data['product_description'] = "";
-            }
-            if(empty($data['product_discount'])) {
-                $data['product_discount'] = "";
-            }
-            if(empty($data['wash_care'])) {
-                $data['wash_care'] = "";
-            }
-
             //upload image
             if($request->hasFile('product_image')) {
                 // take the image
@@ -178,7 +134,7 @@ class ProductController extends Controller
 
             //save product details to product table
             $categoryDetails = Category::find($data['category_id']);
-//            echo "<pre>"; print_r($categoryDetails); die;
+        //    echo "<pre>"; print_r($data); die;
             $products->section_id = $categoryDetails['section_id'];
             $products->category_id = $data['category_id'];
             $products->product_name = $data['product_name'];
@@ -187,10 +143,8 @@ class ProductController extends Controller
             $products->product_price = $data['product_price'];
             $products->product_discount = $data['product_discount'];
             $products->product_weight = $data['product_weight'];
-            $products->product_video = $data['product_video'];
-            $products->product_image = $data['product_image'];
             $products->product_description = $data['product_description'];
-            $products->wash_care = $data['wash_care'];
+            $products->wash_care = $data['wash_care']; 
             $products->fabric = $data['fabric'];
             $products->pattern = $data['pattern'];
             $products->sleeve = $data['sleeve'];
@@ -327,5 +281,11 @@ class ProductController extends Controller
             Session::flash('successMessage', $message);
             return redirect()->back();
         }
+    }
+
+    function addImages($id) {
+        $productData = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_image')->with('images')->find($id);
+        // return $productData;
+        return view('admin.addProductImages')->with(compact('productData'));
     }
 }

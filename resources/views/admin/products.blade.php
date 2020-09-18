@@ -63,9 +63,9 @@
                                             <td>
                                                 <?php $imgPath = "images/productImages/small/".$product->product_image; ?>
                                                 @if(!empty($product->product_image) && file_exists($imgPath))
-                                                    <img class="w-100" src="{{ asset('images/productImages/small/'.$product->product_image)  }}">
+                                                    <img class="productImage" src="{{ asset('images/productImages/small/'.$product->product_image)  }}">
                                                 @else
-                                                    <img class="w-100" src="{{ asset('images/productImages/small/smallDummyImg.png') }}">
+                                                    <img class="productImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}">
                                                 @endif
                                             </td>
                                             <td>{{ $product->category->category_name }}</td>
@@ -78,9 +78,12 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                <a title="Add Edit Attributes" href="{{ url('admin/add-attributes/'.$product->id) }}"><i class="fas fa-plus"></i></a>
-                                                <a title="Edit Product" href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
-                                                <a title="Delete Product" class="confirmDelete" record="product" recordId="{{ $product->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                                <div class="productActions">
+                                                    <a title="Add Edit Attributes" href="{{ url('admin/add-attributes/'.$product->id) }}"><i class="fas fa-plus"></i></a>
+                                                    <a title="Add Images" href="{{ url('admin/add-images/'.$product->id) }}"><i class="fas fa-image"></i></a>
+                                                    <a title="Edit Product" href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
+                                                    <a title="Delete Product" class="confirmDelete" record="product" recordId="{{ $product->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
