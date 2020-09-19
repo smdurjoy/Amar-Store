@@ -36,7 +36,7 @@ $(document).ready(function () {
     })
 
     // Common delete method for all action !!
-    $(".confirmDelete").click(function () {
+    $(document).on('click', '.confirmDelete', function() {
         let record = $(this).attr("record");
         let recordId = $(this).attr("recordId");
         Swal.fire({
@@ -55,7 +55,7 @@ $(document).ready(function () {
     })
 
     // Common status update method for all action !!
-    $(".updateStatus").click(function () {
+    $(document).on('click', '.updateStatus', function() {
         const status = $(this).text();
         const record = $(this).attr("record");
         const record_id = $(this).attr("record_id");
