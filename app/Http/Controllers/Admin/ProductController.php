@@ -31,8 +31,8 @@ class ProductController extends Controller
                 $status = 1;
             }
 
-            Product::where('id', $data['product_id'])->update(['status' => $status]);
-            return response()->json(['status' => $status, 'product_id' => $data['product_id']]);
+            Product::where('id', $data['record_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status]);
         }
     }
 
@@ -294,8 +294,8 @@ class ProductController extends Controller
                 $status = 1;
             }
 
-            ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]);
-            return response()->json(['status' => $status, 'attribute_id' => $data['attribute_id']]);
+            ProductsAttribute::where('id', $data['record_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status]);
         }
     }
 
@@ -336,7 +336,7 @@ class ProductController extends Controller
         return view('admin.addProductImages')->with(compact('productData'));
     }
 
-    function productImageStatus(Request $request) {
+    function updateProductImageStatus(Request $request) {
         if($request->ajax()) {
             $data = $request->all();
             if($data['status'] == "Active") {
@@ -345,8 +345,8 @@ class ProductController extends Controller
                 $status = 1;
             }
 
-            ProductsImage::where('id', $data['image_id'])->update(['status' => $status]);
-            return response()->json(['status' => $status, 'image_id' => $data['image_id']]);
+            ProductsImage::where('id', $data['record_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status]);
         }
     }
 

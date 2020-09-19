@@ -47,9 +47,9 @@
                                                 <td>{{ $brand->name  }}</td>
                                                 <td>
                                                     @if($brand->status == 1)
-                                                    <a class="updateBrandStatus" id="brand-{{$brand->id}}" href="javascript:void(0)" brand_id="{{ $brand->id  }}"> Active </a>
+                                                        <a class="updateStatus" record="brand" href="javascript:void(0)" record_id="{{ $brand->id  }}"> <span id="brand-{{$brand->id}}" class="badge badge-primary">Active</span> </a>
                                                     @else
-                                                    <a class="updateBrandStatus" id="brand-{{$brand->id}}" href="javascript:void(0)" brand_id="{{ $brand->id  }}"> Inactive </a>
+                                                        <a class="updateStatus" record="brand" href="javascript:void(0)" record_id="{{ $brand->id  }}"> <span id="brand-{{$brand->id}}" class="badge badge-primary">Inactive</span> </a>
                                                     @endif
                                                 </td>
                                                 <td class="text-center">

@@ -72,9 +72,9 @@
                                             <td>{{ $product->section->name }}</td>
                                             <td>
                                                 @if($product->status == 1)
-                                                    <a class="updateProductStatus" id="product-{{$product->id}}" href="javascript:void(0)" product_id="{{ $product->id  }}"> Active </a>
+                                                    <a class="updateStatus" record="product" href="javascript:void(0)" record_id="{{ $product->id  }}"> <span id="product-{{$product->id}}" class="badge badge-primary">Active</span> </a>
                                                 @else
-                                                    <a class="updateProductStatus" id="product-{{$product->id}}" href="javascript:void(0)" product_id="{{ $product->id  }}"> Inactive </a>
+                                                    <a class="updateStatus" record="product" href="javascript:void(0)" record_id="{{ $product->id  }}"> <span id="product-{{$product->id}}" class="badge badge-primary">Inactive</span> </a>
                                                 @endif
                                             </td>
                                             <td class="text-center">

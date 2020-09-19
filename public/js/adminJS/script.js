@@ -19,48 +19,6 @@ $(document).ready(function () {
         });
     });
 
-    //update seciton status
-    $(".updateSectionStatus").click(function () {
-        let status = $(this).text();
-        let section_id = $(this).attr("section_id");
-        $.ajax({
-            type: 'post',
-            url: '/admin/updateSectionStatus',
-            data: {status:status, section_id:section_id},
-            success:function (response) {
-                if(response['status'] == 0) {
-                    $("#section-"+section_id).html("<a class='updateSectionStatus' href='javascript:void(0)\'> Inactive </a>");
-                } else if(response['status'] == 1) {
-                    $("#section-"+section_id).html("<a class='updateSectionStatus' href='javascript:void(0)\'> Active </a>");
-                }
-            },
-            error:function () {
-                alert("Error!");
-            }
-        });
-    });
-
-    //update category status
-    $(".updateCategoryStatus").click(function () {
-        let status = $(this).text();
-        let category_id = $(this).attr("category_id");
-        $.ajax({
-            type: 'post',
-            url: '/admin/catStatus',
-            data: {status:status, category_id:category_id},
-            success:function (response) {
-                if(response['status'] == 0) {
-                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'> Inactive </a>");
-                } else if(response['status'] == 1) {
-                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'> Active </a>");
-                }
-            },
-            error:function () {
-                alert("Error!!");
-            }
-        });
-    });
-
     //Append category level
     $("#section_id").change(function () {
         let section_id = $(this).val();
@@ -96,26 +54,27 @@ $(document).ready(function () {
         });
     })
 
-    //update product status
-    $(".updateProductStatus").click(function () {
-        let status = $(this).text();
-        let product_id = $(this).attr("product_id");
+    // Common status update method for all action !!
+    $(".updateStatus").click(function () {
+        const status = $(this).text();
+        const record = $(this).attr("record");
+        const record_id = $(this).attr("record_id");
         $.ajax({
             type: 'post',
-            url: '/admin/proStatus',
-            data: {status:status, product_id:product_id},
+            url: '/admin/update-'+record+'-status',
+            data: {status:status, record_id:record_id},
             success:function (response) {
                 if(response['status'] == 0) {
-                    $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'> Inactive </a>");
+                    $("#"+record+'-'+record_id).html("Inactive");
                 } else if(response['status'] == 1) {
-                    $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'> Active </a>");
+                    $("#"+record+'-'+record_id).html("Active");
                 }
             },
             error:function () {
                 alert("Error!!");
             }
         });
-    });
+    })
 
     // Add or remove products attribute fields
     $(document).ready(function(){

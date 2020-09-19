@@ -122,9 +122,9 @@
                                         </td>
                                         <td>
                                             @if($image['status'] == 1)
-                                                <a class="updateProductImageStatus" id="image-{{$image['id']}}" href="javascript:void(0)" image_id="{{ $image['id']  }}"> Active </a>
+                                                <a class="updateStatus" record="productImage" href="javascript:void(0)" record_id="{{ $image['id']  }}"> <span id="productImage-{{$image['id']}}" class="badge badge-primary">Active</span> </a>
                                             @else
-                                                <a class="updateProductImageStatus" id="image-{{$image['id']}}" href="javascript:void(0)" image_id="{{ $image['id']  }}"> Inactive </a>
+                                                <a class="updateStatus" record="productImage" href="javascript:void(0)" record_id="{{ $image['id']  }}"> <span id="productImage-{{$image['id']}}" class="badge badge-primary">Inactive</span> </a>
                                             @endif
                                         </td> 
                                         <td class="text-center">

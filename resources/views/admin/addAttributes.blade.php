@@ -138,12 +138,12 @@
                                         </td>
                                         <td>
                                             @if($attribute['status'] == 1)
-                                                <a class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" href="javascript:void(0)" attribute_id="{{ $attribute['id'] }}"> Active </a>
+                                                <a class="updateStatus" record="attribute" href="javascript:void(0)" record_id="{{ $attribute['id'] }}"> <span id="attribute-{{ $attribute['id'] }}" class="badge badge-primary">Active</span> </a>
                                             @else
-                                                <a class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" href="javascript:void(0)" attribute_id="{{ $attribute['id'] }}"> Inactive </a>
+                                                <a class="updateStatus" record="attribute" href="javascript:void(0)" record_id="{{ $attribute['id'] }}"> <span id="attribute-{{ $attribute['id'] }}" class="badge badge-primary">Inactive</span> </a>
                                             @endif
                                         </td>
-                                        <td class="text-center">
+                                        <td class="text-center">    
                                             <a title="Delete attribute" class="confirmDelete" record="attribute" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>

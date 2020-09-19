@@ -66,13 +66,13 @@
                                             <td>{{ $category->url }}</td>
                                             <td>
                                                 @if($category->status == 1)
-                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" href="javascript:void(0)" category_id="{{ $category->id  }}"> Active </a>
+                                                    <a class="updateStatus" record="category" href="javascript:void(0)" record_id="{{ $category->id  }}"> <span id="category-{{$category->id}}" class="badge badge-primary">Active</span> </a>
                                                 @else
-                                                    <a class="updateCategoryStatus" id="category-{{$category->id}}" href="javascript:void(0)" category_id="{{ $category->id  }}"> Inactive </a>
+                                                    <a class="updateStatus" record="category" href="javascript:void(0)" record_id="{{ $category->id  }}"> <span id="category-{{$category->id}}" class="badge badge-primary">Inactive</span> </a>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href={{ url('admin/add-edit-category/'.$category->id) }}>Edit</a>
+                                                <a href={{ url("admin/add-edit-category/".$category->id) }}>Edit</a>
                                                 &nbsp;&nbsp;
                                                 <a class="confirmDelete" record="category" recordId="{{ $category->id }}" href="javascript:void(0)" <?php /* name="Category" href="{{ url('admin/delete-category/'.$category->id) }}" */ ?>>Delete</a>
                                             </td>
