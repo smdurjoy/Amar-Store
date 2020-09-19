@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Categories</h3>
-                                <a href="{{ url('admin/add-edit-category ') }}" class="btn btn-dark" style="float: right"> Add Category</a>
+                                <a href="{{ url('admin/add-edit-category ') }}" class="btn btn-dark addButton" style="float: right"> Add Category</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -72,9 +72,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href={{ url("admin/add-edit-category/".$category->id) }}>Edit</a>
-                                                &nbsp;&nbsp;
-                                                <a class="confirmDelete" record="category" recordId="{{ $category->id }}" href="javascript:void(0)" <?php /* name="Category" href="{{ url('admin/delete-category/'.$category->id) }}" */ ?>>Delete</a>
+                                                <a title="Edit Category" href="{{ url('admin/add-edit-category/'.$category->id) }}"><i class="fas fa-edit"></i></a>
+                                                <a title="Delete Brand" class="confirmDelete" record="category" recordId="{{ $category->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

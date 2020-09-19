@@ -36,7 +36,6 @@
                     </div>
                 @endif
 
-                //delete photo success message
                 @if(Session::has('successMessage'))
                     <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                         {{ Session::get('successMessage')  }}
@@ -151,7 +150,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary">
+                            <input type="submit" class="btn btn-primary addButton">
                         </div>
                     </div>
                     <!-- /.card -->

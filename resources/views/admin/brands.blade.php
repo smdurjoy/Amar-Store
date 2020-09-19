@@ -22,13 +22,21 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    @if(Session::has('successMessage'))
+                        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                            {{ Session::get('successMessage')  }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Brands</h3>
-                                    <a href="{{ url('admin/add-edit-brand ') }}" class="btn btn-dark" style="float: right">Add Brands</a>
-                                </div>
+                                    <a href="{{ url('admin/add-edit-brand ') }}" class="btn btn-dark addButton" style="float: right">Add Brands</a>
+                            </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="sectionTable" class="table table-bordered table-striped">

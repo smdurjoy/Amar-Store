@@ -65,9 +65,9 @@ $(document).ready(function () {
             data: {status:status, record_id:record_id},
             success:function (response) {
                 if(response['status'] == 0) {
-                    $("#"+record+'-'+record_id).html("Inactive");
+                    $("#"+record+'-'+record_id).text("Inactive");
                 } else if(response['status'] == 1) {
-                    $("#"+record+'-'+record_id).html("Active");
+                    $("#"+record+'-'+record_id).text("Active");
                 }
             },
             error:function () {
@@ -99,48 +99,5 @@ $(document).ready(function () {
             $(this).parent('div').remove(); //Remove field html
             x--; //Decrement field counter
         });
-    });
-
-    
-    //update attribute status
-    $(".updateAttributeStatus").click(function () {
-        let status = $(this).text();
-        let attribute_id = $(this).attr("attribute_id");
-        $.ajax({
-            type: 'post',
-            url: '/admin/attributeStatus',
-            data: {status:status, attribute_id:attribute_id},
-            success:function (response) {
-                if(response['status'] == 0) {
-                    $("#attribute-"+attribute_id).html("Inactive");
-                } else if(response['status'] == 1) {
-                    $("#attribute-"+attribute_id).html("Active");
-                }
-            },
-            error:function () {
-                alert("Error!!");
-            }
-        });
-    });
-
-    //update product image status
-    $(".updateProductImageStatus").click(function () {
-        const status = $(this).text();
-        const image_id = $(this).attr("image_id");
-        $.ajax({
-            type: 'post',
-            url: '/admin/imageStatus',
-            data: {status:status, image_id:image_id},
-            success:function (response) {
-                if(response['status'] == 0) {
-                    $("#image-"+image_id).html("Inactive");
-                } else if(response['status'] == 1) {
-                    $("#image-"+image_id).html("Active");
-                }
-            },
-            error:function () {
-                alert("Error!!");
-            }
-        }); 
     });
 });

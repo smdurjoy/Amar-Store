@@ -262,7 +262,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary">
+                            <input type="submit" class="btn btn-primary addButton">
                         </div>
                     </div>
                     <!-- /.card -->
