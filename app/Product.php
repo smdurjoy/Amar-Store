@@ -14,6 +14,10 @@ class Product extends Model
         return $this->belongsTo('App\Section', 'section_id')->select(['id', 'name']);
     }
 
+    function brand() {
+        return $this->belongsTo('App\Brand', 'brand_id')->select(['id', 'name']);
+    }
+
     function attributes() {
         return $this->hasMany('App\ProductsAttribute');
     }

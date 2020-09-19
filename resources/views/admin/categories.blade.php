@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Categories</h3>
-                                <a href="{{ url('admin/add-edit-category ') }}" class="btn btn-dark addButton" style="float: right"> Add Category</a>
+                                <a href="{{ url('admin/add-edit-category ') }}" class="btn btn-dark btn-sm" style="float: right"> Add Category</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Products</h3>
-                                <a href="{{ url('admin/add-edit-product') }}" class="btn btn-dark addButton" style="float: right"> Add Products</a>
+                                <a href="{{ url('admin/add-edit-product') }}" class="btn btn-dark btn-sm" style="float: right"> Add Products</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -47,6 +47,7 @@
                                         <th>Product Code</th>
                                         <th>Product Colour</th>
                                         <th>Product Image</th>
+                                        <th>Brand</th>
                                         <th>Category</th>
                                         <th>Section</th>
                                         <th>Status</th>
@@ -68,6 +69,7 @@
                                                     <img class="productImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}">
                                                 @endif
                                             </td>
+                                            <td>{{ $product->brand['name'] }}</td>
                                             <td>{{ $product->category->category_name }}</td>
                                             <td>{{ $product->section->name }}</td>
                                             <td>

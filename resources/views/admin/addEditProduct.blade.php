@@ -82,9 +82,22 @@
                                         <label for="product_name">Product Name</label>
                                         <input type="text" class="form-control" name="product_name" id="productName" placeholder="Enter Product Name" @if(!empty($productData['product_name'])) value="{{ $productData['product_name'] }}" @else value="{{ old('$product_name') }}" @endif>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="product_color">Product Color</label>
+                                        <input type="text" class="form-control" placeholder="Enter Product Color" name="product_color" id="productColor" @if(!empty($productData['product_color'])) value="{{ $productData['product_color'] }}" @else value="{{ old('product_color') }}" @endif>
+                                    </div>
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Select Brand</label>
+                                        <select name="brand_id" class="form-control select2" style="width: 100%;" id="brand_id">
+                                            <option value="" selected>Select</option>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand['id'] }}" @if(!empty($productData['brand_id']) && $productData['brand_id'] == $brand['id']) selected @endif>{{ $brand['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="product_code">Product Code</label>
                                         <input type="text" class="form-control" name="product_code" id="productCode" placeholder="Enter Product Code" @if(!empty($productData['product_code'])) value="{{ $productData['product_code'] }}" @else value="{{ old('$product_code') }}" @endif>
@@ -112,13 +125,6 @@
                             <!-- /.row -->
 
                             <div class="row">
-                                <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="product_color">Product Color</label>
-                                        <input type="text" class="form-control" placeholder="Enter Product Color" name="product_color" id="productColor" @if(!empty($productData['product_color'])) value="{{ $productData['product_color'] }}" @else value="{{ old('product_color') }}" @endif>
-                                    </div>
-                                    <!-- /.form-group -->
-                                </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="product_weight">Product Weight</label>
@@ -250,19 +256,19 @@
                                         <label for="meta_keywords">Meta Keyword</label>
                                         <input type="text" class="form-control" placeholder="Enter Meta Keyword" name="meta_keywords" id="productUrl" @if(!empty($productData['meta_keywords'])) value="{{ $productData['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="featured">Featured Item</label>
-                                        <input type="checkbox" id="is_featured" name="is_featured" value="Yes" @if(!empty($productData['is_featured']) && $productData['is_featured'] == "Yes") checked @endif>
-                                    </div>
                                     <!-- /.form-group -->
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="featured">Featured Item</label>
+                                <input type="checkbox" id="is_featured" name="is_featured" value="Yes" @if(!empty($productData['is_featured']) && $productData['is_featured'] == "Yes") checked @endif>
                             </div>
                             <!-- /.row -->
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary addButton">
+                            <input type="submit" class="btn btn-primary btn-sm">
                         </div>
                     </div>
                     <!-- /.card -->

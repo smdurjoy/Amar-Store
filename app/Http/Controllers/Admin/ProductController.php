@@ -8,6 +8,7 @@ use App\Product;
 use App\Section;
 use App\ProductsAttribute;
 use App\ProductsImage;
+use App\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
@@ -16,7 +17,7 @@ class ProductController extends Controller
 {
     function index() {
         Session::put('page', 'products');
-        $products = Product::with(['category', 'section'])->get();
+        $products = Product::with(['category', 'brand', 'section'])->get();
         // $products = json_decode(json_encode($products), true);
         // echo "<pre>"; print_r($products); die();
         return view('admin.products')->with(compact('products'));
@@ -67,13 +68,15 @@ class ProductController extends Controller
             //Add product validation
             $rules = [
                 'category_id' => 'required',
+                'brand_id' => 'required',
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'product_code' => 'required|regex:/^[\w-]*$/',
                 'product_color' => 'required|regex:/^[\pL\s\-]+$/u',
                 'product_price' => 'required|numeric'
             ];
             $errorMessages = [
-                'category_id.required' => 'Category id is required.',
+                'category_id.required' => 'Please select a category.',
+                'brand_id.required' => 'Please select a brand.',
                 'product_name.required' => 'Product name is required.',
                 'product_name.regex' => 'Valid product name is required.',
                 'product_code.required' => 'Product code is required.',
@@ -138,6 +141,7 @@ class ProductController extends Controller
         //    echo "<pre>"; print_r($data); die;
             $products->section_id = $categoryDetails['section_id'];
             $products->category_id = $data['category_id'];
+            $products->brand_id = $data['brand_id'];
             $products->product_name = $data['product_name'];
             $products->product_code = $data['product_code'];
             $products->product_color = $data['product_color'];
@@ -172,10 +176,13 @@ class ProductController extends Controller
         //Section with categories and sub categories
         $categories = Section::with('categories')->get();
         $categories = json_decode(json_encode($categories), true);
-//        echo "<pre>"; print_r($categories); die();
+        //echo "<pre>"; print_r($categories); die();
 
+        // get all brands
+        $brands = Brand::where('status', 1)->get();
+        $brands = json_decode(json_encode($brands), true);
 
-        return view('admin.addEditProduct')->with(compact('title',  'fabricArray', 'sleeveArray','patternArray', 'fitArray', 'occasionArray', 'categories', 'productData'));
+        return view('admin.addEditProduct')->with(compact('title',  'fabricArray', 'sleeveArray','patternArray', 'fitArray', 'occasionArray', 'categories', 'productData', 'brands'));
     }
 
     function deleteProductImage($id) {

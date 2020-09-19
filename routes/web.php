@@ -21,6 +21,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Frontend Routes
+Route::namespace('Front')->group(function() {
+    Route::get('/', 'HomeController@index');
+});
+
 // Admin routes
 Route::prefix('/admin')->namespace('Admin')->group(function() {
     Route::match(['get', 'post'],'/', 'AdminController@login');

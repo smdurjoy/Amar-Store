@@ -150,7 +150,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary addButton">
+                            <input type="submit" class="btn btn-primary btn-sm">
                         </div>
                     </div>
                     <!-- /.card -->
