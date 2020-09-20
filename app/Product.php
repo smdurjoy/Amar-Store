@@ -15,7 +15,7 @@ class Product extends Model
     }
 
     function brand() {
-        return $this->belongsTo('App\Brand', 'brand_id')->select(['id', 'name']);
+        return $this->belongsTo('App\Brand', 'brand_id');
     }
 
     function attributes() {

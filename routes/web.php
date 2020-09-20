@@ -23,7 +23,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Frontend Routes
 Route::namespace('Front')->group(function() {
+    // Homepage routes
     Route::get('/', 'HomeController@index');
+
+    // Listing category route
+    Route::get('/{url}', 'ProductsController@listing');
 });
 
 // Admin routes
