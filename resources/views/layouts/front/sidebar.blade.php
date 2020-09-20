@@ -11,9 +11,9 @@ $sections = Section::section();
             <li class="subMenu"><a>{{$section['name']}}</a>
             @foreach($section['categories'] as $category)
                 <ul>
-                    <li><a href="products.html"><i class="icon-chevron-right"></i><strong>{{ $category['category_name'] }}</strong></a></li>
+                    <li><a href="{{ url($category['url']) }}"><i class="icon-chevron-right"></i><strong>{{ $category['category_name'] }}</strong></a></li>
                     @foreach($category['sub_categories'] as $subCategories)
-                        <li><a href="products.html"><i class="icon-chevron-right"></i>{{$subCategories['category_name']}}</a></li>
+                        <li><a href="{{ url($subCategories['url']) }}"><i class="icon-chevron-right"></i>{{$subCategories['category_name']}}</a></li>
                     @endforeach
                 </ul>
             @endforeach

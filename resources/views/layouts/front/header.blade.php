@@ -35,9 +35,9 @@ $sections = Section::section();
                             <ul class="dropdown-menu">
                                 @foreach($section['categories'] as $category)
                                     <li class="divider"></li>
-                                    <li class="nav-header"><a href="#">{{ $category['category_name'] }}</a></li>
+                                    <li class="nav-header"><a href="{{ url($category['url']) }}">{{ $category['category_name'] }}</a></li>
                                     @foreach($category['sub_categories'] as $subCategories)
-                                        <li><a href="#">{{$subCategories['category_name']}}</a></li>
+                                        <li><a href="{{ url($subCategories['url']) }}">{{$subCategories['category_name']}}</a></li>
                                     @endforeach
                                 @endforeach
                             </ul>
