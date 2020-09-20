@@ -33,10 +33,14 @@
                         </div>  
                     @endforeach
                 </div>
+                @if($featuredItemsCount > 4) 
+                    <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
+                    <a class="right carousel-control" href="#featured" data-slide="next">›</a>
+                @endif
             </div>
         </div>
     </div>
-    <h4>Latest Products </h4> 
+    <h4>Latest Products </h4>
     <ul class="thumbnails">
     @foreach($latestProducts as $latestProduct) 
         <li class="span3">
