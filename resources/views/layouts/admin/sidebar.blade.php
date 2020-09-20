@@ -100,6 +100,18 @@
                                 <p>Products</p>
                             </a>
                         </li>
+
+                        @if(Session::get('page') == "banners")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/banners') }}" class="nav-link {{ $active }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Banners</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

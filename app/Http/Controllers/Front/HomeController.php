@@ -10,11 +10,17 @@ use App\Product;
 class HomeController extends Controller
 {
     function index() {
-        $featuredItemsCount = Product::where('is_featured', 'Yes')->count(); 
-        $featuredItems = Product::where('is_featured', 'Yes')->select('product_name', 'product_image', 'product_price')->get()->toArray(); 
+        $page_name = 'index';
+        // Get featured products
+        $featuredItemsCount = Product::where('is_featured', 'Yes')->where('status', 1)->count(); 
+        $featuredItems = Product::where('is_featured', 'Yes')->where('status', 1)->select('product_name', 'product_image', 'product_price')->get()->toArray(); 
         $featuredItemsChunk = array_chunk($featuredItems, 4);
         // dd($featuredItemsChunk); die;
-        $page_name = 'index';
-        return view('front.index')->with(compact('page_name', 'featuredItemsCount', 'featuredItemsChunk'));
+
+        // Get latest products
+        $latestProducts = Product::where('status', 1)->orderBy('id', 'desc')->select('product_name', 'product_image', 'product_price', 'product_code')->limit(6)->get()->toArray();
+        // echo '<pre>'; print_r($latestProducts); die;
+
+        return view('front.index')->with(compact('page_name', 'featuredItemsCount', 'featuredItemsChunk', 'latestProducts'));
     }
 }

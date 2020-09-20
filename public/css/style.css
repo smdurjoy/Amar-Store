@@ -19,3 +19,8 @@
 .productActions i {
     font-size: 15px;
 }
+
+.adminBannerImage {
+    width: 150px;
+    object-fit: contain;
+}

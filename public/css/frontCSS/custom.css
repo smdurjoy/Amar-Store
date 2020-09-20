@@ -1,3 +1,8 @@
 .subMenu {
     cursor: pointer;
 }
+
+.featuredProductImage {
+    width: 150px;
+    object-fit: contain;
+}
