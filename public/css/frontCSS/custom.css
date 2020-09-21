@@ -16,3 +16,7 @@
     width: 280px;
     height: 200px;
 }
+
+.sortSelected {
+    background-color:#F5F5F5 !important;
+}

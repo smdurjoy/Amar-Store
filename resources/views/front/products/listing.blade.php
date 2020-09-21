@@ -12,14 +12,16 @@
         {{ $categoryDetails['categoryDetails']['description'] }}
     </p>
     <hr class="soft"/> 
-    <form class="form-horizontal span6">
+    <form class="form-horizontal span6" name="sortProducts" id="sortProducts">
         <div class="control-group">
             <label class="control-label alignL">Sort By </label>
-            <select>
-                <option>Product name A - Z</option>
-                <option>Product name Z - A</option>
-                <option>Product Stoke</option>
-                <option>Price Lowest first</option>
+            <select name="sort" id="sort">
+                <option value="">Select</option>
+                <option value="latest_products" @if(isset($_GET['sort']) && $_GET['sort'] == 'latest_products') selected class="sortSelected" @endif>Latest Products</option>
+                <option value="price_lowset" @if(isset($_GET['sort']) && $_GET['sort'] == 'price_lowset') selected class="sortSelected" @endif>Lowest price first</option>
+                <option value="price_highest" @if(isset($_GET['sort']) && $_GET['sort'] == 'price_highest') selected class="sortSelected" @endif>Highest price first</option>
+                <option value="products_a_z" @if(isset($_GET['sort']) && $_GET['sort'] == 'products_a_z') selected class="sortSelected" @endif>Product name A - Z</option>
+                <option value="products_z_a" @if(isset($_GET['sort']) && $_GET['sort'] == 'products_z_a') selected class="sortSelected" @endif>Product name Z - A</option>
             </select>
         </div>
     </form>
@@ -92,15 +94,11 @@
     </div>
     <a href="compare.html" class="btn btn-large pull-right">Compare Product</a>
     <div class="pagination">
-        <ul>
-            <li><a href="#">&lsaquo;</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">...</a></li>
-            <li><a href="#">&rsaquo;</a></li>
-        </ul>
+        @if(isset($_GET['sort']) && !empty($_GET['sort']))
+            {{ $categoryProducts->appends(['sort' => $_GET['sort']])->links() }}
+        @else
+            {{ $categoryProducts->links() }}
+        @endif
     </div>
     <br class="clr"/>
 </div>

@@ -48,6 +48,7 @@
 <script src="{{asset('js/frontJS/google-code-prettify/prettify.js')}}"></script>
 
 <script src="{{asset('js/frontJS/front.js')}}"></script>
+<script src="{{asset('js/frontJS/script.js')}}"></script>
 <script src="{{asset('js/frontJS/jquery.lightbox-0.5.js')}}"></script>
 
 </body>

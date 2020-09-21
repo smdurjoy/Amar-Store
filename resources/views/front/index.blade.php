@@ -46,9 +46,9 @@
         <li class="span3">
             <div class="thumbnail">
                 <a  href="product_details.html">
-                    <?php $productImagePath = 'images/productImages/small/'.$item['product_image'] ?>
+                    <?php $productImagePath = 'images/productImages/small/'.$latestProduct['product_image'] ?>
                     @if(!empty($latestProduct['product_image']) && file_exists($productImagePath))
-                        <img class="featuredProductImage" src="{{ asset($productImagePath) }}" alt="">
+                        <img class="featuredProductImage" src="{{ asset('images/productImages/small/'.$latestProduct['product_image']) }}" alt="">
                     @else
                         <img class="featuredProductImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}" alt="">
                     @endif
