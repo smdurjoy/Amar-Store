@@ -12,9 +12,10 @@
         {{ $categoryDetails['categoryDetails']['description'] }}
     </p>
     <hr class="soft"/> 
+    <input type="hidden" id="url" value="{{ $url }}"/>
     <form class="form-horizontal span6" name="sortProducts" id="sortProducts">
         <div class="control-group">
-            <label class="control-label alignL">Sort By </label>
+            <label class="control-label alignL">Sort By</label>
             <select name="sort" id="sort">
                 <option value="">Select</option>
                 <option value="latest_products" @if(isset($_GET['sort']) && $_GET['sort'] == 'latest_products') selected class="sortSelected" @endif>Latest Products</option>
@@ -26,13 +27,14 @@
         </div>
     </form>
     
-    <div id="myTab" class="pull-right">
+    <!-- <div id="myTab" class="pull-right">
         <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
         <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
-    </div>
+    </div> -->
     <br class="clr"/>
-    <div class="tab-content">
-        <div class="tab-pane" id="listView">
+    <div class="tab-content" id="filter_products">
+        <!-- products list view -->
+        <!-- <div class="tab-pane" id="listView">
             @foreach($categoryProducts as $product)
                 <div class="row">
                     <div class="span2">
@@ -66,31 +68,11 @@
                 </div>
                 <hr class="soft"/>
             @endforeach
-        </div>
-        <div class="tab-pane  active" id="blockView">
-            <ul class="thumbnails">
-            @foreach($categoryProducts as $product)
-                <li class="span3">
-                    <div class="thumbnail">
-                        <a href="product_details.html">
-                            <?php $productImagePath = 'images/productImages/small/'.$product['product_image'] ?>
-                            @if(!empty($product['product_image']) && file_exists($productImagePath))
-                                <img class="listingPageProductImage" src="{{ asset($productImagePath) }}" alt="">
-                            @else
-                                <img class="listingPageProductImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}" alt="">
-                            @endif
-                        </a> 
-                        <div class="caption">
-                            <h5>{{ $product['product_name'] }}</h5>
-                            <p>{{ $product['brand']['name'] }}</p>
-                            <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Tk.{{ $product['product_price'] }}</a></h4>
-                        </div>
-                    </div>
-                </li>
-            @endforeach
-            </ul>
-            <hr class="soft"/>
-        </div>
+        </div> -->
+
+        <!-- products block view -->
+        @include('front.products.ajaxProductView')
+
     </div>
     <a href="compare.html" class="btn btn-large pull-right">Compare Product</a>
     <div class="pagination">

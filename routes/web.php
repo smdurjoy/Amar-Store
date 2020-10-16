@@ -21,15 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Frontend Routes
-Route::namespace('Front')->group(function() {
-    // Homepage routes
-    Route::get('/', 'HomeController@index');
-
-    // Listing category route
-    Route::get('/{url}', 'ProductsController@listing');
-});
-
 // Admin routes
 Route::prefix('/admin')->namespace('Admin')->group(function() {
     Route::match(['get', 'post'],'/', 'AdminController@login');
@@ -73,7 +64,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         // Attributes
         Route::match(['get', 'post'], 'add-attributes/{id?}', 'ProductController@addAttributes');
         Route::post('update-attribute-status', 'ProductController@updateAttributeStatus');
-        Route::post('edit-attributes/{id?}', 'ProductController@editAttributes');        
+        Route::post('edit-attributes/{id?}', 'ProductController@editAttributes');
 
         // Images
         Route::match(['get', 'post'], 'add-images/{id}', 'ProductController@addImages');
@@ -87,4 +78,13 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::get('delete-banner/{id}', 'BannersController@deleteBanner');
         Route::get('delete-banner-image/{id}', 'BannersController@deleteImage');
     });
+});
+
+// Frontend Routes
+Route::namespace('Front')->group(function() {
+    // Homepage routes
+    Route::get('/', 'HomeController@index');
+
+    // Listing category route
+    Route::get('/{url}', 'ProductsController@listing');
 });
