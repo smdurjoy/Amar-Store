@@ -30,10 +30,10 @@
                                 </li>
                                 @endforeach
                             </ul>
-                        </div>  
+                        </div>
                     @endforeach
                 </div>
-                @if($featuredItemsCount > 4) 
+                @if($featuredItemsCount > 4)
                     <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
                     <a class="right carousel-control" href="#featured" data-slide="next">›</a>
                 @endif
@@ -42,7 +42,7 @@
     </div>
     <h4>Latest Products </h4>
     <ul class="thumbnails">
-    @foreach($latestProducts as $latestProduct) 
+    @foreach($latestProducts as $latestProduct)
         <li class="span3">
             <div class="thumbnail">
                 <a  href="product_details.html">
@@ -54,8 +54,8 @@
                     @endif
                 </a>
                 <div class="caption">
-                    <h5>{{ $latestProduct['product_name'] }}</h5> 
-                    <p>{{ $latestProduct['product_code'] }}</p>
+                    <h5>{{ $latestProduct['product_name'] }}</h5>
+                    <p>{{ $latestProduct['brand']['name'] }}</p>
                     <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Tk.{{ $latestProduct['product_price'] }}</a></h4>
                 </div>
             </div>

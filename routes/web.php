@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,11 +80,16 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
     });
 });
 
+
+
 // Frontend Routes
 Route::namespace('Front')->group(function() {
     // Homepage routes
     Route::get('/', 'HomeController@index');
 
-    // Listing category route
-    Route::get('/{url}', 'ProductsController@listing');
+    // Listing page route
+    $categoryUrls = Category::where('status', 1)->select('url')->get()->pluck('url')->toArray();
+    foreach ($categoryUrls as $url) {
+        Route::get('/'.$url, 'ProductsController@listing');
+    }
 });

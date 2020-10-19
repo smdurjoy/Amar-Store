@@ -7,15 +7,17 @@ use App\ProductFilter;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Pagination\Paginator;
 
 class ProductsController extends Controller
 {
-    function listing($url, Request $request) {
+    function listing(Request $request) {
+        Paginator::useBootstrap();
         if($request->ajax()) {
-            $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
             $data = $request->all();
-//            echo '<pre>'; print_r($data); die;
             $url = $data['url'];
+            $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
 
             if($categoryCount > 0) {
                 $categoryDetails = Category::categoryDetails($url);
@@ -48,7 +50,7 @@ class ProductsController extends Controller
                     $categoryProducts->whereIn('products.occasion', $data['occasion']);
                 }
 
-                    // If sort option is selected
+                // If sort option is selected
                 if(isset($data['sort']) && !empty($data['sort'])) {
                     if($data['sort'] == 'latest_products') {
                         $categoryProducts->orderBy('id', 'desc');
@@ -70,11 +72,12 @@ class ProductsController extends Controller
                     $categoryProducts->orderBy('id', 'desc');
                 }
 
-                $categoryProducts = $categoryProducts->paginate(30);
+                $categoryProducts = $categoryProducts->paginate(6);
 
                 return view('front.products.ajaxProductView')->with(compact('categoryDetails', 'categoryProducts', 'url'));
             }
         } else {
+            $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
 
             if($categoryCount > 0) {
@@ -107,7 +110,7 @@ class ProductsController extends Controller
                     $categoryProducts->orderBy('id', 'desc');
                 }
 
-                $categoryProducts = $categoryProducts->paginate(30);
+                $categoryProducts = $categoryProducts->paginate(6);
 
                 // Product filters
                 $fabricArray = ProductFilter::where('filter_name', 'fabric')->get();
