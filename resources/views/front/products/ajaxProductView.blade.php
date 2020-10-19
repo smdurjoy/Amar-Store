@@ -10,7 +10,7 @@
                     @else
                         <img class="listingPageProductImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}" alt="">
                     @endif
-                </a> 
+                </a>
                 <div class="caption">
                     <h5>{{ $product['product_name'] }}</h5>
                     <p>{{ $product['brand']['name'] }}</p>

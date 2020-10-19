@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductFilter;
 use App\Section;
 use App\ProductsAttribute;
 use App\ProductsImage;
@@ -149,7 +150,7 @@ class ProductController extends Controller
             $products->product_discount = $data['product_discount'];
             $products->product_weight = $data['product_weight'];
             $products->product_description = $data['product_description'];
-            $products->wash_care = $data['wash_care']; 
+            $products->wash_care = $data['wash_care'];
             $products->fabric = $data['fabric'];
             $products->pattern = $data['pattern'];
             $products->sleeve = $data['sleeve'];
@@ -166,12 +167,12 @@ class ProductController extends Controller
             return redirect('admin/products');
         }
 
-        //filter arrays
-        $fabricArray = array('Cotton', 'Polyester', 'Wool');
-        $sleeveArray = array('Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'SleeveLess');
-        $patternArray = array('Checked', 'Plain', 'Printed', 'Self', 'Solid');
-        $fitArray = array('Regular', 'Slim');
-        $occasionArray = array('Formal', 'Casual');
+        // Product filters
+        $fabricArray = ProductFilter::where('filter_name', 'fabric')->get();
+        $sleeveArray = ProductFilter::where('filter_name', 'sleeve')->get();
+        $patternArray = ProductFilter::where('filter_name', 'pattern')->get();
+        $fitArray = ProductFilter::where('filter_name', 'fit')->get();
+        $occasionArray = ProductFilter::where('filter_name', 'occasion')->get();
 
         //Section with categories and sub categories
         $categories = Section::with('categories')->get();
@@ -246,7 +247,7 @@ class ProductController extends Controller
                         Session::flash('errorMessage', $msg);
                         return redirect()->back();
                     }
-                    
+
                     // If size already exist of the same product id
                     $attrCountSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
                     if($attrCountSize > 0) {
@@ -267,7 +268,7 @@ class ProductController extends Controller
                     $msg = 'Attributes Added Successfully !';
                     Session::flash('successMessage', $msg);
                     return redirect()->back();
-                }  
+                }
             }
         }
         $productData = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_image')->with('attributes')->find($id);

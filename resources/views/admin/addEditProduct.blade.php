@@ -190,7 +190,7 @@
                                         <select name="fabric" class="form-control select2" style="width: 100%;" id="category_id">
                                             <option value="" selected>Select</option>
                                             @foreach($fabricArray as $fabric)
-                                                <option value="{{ $fabric }}" @if(!empty($productData['fabric']) && $productData['fabric'] == $fabric) selected @endif>{{ $fabric }}</option>
+                                                <option value="{{ $fabric['filter_value'] }}" @if(!empty($productData['fabric']) && $productData['fabric'] == $fabric['filter_value']) selected @endif>{{ $fabric['filter_value'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -202,7 +202,7 @@
                                         <select name="sleeve" class="form-control select2" style="width: 100%;" id="sleeve">
                                             <option value="" selected>Select</option>
                                             @foreach($sleeveArray as $sleeve)
-                                                <option value="{{ $sleeve }}" @if(!empty($productData['sleeve']) && $productData['sleeve'] == $sleeve) selected @endif>{{ $sleeve }}</option>
+                                                <option value="{{ $sleeve['filter_value'] }}" @if(!empty($productData['sleeve']) && $productData['sleeve'] == $sleeve['filter_value']) selected @endif>{{ $sleeve['filter_value'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -214,7 +214,7 @@
                                         <select name="pattern" class="form-control select2" style="width: 100%;" id="pattern">
                                             <option value="" selected>Select</option>
                                             @foreach($patternArray as $pattern)
-                                                <option value="{{ $pattern }}" @if(!empty($productData['pattern']) && $productData['pattern'] == $pattern) selected @endif>{{ $pattern }}</option>
+                                                <option value="{{ $pattern['filter_value'] }}" @if(!empty($productData['pattern']) && $productData['pattern'] == $pattern['filter_value']) selected @endif>{{ $pattern['filter_value'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -226,7 +226,7 @@
                                         <select name="fit" class="form-control select2" style="width: 100%;" id="fit">
                                             <option value="" selected>Select</option>
                                             @foreach($fitArray as $fit)
-                                                <option value="{{ $fit }}" @if(!empty($productData['fit']) && $productData['fit'] == $fit) selected @endif>{{ $fit }}</option>
+                                                <option value="{{ $fit['filter_value'] }}" @if(!empty($productData['fit']) && $productData['fit'] == $fit['filter_value']) selected @endif>{{ $fit['filter_value'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -238,7 +238,7 @@
                                         <select name="occasion" class="form-control select2" style="width: 100%;" id="occasion">
                                             <option value="" selected>Select</option>
                                             @foreach($occasionArray as $occasion)
-                                                <option value="{{ $occasion }}" @if(!empty($productData['occasion']) && $productData['occasion'] == $occasion) selected @endif>{{ $occasion }}</option>
+                                                <option value="{{ $occasion['filter_value'] }}" @if(!empty($productData['occasion']) && $productData['occasion'] == $occasion['filter_value']) selected @endif>{{ $occasion['filter_value'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
