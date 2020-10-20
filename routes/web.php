@@ -92,4 +92,7 @@ Route::namespace('Front')->group(function() {
     foreach ($categoryUrls as $url) {
         Route::get('/'.$url, 'ProductsController@listing');
     }
+
+    // Product Detail Routes
+    Route::get('/product/{id}/{name}', 'ProductsController@productDetail');
 });

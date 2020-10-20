@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\ProductFilter;
+use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
@@ -18,7 +19,6 @@ class ProductsController extends Controller
             $data = $request->all();
             $url = $data['url'];
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
-
             if($categoryCount > 0) {
                 $categoryDetails = Category::categoryDetails($url);
                 $categoryProducts = Product::with(['brand' => function($query) {
@@ -72,7 +72,7 @@ class ProductsController extends Controller
                     $categoryProducts->orderBy('id', 'desc');
                 }
 
-                $categoryProducts = $categoryProducts->paginate(6);
+                $categoryProducts = $categoryProducts->paginate(9);
 
                 return view('front.products.ajaxProductView')->with(compact('categoryDetails', 'categoryProducts', 'url'));
             }
@@ -110,7 +110,7 @@ class ProductsController extends Controller
                     $categoryProducts->orderBy('id', 'desc');
                 }
 
-                $categoryProducts = $categoryProducts->paginate(6);
+                $categoryProducts = $categoryProducts->paginate(9);
 
                 // Product filters
                 $fabricArray = ProductFilter::where('filter_name', 'fabric')->get();
@@ -125,5 +125,12 @@ class ProductsController extends Controller
                 abort(404);
             }
         }
+    }
+
+    function productDetail($id, $name) {
+        $productDetails = Product::with('category', 'brand', 'attributes', 'images')->find($id)->toArray();
+//        echo '<pre>'; print_r($productDetails); die;
+        $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock');
+        return view('front.products.productDetail   ')->with(compact('productDetails', 'totalStock'));
     }
 }
