@@ -84,7 +84,7 @@
                                                     <a title="Add Edit Attributes" href="{{ url('admin/add-attributes/'.$product->id) }}"><i class="fas fa-plus"></i></a>
                                                     <a title="Add Images" href="{{ url('admin/add-images/'.$product->id) }}"><i class="fas fa-image"></i></a>
                                                     <a title="Edit Product" href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
-                                                    <a title="Delete Product" class="confirmDelete" record="product" recordId="{{ $product->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                                    <a title="Delete Product" class="btn btn-danger confirmDelete deleteBtn" record="product" recordId="{{ $product->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

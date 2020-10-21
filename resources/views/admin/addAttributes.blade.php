@@ -54,7 +54,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">                 
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Product Name:</label> &nbsp;
                                         {{ $productData['product_name'] }}
@@ -73,9 +73,9 @@
                                     <div class="form-group">
                                         <label for="product_image">Product Image</label>
                                         @if(!empty($productData['product_image']))
-                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a class="confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}">Delete Photo</a>
-                                        @endif         
-                                    </div>  
+                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a class="btn btn-danger deleteBtn confirmDelete" title="Delete Photo" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}"><i class="fas fa-trash"></i></a>
+                                        @endif
+                                    </div>
                                     <!-- /.form-group -->
                                 </div>
                             </div>
@@ -114,25 +114,25 @@
                             <table id="productTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Size</th>
-                                    <th>SKU</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="text-bold">SL.</th>
+                                    <th class="text-bold">Size</th>
+                                    <th class="text-bold">SKU</th>
+                                    <th class="text-bold">Price</th>
+                                    <th class="text-bold">Stock</th>
+                                    <th class="text-bold">Status</th>
+                                    <th class="text-bold">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($productData['attributes'] as $attribute)
+                                @foreach($productData['attributes'] as $key => $attribute)
                                     <input class="form-control d-none" name="attrId[]" value="{{ $attribute['id'] }}"/>
                                     <tr>
-                                        <td>{{ $attribute['id'] }}</td>
+                                        <td>{{ $key+1 }}</td>
                                         <td>{{ $attribute['size'] }}</td>
                                         <td>{{ $attribute['sku'] }}</td>
                                         <td>
                                             <input class="form-control" type="text" name="price[]" id="size" placeholder="Size" value="{{ $attribute['price'] }}" required/>
-                                        </td>  
+                                        </td>
                                         <td>
                                             <input class="form-control" type="text" name="stock[]" id="stock" placeholder="Stock" value="{{ $attribute['stock'] }}" required/>
                                         </td>
@@ -143,8 +143,8 @@
                                                 <a class="updateStatus" record="attribute" href="javascript:void(0)" record_id="{{ $attribute['id'] }}"> <span id="attribute-{{ $attribute['id'] }}" class="badge badge-primary">Inactive</span> </a>
                                             @endif
                                         </td>
-                                        <td class="text-center">    
-                                            <a title="Delete attribute" class="confirmDelete" record="attribute" recordId="#" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                        <td class="text-center">
+                                            <a title="Delete attribute" class="btn btn-danger deleteBtn confirmDelete" record="attribute" recordId="{{ $attribute['id'] }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

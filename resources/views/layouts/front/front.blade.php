@@ -6,7 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 	<!-- Front style -->
 	<link id="callCss" rel="stylesheet" href="{{asset('css/frontCSS/front.min.css')}}" media="screen"/>
 	<link href="{{asset('css/frontCSS/base.css')}}" rel="stylesheet" media="screen"/>

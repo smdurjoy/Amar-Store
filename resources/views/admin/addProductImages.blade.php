@@ -54,7 +54,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">                 
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Product Name:</label> &nbsp;
                                         {{ $productData['product_name'] }}
@@ -73,10 +73,10 @@
                                     <div class="form-group">
                                         <label for="product_image">Product Main Image</label>
                                         @if(!empty($productData['product_image']))
-                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; 
-                                            <a class="confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}">Delete <i class="fas fa-trash"></i></a>
-                                        @endif         
-                                    </div>  
+                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp;
+                                            <a class="btn btn-danger deleteBtn confirmDelete" title="Delete Photo" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}"><i class="fas fa-trash"></i></a>
+                                        @endif
+                                    </div>
                                     <!-- /.form-group -->
                                 </div>
                                 <div class="col-md-6">
@@ -106,17 +106,17 @@
                             <table id="productTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Image</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="text-bold">SL.</th>
+                                    <th class="text-bold">Image</th>
+                                    <th class="text-bold">Status</th>
+                                    <th class="text-bold">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($productData['images'] as $image)
+                                @foreach($productData['images'] as $key => $image)
                                     <input class="form-control d-none" name="attrId[]" value="{{ $image['id'] }}"/>
                                     <tr>
-                                        <td>{{ $image['id'] }}</td>
+                                        <td>{{ $key+1 }}</td>
                                         <td>
                                             <img src="{{ asset('images/productImages/small/'.$image['image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">
                                         </td>
@@ -126,9 +126,9 @@
                                             @else
                                                 <a class="updateStatus" record="productImage" href="javascript:void(0)" record_id="{{ $image['id']  }}"> <span id="productImage-{{$image['id']}}" class="badge badge-primary">Inactive</span> </a>
                                             @endif
-                                        </td> 
+                                        </td>
                                         <td class="text-center">
-                                            <a title="Delete Product" class="confirmDelete" record="productImage" recordId="{{$image['id']}}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                            <a title="Delete Photo" class="btn btn-danger deleteBtn confirmDelete" record="productImage" recordId="{{$image['id']}}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

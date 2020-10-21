@@ -256,7 +256,7 @@ class ProductController extends Controller
                         return redirect()->back();
                     }
 
-                    $attributes =  new ProductsAttribute;
+                    $attributes = new ProductsAttribute;
                     $attributes->product_id = $id;
                     $attributes->sku = $value;
                     $attributes->size = $data['size'][$key];
@@ -264,12 +264,11 @@ class ProductController extends Controller
                     $attributes->stock = $data['stock'][$key];
                     $attributes->status = 1;
                     $attributes->save();
-
-                    $msg = 'Attributes Added Successfully !';
-                    Session::flash('successMessage', $msg);
-                    return redirect()->back();
                 }
             }
+            $msg = 'Attributes Added Successfully !';
+            Session::flash('successMessage', $msg);
+            return redirect()->back();
         }
         $productData = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_image')->with('attributes')->find($id);
         $productData = json_decode(json_encode($productData), true);
@@ -291,6 +290,13 @@ class ProductController extends Controller
             Session::flash('successMessage', $message);
             return redirect()->back();
         }
+    }
+
+    function deleteAttribute($id) {
+        ProductsAttribute::find($id)->delete();
+        $message = "Product Attribute Deleted Successfully!";
+        Session::flash('successMessage', $message);
+        return redirect()->back();
     }
 
     function updateAttributeStatus(Request $request) {

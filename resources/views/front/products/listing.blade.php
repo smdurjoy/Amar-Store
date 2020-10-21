@@ -11,7 +11,7 @@
     <p>
         {{ $categoryDetails['categoryDetails']['description'] }}
     </p>
-    <hr class="soft"/> 
+    <hr class="soft"/>
     <input type="hidden" id="url" value="{{ $url }}"/>
     <form class="form-horizontal span6" name="sortProducts" id="sortProducts">
         <div class="control-group">
@@ -26,53 +26,10 @@
             </select>
         </div>
     </form>
-    
-    <!-- <div id="myTab" class="pull-right">
-        <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
-        <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
-    </div> -->
+
     <br class="clr"/>
     <div class="tab-content" id="filter_products">
-        <!-- products list view -->
-        <!-- <div class="tab-pane" id="listView">
-            @foreach($categoryProducts as $product)
-                <div class="row">
-                    <div class="span2">
-                        <?php $productImagePath = 'images/productImages/small/'.$product['product_image'] ?>
-                        @if(!empty($product['product_image']) && file_exists($productImagePath))
-                            <img class="listingPageListViewImage" src="{{ asset($productImagePath) }}" alt="">
-                        @else
-                            <img class="listingPageListViewImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}" alt="">
-                        @endif
-                    </div>
-                    <div class="span4">
-                        <h3>{{ $product['product_name'] }}</h3>
-                        <hr class="soft"/>
-                        <h5>Brand: {{ $product['brand']['name'] }}</h5>
-                        <p>{{ $product['product_description'] }}</p>
-                        <a class="btn btn-small pull-right" href="product_details.html">View Details</a>
-                        <br class="clr"/>
-                    </div>
-                    <div class="span3 alignR">
-                        <form class="form-horizontal qtyFrm">
-                            <h3>Tk.{{ $product['product_price'] }}</h3>
-                            <label class="checkbox">
-                                <input type="checkbox">  Adds product to compare
-                            </label><br/>
-                            
-                            <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
-                            <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
-                            
-                        </form>
-                    </div>
-                </div>
-                <hr class="soft"/>
-            @endforeach
-        </div> -->
-
-        <!-- products block view -->
         @include('front.products.ajaxProductView')
-
     </div>
     <a href="compare.html" class="btn btn-large pull-right">Compare Product</a>
     <div class="pagination">

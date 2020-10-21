@@ -131,6 +131,16 @@ class ProductsController extends Controller
         $productDetails = Product::with('category', 'brand', 'attributes', 'images')->find($id)->toArray();
 //        echo '<pre>'; print_r($productDetails); die;
         $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock');
-        return view('front.products.productDetail   ')->with(compact('productDetails', 'totalStock'));
+        $relatedProducts = Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(3)->inRandomOrder()->get()->toArray();
+//        echo '<pre>'; print_r($relatedProducts); die;
+        return view('front.products.productDetail')->with(compact('productDetails', 'totalStock', 'relatedProducts'));
+    }
+
+    function getProductPrice(Request $request) {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $getProductPrice = ProductsAttribute::where(['product_id' => $data['id'], 'size' => $data['size']])->first();
+            return $getProductPrice->price;
+        }
     }
 }

@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $("#sort").on("change", function() {
         const sort = $(this).val();
         const url = $("#url").val();
@@ -114,4 +120,24 @@ $(document).ready(function() {
         })
         return filters;
     }
+
+    $('#getPrice').on('change', function () {
+        const id = $(this).data('id');
+        const size = $(this).val();
+        if(size == "") {
+            alert('Please Select Size');
+            return false;
+        }
+        $.ajax({
+            url: '/getProductPrice',
+            data: {id: id, size: size},
+            type: 'post',
+            success:function (response) {
+                $('.productPrice').html('Tk.'+response)
+            },
+            error:function () {
+                alert('Error')
+            }
+        })
+    });
 });

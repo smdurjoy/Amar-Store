@@ -3,7 +3,7 @@
     @foreach($categoryProducts as $product)
         <li class="span3">
             <div class="thumbnail">
-                <a href="product_details.html">
+                <a href="{{ url('product/'.$product['id'].'/'.$product['product_name']) }}">
                     <?php $productImagePath = 'images/productImages/small/'.$product['product_image'] ?>
                     @if(!empty($product['product_image']) && file_exists($productImagePath))
                         <img class="listingPageProductImage" src="{{ asset($productImagePath) }}" alt="">

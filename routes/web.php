@@ -65,6 +65,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::match(['get', 'post'], 'add-attributes/{id?}', 'ProductController@addAttributes');
         Route::post('update-attribute-status', 'ProductController@updateAttributeStatus');
         Route::post('edit-attributes/{id?}', 'ProductController@editAttributes');
+        Route::get('delete-attribute/{id}', 'ProductController@deleteAttribute');
 
         // Images
         Route::match(['get', 'post'], 'add-images/{id}', 'ProductController@addImages');
@@ -95,4 +96,5 @@ Route::namespace('Front')->group(function() {
 
     // Product Detail Routes
     Route::get('/product/{id}/{name}', 'ProductsController@productDetail');
+    Route::post('/getProductPrice', 'ProductsController@getProductPrice');
 });
