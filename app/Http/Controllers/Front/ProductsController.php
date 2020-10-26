@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Cart;
 use App\Http\Controllers\Controller;
 use App\ProductFilter;
 use App\ProductsAttribute;
@@ -10,6 +11,7 @@ use App\Category;
 use App\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Session;
 
 class ProductsController extends Controller
 {
@@ -128,7 +130,9 @@ class ProductsController extends Controller
     }
 
     function productDetail($id, $name) {
-        $productDetails = Product::with('category', 'brand', 'attributes', 'images')->find($id)->toArray();
+        $productDetails = Product::with(['category', 'brand', 'attributes' => function($query) {
+            $query->where('status', 1);
+        }, 'images'])->find($id)->toArray();
 //        echo '<pre>'; print_r($productDetails); die;
         $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock');
         $relatedProducts = Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(3)->inRandomOrder()->get()->toArray();
@@ -142,5 +146,43 @@ class ProductsController extends Controller
             $getProductPrice = ProductsAttribute::where(['product_id' => $data['id'], 'size' => $data['size']])->first();
             return $getProductPrice->price;
         }
+    }
+
+    function addToCart(Request $request) {
+        $data = $request->all();
+
+        // Check product stock is available or not
+        $getProductStock = ProductsAttribute::where(['product_id' => $data['product_id'], 'size' => $data['size']])->first();
+        if($getProductStock->stock < $data['quantity']) {
+            $msg = 'Required quantity is not available for this size.';
+            Session::flash('errorMessage', $msg);
+            return redirect()->back();
+        }
+
+        // Generate session id if not exists
+        $sessionId = Session::get('session_id');
+        if(empty($sessionId)) {
+            $sessionId = Session::getId();
+            Session::put('session_id', $sessionId);
+        }
+
+        // If product already exists in cart
+        $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size']])->count();
+        if($countProducts > 0) {
+            $msg = 'Product already exists in Cart !';
+            Session::flash('errorMessage', $msg);
+            return redirect()->back();
+        }
+
+        $cart = new Cart;
+        $cart->session_id = $sessionId;
+        $cart->product_id = $data['product_id'];
+        $cart->size = $data['size'];
+        $cart->quantity = $data['quantity'];
+        $cart->save();
+
+        $msg = 'Product has been added to the Cart.';
+        Session::flash('successMessage', $msg);
+        return redirect()->back();
     }
 }

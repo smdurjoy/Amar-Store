@@ -97,4 +97,7 @@ Route::namespace('Front')->group(function() {
     // Product Detail Routes
     Route::get('/product/{id}/{name}', 'ProductsController@productDetail');
     Route::post('/getProductPrice', 'ProductsController@getProductPrice');
+
+    // Add to cart routes
+    Route::post('add-to-cart', 'ProductsController@addToCart');
 });

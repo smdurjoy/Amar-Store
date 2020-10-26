@@ -35,21 +35,38 @@
                 </div>
             </div>
             <div class="span6">
+                @if(Session::has('successMessage'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('successMessage')  }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if(Session::has('errorMessage'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ Session::get('errorMessage')  }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <h3>{{ $productDetails['product_name'] }}</h3>
                 <small>- {{ $productDetails['brand']['name'] }}</small>
                 <hr class="soft"/>
                 <small>{{ $totalStock }} items in stock</small>
-                <form class="form-horizontal qtyFrm">
+                <form action="{{ url('add-to-cart') }}" method="post" class="form-horizontal qtyFrm">@csrf
                     <div class="control-group">
+                        <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
                         <h4 class="productPrice">Tk.{{ $productDetails['product_price'] }}</h4>
-                        <select class="span2 pull-left" id="getPrice" data-id="{{ $productDetails['id'] }}">
+                        <select name="size" class="span2 pull-left" id="getPrice" data-id="{{ $productDetails['id'] }}" required>
                             <option value="">Select Size</option>
                             @foreach($productDetails['attributes'] as $attribute)
                                 <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
                             @endforeach
                         </select>
-                        <input type="number" class="span1" placeholder="Qty."/>
-                        <button type="button" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                        <input name="quantity" type="number" class="span1" placeholder="Qty." required/>
+                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
                     </div>
                 </form>
 

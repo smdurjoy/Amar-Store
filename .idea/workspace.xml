@@ -34,19 +34,8 @@
   <component name="ChangeListManager">
     <list default="true" id="09ec50a8-96e8-47f5-ab67-28349cd9e8de" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/ProductsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/frontJS/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/frontJS/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/addAttributes.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/addAttributes.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/addEditProduct.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/addEditProduct.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/addProductImages.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/addProductImages.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/products/ajaxProductView.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/products/ajaxProductView.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/products/listing.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/products/listing.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front/products/productDetail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/products/productDetail.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/front/front.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/front/front.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -214,7 +203,9 @@
       <workItem from="1603112998135" duration="4011000" />
       <workItem from="1603169904961" duration="1665000" />
       <workItem from="1603195631940" duration="8166000" />
-      <workItem from="1603271196243" duration="8775000" />
+      <workItem from="1603271196243" duration="11061000" />
+      <workItem from="1603518912089" duration="14000" />
+      <workItem from="1603702940002" duration="3274000" />
     </task>
     <servers />
   </component>
@@ -242,17 +233,17 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1603101295658" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1602865377789">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1603518924851">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1602865377789" />
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1603518924851" />
     <state x="517" y="287" key="NewPhpFileDialog" timestamp="1603196320337">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1603196320337" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1603285172300">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1603710698811">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1603285172300" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1603710698811" />
   </component>
 </project>
