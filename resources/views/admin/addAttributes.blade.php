@@ -96,6 +96,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button class="btn btn-primary btn-sm" type="submit">Add Attributes</button>
+                            <a class="btn btn-dark btn-sm" href="{{ url('admin/products') }}">Go Back</a>
                         </div>
                     </div>
                     <!-- /.card -->

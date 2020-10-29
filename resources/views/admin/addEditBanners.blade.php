@@ -108,7 +108,8 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary btn-sm">
+                            <Button type="submit" class="btn btn-primary btn-sm">Submit</Button>
+                            <a href="{{ url('admin/banners') }}" class="btn btn-dark btn-sm">Go back</a>
                         </div>
                     </div>
                     <!-- /.card -->

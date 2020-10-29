@@ -27,5 +27,9 @@
 
 .deleteBtn {
     padding: 5px 10px !important;
+    font-size: 10px !important;
+}
+
+.deleteBtn > i{
     font-size: 12px !important;
 }

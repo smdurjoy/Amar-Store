@@ -49,7 +49,7 @@
 
             <form action="/admin" method="post">@csrf
                 <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email">
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -80,6 +80,21 @@
                     <!-- /.col -->
                 </div>
             </form>
+            <div class="row mt-3 text-center">
+                <table class="table table-bordered table-sm text-center table-hover">
+                    <tr>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                    </tr>
+                    <tr class="table-row" style="cursor: pointer;">
+                        <td class="email">admin@gmail.com</td>
+                        <td class="pass">admin96</td>
+                        <td>Admin</td>
+                    </tr>
+                </table>
+                <p style="font-size: 14px; color: #0069D9; text-align: center"><b>Note:</b> Role user will not be able to manage users.</p>
+            </div>
         </div>
         <!-- /.login-card-body -->
     </div>
@@ -92,6 +107,13 @@
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('js/adminJS/adminlte.min.js')}}"></script>
-
+<script>
+    $(document).on('click', '.table-row', function() {
+        const email = $(this).find(".email").text();     
+        $('#email').val(email)
+        const pass = $(this).find(".pass").text();     
+        $('#password').val(pass)
+    })
+</script>
 </body>
 </html>

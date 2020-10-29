@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Admin;
+use App\Section;
+use App\Category;
+use App\Brand;
+use App\Product;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
@@ -14,7 +18,11 @@ class AdminController extends Controller
 {
     function index() {
         Session::put('page', 'dashboard');
-        return view('admin.dashboard');
+        $sections = Section::count();
+        $categories = Category::count();
+        $brands = Brand::count();
+        $products = Product::count();
+        return view('admin.dashboard')->with(compact('sections', 'categories', 'brands', 'products'));
     }
 
     function login(Request $request) {

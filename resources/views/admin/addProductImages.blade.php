@@ -88,6 +88,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button class="btn btn-primary btn-sm" type="submit">Add images</button>
+                            <a href="{{ url('admin/products') }}" class="btn btn-dark btn-sm">Go back</a>
                         </div>
                     </div>
                     <!-- /.card -->

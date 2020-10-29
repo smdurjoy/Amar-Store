@@ -1,10 +1,19 @@
 <?php
 use App\Section;
+use App\Cart;
+use Illuminate\Support\Facades\Auth;
+
 $sections = Section::section();
+
+if(Auth::check()) {
+    $countCarts = Cart::where('user_id', Auth::user()->id)->count();
+} else {
+    $countCarts = Cart::where('session_id', \Illuminate\Support\Facades\Session::get('session_id'))->count();
+}
 ?>
 
 <div id="sidebar" class="span3">
-    <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="{{asset('images/frontImages/ico-cart.png')}}" alt="cart">3 Items in your cart</a></div>
+    <div class="well well-small"><a id="myCart" href="{{ url('cart') }}"><img src="{{asset('images/frontImages/ico-cart.png')}}" alt="cart">{{ $countCarts }} Items in your cart</a></div>
     <ul id="sideManu" class="nav nav-tabs nav-stacked">
     @foreach($sections as $section)
         @if(count($section['categories']) > 0)

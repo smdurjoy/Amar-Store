@@ -69,8 +69,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a title="Edit banner" href="{{ url('admin/add-edit-banner/'.$banner['id']) }}"><i class="fas fa-edit"></i></a>
-                                                <a title="Delete Brand" class="confirmDelete" record="banner" recordId="{{ $banner['id'] }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                                <a class="btn btn-primary deleteBtn" title="Edit banner" href="{{ url('admin/add-edit-banner/'.$banner['id']) }}"><i class="fas fa-edit"></i></a>
+                                                <a title="Delete Brand" class="btn btn-danger deleteBtn confirmDelete" record="banner" recordId="{{ $banner['id'] }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

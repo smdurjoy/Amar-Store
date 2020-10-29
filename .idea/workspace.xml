@@ -33,9 +33,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09ec50a8-96e8-47f5-ab67-28349cd9e8de" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/front/products/cart.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/ProductsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/products/productDetail.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/products/productDetail.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/front/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/front/header.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -205,7 +210,10 @@
       <workItem from="1603195631940" duration="8166000" />
       <workItem from="1603271196243" duration="11061000" />
       <workItem from="1603518912089" duration="14000" />
-      <workItem from="1603702940002" duration="3274000" />
+      <workItem from="1603702940002" duration="4434000" />
+      <workItem from="1603725457649" duration="2543000" />
+      <workItem from="1603801411788" duration="5000" />
+      <workItem from="1603859838724" duration="4988000" />
     </task>
     <servers />
   </component>
@@ -237,13 +245,13 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1603518924851" />
-    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1603196320337">
+    <state x="517" y="287" key="NewPhpFileDialog" timestamp="1603726553187">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1603196320337" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1603710698811">
+    <state x="517" y="287" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1603726553187" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1603727074501">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1603710698811" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1603727074501" />
   </component>
 </project>

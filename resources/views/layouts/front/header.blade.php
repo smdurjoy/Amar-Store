@@ -1,6 +1,15 @@
-<?php 
+<?php
 use App\Section;
+use App\Cart;
+use Illuminate\Support\Facades\Auth;
+
 $sections = Section::section();
+if(Auth::check()) {
+    $countCarts = Cart::where('user_id', Auth::user()->id)->count();
+} else {
+    $countCarts = Cart::where('session_id', \Illuminate\Support\Facades\Session::get('session_id'))->count();
+}
+
 ?>
 
 <div id="header">
@@ -9,7 +18,7 @@ $sections = Section::section();
 			<div class="span6">Welcome!<strong> User</strong></div>
 			<div class="span6">
 				<div class="pull-right">
-					<a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 3 ] Items in your cart </span> </a>
+					<a href="{{ url('cart') }}"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ {{ $countCarts }} ] Items in your cart </span> </a>
 				</div>
 			</div>
 		</div>
@@ -25,8 +34,8 @@ $sections = Section::section();
 		        </a>
 		        <a class="brand" href="{{url('/')}}">Amar Store</a>
 		        <div class="nav-collapse">
-		          <ul class="nav"> 
-                    <li class="active"><a href="#">Home</a></li>
+		          <ul class="nav">
+                    <li class="@if(Request::is('/')) active @endif"><a href="{{ url('/') }}">Home</a></li>
 
                     @foreach($sections as $section)
                         @if(count($section['categories']) > 0)

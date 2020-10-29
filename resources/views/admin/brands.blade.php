@@ -62,8 +62,8 @@
                                                 </td>
                                                 <td class="text-center">
                                                 <div class="brandActions">
-                                                    <a title="Edit Brand" href="{{ url('admin/add-edit-brand/'.$brand->id) }}"><i class="fas fa-edit"></i></a>
-                                                    <a title="Delete Brand" class="confirmDelete" record="brand" recordId="{{ $brand->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                                    <a class="btn btn-primary deleteBtn" title="Edit Brand" href="{{ url('admin/add-edit-brand/'.$brand->id) }}"><i class="fas fa-edit"></i></a>
+                                                    <a title="Delete Brand" class="btn btn-danger deleteBtn confirmDelete" record="brand" recordId="{{ $brand->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                                 </div>
                                             </td>
                                             </tr>

@@ -55,9 +55,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($products as $product)
+                                    @foreach($products as $key => $product)
                                         <tr>
-                                            <td>{{ $product->id }}</td>
+                                            <td>{{ $key+1 }}</td>
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ $product->product_code }}</td>
                                             <td>{{ $product->product_color }}</td>
@@ -81,9 +81,9 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="productActions">
-                                                    <a title="Add Edit Attributes" href="{{ url('admin/add-attributes/'.$product->id) }}"><i class="fas fa-plus"></i></a>
-                                                    <a title="Add Images" href="{{ url('admin/add-images/'.$product->id) }}"><i class="fas fa-image"></i></a>
-                                                    <a title="Edit Product" href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
+                                                    <a class="btn btn-dark btn-sm deleteBtn" title="Add Edit Attributes" href="{{ url('admin/add-attributes/'.$product->id) }}"><i class="fas fa-plus"></i></a>
+                                                    <a class="btn btn-info btn-sm deleteBtn" title="Add Images" href="{{ url('admin/add-images/'.$product->id) }}"><i class="fas fa-image"></i></a>
+                                                    <a class="btn btn-primary btn-sm deleteBtn" title="Edit Product" href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
                                                     <a title="Delete Product" class="btn btn-danger confirmDelete deleteBtn" record="product" recordId="{{ $product->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                                 </div>
                                             </td>

@@ -115,7 +115,7 @@
                                     </div>
                                     <div>
                                         @if(!empty($productData['product_image']))
-                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a class="btn btn-danger deleteBtn confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}">Delete Photo</a>
+                                            <img src="{{ asset('images/productImages/small/'.$productData['product_image']) }}" alt="image!" style="margin-top: 5px; height: 80px; width: 80px; margin-bottom: 5px">&nbsp; <a class="btn btn-danger deleteBtn confirmDelete" href="javascript:void(0)" record="product-image" recordId="{{ $productData['id'] }}" title="Delete Image"><i class="fas fa-trash"></i></a>
                                         @endif
                                     </div>
                                     <!-- /.form-group -->
@@ -159,7 +159,7 @@
                                     @if(!empty($productData['product_video']))
                                         <a href="{{ url('videos/productVideos/'.$productData['product_video']) }}" download>Download Video</a>
                                         ||
-                                        <a class="btn btn-danger deleteBtn confirmDelete" href="javascript:void(0)" record="product-video" recordId="{{ $productData['id'] }}">Delete Video</a>
+                                        <a class="btn btn-danger deleteBtn confirmDelete" href="javascript:void(0)" record="product-video" recordId="{{ $productData['id'] }}" title="Delete Video"><i class="fas fa-trash"></i></a>
                                     @endif
                                     <!-- /.form-group -->
                                 </div>
@@ -269,6 +269,7 @@
 
                         <div class="card-footer">
                             <input type="submit" class="btn btn-primary btn-sm">
+                            <a href="{{ url('admin/products') }}" class="btn btn-dark btn-sm">Go back</a>
                         </div>
                     </div>
                     <!-- /.card -->

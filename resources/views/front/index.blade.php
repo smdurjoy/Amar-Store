@@ -14,7 +14,7 @@
                                 <li class="span3">
                                     <div class="thumbnail">
                                         <i class="tag"></i>
-                                        <a href="product_details.html">
+                                        <a href="{{ url('product/'.$item['id'].'/'.$item['product_name']) }}">
                                             <?php $productImagePath = 'images/productImages/small/'.$item['product_image'] ?>
                                             @if(!empty($item['product_image']) && file_exists($productImagePath))
                                                 <img src="{{ asset($productImagePath) }}" alt="">
@@ -24,7 +24,7 @@
                                         </a>
                                         <div class="caption">
                                             <h5>{{$item['product_name']}}</h5>
-                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">Tk.{{$item['product_price']}}</span></h4>
+                                            <h4><a class="btn" href="{{ url('product/'.$item['id'].'/'.$item['product_name']) }}">VIEW</a> <span class="pull-right">Tk.{{$item['product_price']}}</span></h4>
                                         </div>
                                     </div>
                                 </li>
@@ -45,7 +45,7 @@
     @foreach($latestProducts as $latestProduct)
         <li class="span3">
             <div class="thumbnail">
-                <a  href="product_details.html">
+                <a href="{{ url('product/'.$latestProduct['id'].'/'.$latestProduct['product_name']) }}">
                     <?php $productImagePath = 'images/productImages/small/'.$latestProduct['product_image'] ?>
                     @if(!empty($latestProduct['product_image']) && file_exists($productImagePath))
                         <img class="featuredProductImage" src="{{ asset('images/productImages/small/'.$latestProduct['product_image']) }}" alt="">
@@ -56,7 +56,7 @@
                 <div class="caption">
                     <h5>{{ $latestProduct['product_name'] }}</h5>
                     <p>{{ $latestProduct['brand']['name'] }}</p>
-                    <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Tk.{{ $latestProduct['product_price'] }}</a></h4>
+                    <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="{{ url('product/'.$latestProduct['id'].'/'.$latestProduct['product_name']) }}">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Tk.{{ $latestProduct['product_price'] }}</a></h4>
                 </div>
             </div>
         </li>

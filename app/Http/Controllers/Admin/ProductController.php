@@ -18,7 +18,7 @@ class ProductController extends Controller
 {
     function index() {
         Session::put('page', 'products');
-        $products = Product::with(['category', 'brand', 'section'])->get();
+        $products = Product::with(['category', 'brand', 'section'])->orderBy('id', 'desc')->get();
         // $products = json_decode(json_encode($products), true);
         // echo "<pre>"; print_r($products); die();
         return view('admin.products')->with(compact('products'));
