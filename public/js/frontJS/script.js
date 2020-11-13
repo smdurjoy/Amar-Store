@@ -133,7 +133,11 @@ $(document).ready(function() {
             data: {id: id, size: size},
             type: 'post',
             success:function (response) {
-                $('.productPrice').html('Tk.'+response)
+                if(response['discounted_price'] > 0) {
+                    $('.productPrice').html('Tk.<del>'+response['product_price']+'</del> '+response['discounted_price'])
+                }else {
+                    $('.productPrice').html('Tk.'+response['product_price'])
+                }
             },
             error:function () {
                 alert('Error')

@@ -32,4 +32,8 @@ class Cart extends Model
         $attrPrice = ProductsAttribute::select('price')->where(['product_id' => $productId, 'size' => $size])->first();
         return $attrPrice->price;
     }
+
+    public function getDiscountPrice($productId) {
+        $productDiscount = Product::where('id', $productId)->first();
+    }
 }

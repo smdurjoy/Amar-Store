@@ -1,3 +1,7 @@
+<?php
+use App\Product;
+?>
+
 @extends('layouts.front.front')
 
 @section('content')
@@ -58,7 +62,14 @@
                 <form action="{{ url('add-to-cart') }}" method="post" class="form-horizontal qtyFrm">@csrf
                     <div class="control-group">
                         <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
-                        <h4 class="productPrice">Tk.{{ $productDetails['product_price'] }}</h4>
+                        <?php $discountPrice = Product::getDiscountedPrice($productDetails['id']);?>
+                        <h4 class="productPrice">
+                        @if($discountPrice > 0)
+                            Tk.<del>{{ $productDetails['product_price'] }}</del> {{ $discountPrice }}
+                        @else
+                            Tk.{{ $productDetails['product_price'] }}
+                        @endif
+                        </h4>
                         <select name="size" class="span2 pull-left" id="getPrice" data-id="{{ $productDetails['id'] }}" required>
                             <option value="">Select Size</option>
                             @foreach($productDetails['attributes'] as $attribute)
