@@ -1,5 +1,6 @@
 <?php 
     use App\Cart; 
+    use App\Product; 
     use Illuminate\Support\Facades\Auth;
 
     if(Auth::check()) {
@@ -49,7 +50,22 @@
                 </td>
             </tr>
         </table>
-
+        @if(Session::has('successMessage'))
+            <div class="alert alert-success" role="alert">
+                {{ Session::get('successMessage')  }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if(Session::has('errorMessage'))
+            <div class="alert alert-danger" role="alert">
+                {{ Session::get('errorMessage')  }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -65,7 +81,7 @@
             <tbody>
             <?php $totalPrice = 0;?>
             @foreach($userCartItems as $item)
-            <?php $attrPrice = Cart::getAttrPrice($item['product_id'], $item['size']);?>
+            <?php $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);?>
                 <tr>
                     <td> <img width="60" src="{{ asset('images/productImages/small/'.$item['product']['product_image']) }}" alt=""/></td>
                     <td>{{ $item['product']['product_name'] }}<br/>Color : {{ $item['product']['product_color'] }}</td>
@@ -73,11 +89,11 @@
                     <td>
                         <div class="input-append"><input class="span1" style="max-width:34px" value="{{ $item['quantity'] }}" id="appendedInputButtons" size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>	</div>
                     </td>
-                    <td>Tk.{{ $attrPrice }}</td>
-                    <td>Tk.0.00</td>
-                    <td>Tk.{{ $attrPrice * $item['quantity'] }}</td>
+                    <td>Tk.{{ $attrPrice['product_price'] }}</td>
+                    <td>Tk.{{ $attrPrice['discount'] }}</td>
+                    <td>Tk.{{ $attrPrice['final_price'] * $item['quantity'] }}</td>
                 </tr>
-                <?php $totalPrice += ($attrPrice * $item['quantity'])?>
+                <?php $totalPrice += ($attrPrice['final_price'] * $item['quantity'])?>
             @endforeach
 
             <tr>
@@ -85,7 +101,7 @@
                 <td> Tk.{{ $totalPrice }}</td>
             </tr>
             <tr>
-                <td colspan="6" style="text-align:right">Total Discount: </td>
+                <td colspan="6" style="text-align:right">Voucher Discount: </td>
                 <td> Tk.0.00</td>
             </tr>
             <tr>

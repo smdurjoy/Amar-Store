@@ -1,3 +1,7 @@
+<?php
+use App\Product;
+?>
+
 @extends('layouts.front.front')
 
 @section('content')
@@ -24,7 +28,14 @@
                                         </a>
                                         <div class="caption">
                                             <h5>{{$item['product_name']}}</h5>
-                                            <h4><a class="btn" href="{{ url('product/'.$item['id'].'/'.$item['product_name']) }}">VIEW</a> <span class="pull-right">Tk.{{$item['product_price']}}</span></h4>
+                                            <h4><a class="btn" href="{{ url('product/'.$item['id'].'/'.$item['product_name']) }}">VIEW</a> 
+                                            <?php $discountPrice = Product::getDiscountedPrice($item['id']);?>
+                                            @if($discountPrice > 0)
+                                                <span class="pull-right">Tk.<del>{{ $item['product_price'] }}</del> {{ $discountPrice }}</span>
+                                            @else
+                                                <span class="pull-right">Tk.{{$item['product_price']}}</span>
+                                            @endif
+                                            </h4>
                                         </div>
                                     </div>
                                 </li>
@@ -56,7 +67,14 @@
                 <div class="caption">
                     <h5>{{ $latestProduct['product_name'] }}</h5>
                     <p>{{ $latestProduct['brand']['name'] }}</p>
-                    <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="{{ url('product/'.$latestProduct['id'].'/'.$latestProduct['product_name']) }}">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Tk.{{ $latestProduct['product_price'] }}</a></h4>
+                    <?php $discountPrice = Product::getDiscountedPrice($latestProduct['id']);?>
+                    <h4 style="text-align:center"><a class="btn" href="{{ url('product/'.$latestProduct['id'].'/'.$latestProduct['product_name']) }}">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
+                        @if($discountPrice > 0)
+                            <span class="pull-right">Tk.<del>{{ $latestProduct['product_price'] }}</del> <span style="color: yellow;">{{ $discountPrice }}</span></span>
+                        @else
+                            Tk.{{ $latestProduct['product_price'] }}
+                        @endif
+                    </a></h4>
                 </div>
             </div>
         </li>

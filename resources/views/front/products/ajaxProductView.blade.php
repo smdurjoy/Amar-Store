@@ -18,9 +18,9 @@ use App\Product;
                     <h5>{{ $product['product_name'] }}</h5>
                     <p>{{ $product['brand']['name'] }}</p>
                     <?php $discountPrice = Product::getDiscountedPrice($product['id']);?>
-                    <h4 style="text-align:center"><a class="btn" href="{ url('product/'.$product['id'].'/'.$product['product_name']) }}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
+                    <h4 style="text-align:center"><a class="btn" href="{{ url('product/'.$product['id'].'/'.$product['product_name']) }}">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
                     @if($discountPrice > 0)
-                        Tk.<del>{{ $product['product_price'] }}</del> {{ $discountPrice }}
+                        Tk.<del>{{ $product['product_price'] }}</del> <span style="color: yellow;">{{ $discountPrice }}</span>
                     @else
                         Tk.{{ $product['product_price'] }}
                     @endif

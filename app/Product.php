@@ -53,13 +53,16 @@ class Product extends Model
 
         if($proDetails['product_discount'] > 0) {
             // if product discount is added from admin panel
-            $discounted_price = $proAttrPrice['price'] - ($proAttrPrice['price'] * $proDetails['product_discount'] / 100);
+            $final_price = $proAttrPrice['price'] - ($proAttrPrice['price'] * $proDetails['product_discount'] / 100);
+            $discount = $proAttrPrice['price'] - $final_price;
         } else if($catDetails['category_discount'] > 0) {
             // if product discount is not added and category discount is added from admin panel
-            $discounted_price = $proAttrPrice['price'] - ($proAttrPrice['price'] * $catDetails['category_discount'] / 100);
+            $final_price = $proAttrPrice['price'] - ($proAttrPrice['price'] * $catDetails['category_discount'] / 100);
+            $discount = $proAttrPrice['price'] - $final_price;
         } else {
-            $discounted_price = 0;
+            $final_price = $proAttrPrice['price'];
+            $discount = 0;
         }
-        return array('product_price' => $proAttrPrice['price'], 'discounted_price' => round($discounted_price));
+        return array('product_price' => $proAttrPrice['price'], 'final_price' => round($final_price), 'discount' => $discount);
     }
 }

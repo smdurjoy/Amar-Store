@@ -133,8 +133,8 @@ $(document).ready(function() {
             data: {id: id, size: size},
             type: 'post',
             success:function (response) {
-                if(response['discounted_price'] > 0) {
-                    $('.productPrice').html('Tk.<del>'+response['product_price']+'</del> '+response['discounted_price'])
+                if(response['discount'] > 0) {
+                    $('.productPrice').html('Tk.<del>'+response['product_price']+'</del> '+response['final_price'])
                 }else {
                     $('.productPrice').html('Tk.'+response['product_price'])
                 }
