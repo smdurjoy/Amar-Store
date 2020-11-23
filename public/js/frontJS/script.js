@@ -133,6 +133,7 @@ $(document).ready(function() {
             data: {id: id, size: size},
             type: 'post',
             success:function (response) {
+                console.log(response)
                 if(response['discount'] > 0) {
                     $('.productPrice').html('Tk.<del>'+response['product_price']+'</del> '+response['final_price'])
                 }else {
@@ -144,4 +145,54 @@ $(document).ready(function() {
             }
         })
     });
+
+    $(document).on('click', '.cartItemUpdate', function() {
+        if($(this).hasClass('qtyMinus')) {
+            let quantity = $(this).prev().val();
+            if(quantity <= 1) {
+                alert('Item quantity must be 1 or greater !');
+                return false;
+            }else {
+                new_qty = parseInt(quantity) - 1;
+            }
+        }
+        if($(this).hasClass('qtyPlus')) {
+            let quantity = $(this).prev().prev().val();
+            new_qty = parseInt(quantity) + 1;
+        }
+        const cartId = $(this).data('id');
+        $.ajax({
+            data: {'qty': new_qty, 'cartId': cartId},
+            url: '/update-cart-qty',
+            type: 'post',
+            success:function(response) {
+                if(response.status == false) {
+                    alert('Product stock is not available !')
+                } else {
+                    $('#appendCartItems').html(response.view);
+                }
+            },
+            error:function() {
+                alert('error')
+            }
+        })
+    });
+
+    $(document).on('click', '.cartItemDelete', function() {
+        const id = $(this).data('id');
+        const result = confirm('Are you sure you want to remove this item ?')
+        if(result) {
+            $.ajax({
+                data: {id: id},
+                url: '/delete-cart-item',
+                type: 'post',
+                success:function(response) {
+                    $('#appendCartItems').html(response.view);
+                },
+                error:function() {
+                    alert('error')
+                }
+            })
+        }
+    })
 });

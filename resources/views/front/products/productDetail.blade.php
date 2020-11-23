@@ -14,7 +14,7 @@ use App\Product;
         <div class="row">
             <div id="gallery" class="span3">
                 <a href="{{ asset('images/productImages/medium/'.$productDetails['product_image']) }}" title="Blue Casual T-Shirt">
-                    <img src="{{ asset('images/productImages/large/'.$productDetails['product_image']) }}" style="width:100%" alt="Blue Casual T-Shirt"/>
+                    <img src="{{ asset('images/productImages/large/'.$productDetails['product_image']) }}" style="width:100%" alt="image!"/>
                 </a>
                 <div id="differentview" class="moreOptopm carousel slide">
                     <div class="carousel-inner">
@@ -73,7 +73,7 @@ use App\Product;
                         <select name="size" class="span2 pull-left" id="getPrice" data-id="{{ $productDetails['id'] }}" required>
                             <option value="">Select Size</option>
                             @foreach($productDetails['attributes'] as $attribute)
-                                <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                                <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>  
                             @endforeach
                         </select>
                         <input name="quantity" type="number" class="span1" placeholder="Qty." required/>

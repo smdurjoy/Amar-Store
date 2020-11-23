@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 
 class ProductsController extends Controller
 {
@@ -198,5 +199,43 @@ class ProductsController extends Controller
         $userCartItems = Cart::userCartItems();
 //        echo '<pre>'; print_r($userCartItems); die;
         return view('front.products.cart')->with(compact('userCartItems'));
+    }
+
+    function updateCartItemQty(Request $request) {
+        if($request->ajax()) {
+            $data = $request->all();
+
+            // get cart details 
+            $cartDetails = Cart::find($data['cartId']);
+
+            // check available product stock
+            $availableStock = ProductsAttribute::select('stock')->where(['product_id' => $cartDetails['product_id'], 'size' => $cartDetails['size']])->first()->toArray();
+
+            if($data['qty'] > $availableStock['stock']) {
+                $userCartItems = Cart::userCartItems();
+                return response()->json([
+                    'status' => false,
+                    'view' => (String)View('front.products.cartItems')->with(compact('userCartItems'))
+                ]);
+            }
+
+            Cart::where('id', $data['cartId'])->update(['quantity' => $data['qty']]);
+            $userCartItems = Cart::userCartItems();
+            return response()->json([
+                'status' => true,
+                'view' => (String)View('front.products.cartItems')->with(compact('userCartItems'))
+            ]);
+        }
+    }
+
+    function deleteCartItem(Request $request) {
+        if($request->ajax()) {
+            $data = $request->all();
+            Cart::where('id',$data['id'])->delete();
+            $userCartItems = Cart::userCartItems();
+            return response()->json([
+                'view' => (String)View('front.products.cartItems')->with(compact('userCartItems'))
+            ]);
+        }
     }
 }

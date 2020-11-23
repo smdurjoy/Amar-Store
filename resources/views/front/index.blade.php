@@ -31,7 +31,7 @@ use App\Product;
                                             <h4><a class="btn" href="{{ url('product/'.$item['id'].'/'.$item['product_name']) }}">VIEW</a> 
                                             <?php $discountPrice = Product::getDiscountedPrice($item['id']);?>
                                             @if($discountPrice > 0)
-                                                <span class="pull-right">Tk.<del>{{ $item['product_price'] }}</del> {{ $discountPrice }}</span>
+                                                <span class="pull-right">Tk.<del>{{ $item['product_price'] }}</del> <span style="color: #0086D8">{{ $discountPrice }}<span></span>
                                             @else
                                                 <span class="pull-right">Tk.{{$item['product_price']}}</span>
                                             @endif
