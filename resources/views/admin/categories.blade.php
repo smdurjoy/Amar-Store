@@ -42,24 +42,24 @@
                                 <table id="categoryTable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Category</th>
-                                        <th>Parent Category</th>
-                                        <th>Section</th>
-                                        <th>URL</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th class="text-bold">SL</th>
+                                        <th class="text-bold">Category</th>
+                                        <th class="text-bold">Parent Category</th>
+                                        <th class="text-bold">Section</th>
+                                        <th class="text-bold">URL</th>
+                                        <th class="text-bold">Status</th>
+                                        <th class="text-bold">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($categories as $category)
+                                    @foreach($categories as $key => $category)
                                         @if(!isset($category->parentCategory->category_name))
                                             <?php $parent_category = "Root"; ?>
                                         @else
                                             <?php $parent_category = $category->parentCategory->category_name; ?>
                                         @endif
                                         <tr>
-                                            <td>{{ $category->id }}</td>
+                                            <td>{{ $key+1 }}</td>
                                             <td>{{ $category->category_name }}</td>
                                             <td>{{ $parent_category }}</td>
                                             <td>{{ $category->section->name }}</td>

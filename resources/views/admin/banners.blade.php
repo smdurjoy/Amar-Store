@@ -42,19 +42,19 @@
                                 <table id="bannerTable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Image</th>
-                                        <th>Title</th>
-                                        <th>Link</th>
-                                        <th>ALT</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th class="text-bold">SL</th>
+                                        <th class="text-bold">Image</th>
+                                        <th class="text-bold">Title</th>
+                                        <th class="text-bold">Link</th>
+                                        <th class="text-bold">ALT</th>
+                                        <th class="text-bold">Status</th>
+                                        <th class="text-bold">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($banners as $banner)
+                                    @foreach($banners as $key => $banner)
                                         <tr>
-                                            <td>{{ $banner['id'] }}</td>
+                                            <td>{{ $key+1 }}</td>
                                             <td>
                                                 <img class="adminBannerImage" src="{{ asset('images/bannerImages/'.$banner['image']) }}"/>
                                             </td>

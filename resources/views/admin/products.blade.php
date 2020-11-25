@@ -42,16 +42,16 @@
                                 <table id="productTable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Product Name</th>
-                                        <th>Product Code</th>
-                                        <th>Product Colour</th>
-                                        <th>Product Image</th>
-                                        <th>Brand</th>
-                                        <th>Category</th>
-                                        <th>Section</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th class="text-bold">SL</th>
+                                        <th class="text-bold">Product Name</th>
+                                        <th class="text-bold">Product Code</th>
+                                        <th class="text-bold">Product Colour</th>
+                                        <th class="text-bold">Product Image</th>
+                                        <th class="text-bold">Brand</th>
+                                        <th class="text-bold">Category</th>
+                                        <th class="text-bold">Section</th>
+                                        <th class="text-bold">Status</th>
+                                        <th class="text-bold">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>

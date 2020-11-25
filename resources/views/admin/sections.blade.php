@@ -33,15 +33,15 @@
                                     <table id="sectionTable" class="table table-bordered table-striped">
                                         <thead>
                                         <tr>
-                                            <th>Id</th>
-                                            <th>Name</th>
-                                            <th>Status</th>
+                                            <th class="text-bold">SL</th>
+                                            <th class="text-bold">Name</th>
+                                            <th class="text-bold">Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($sections as $section)
+                                        @foreach($sections as $key => $section)
                                             <tr>
-                                                <td>{{ $section->id  }}</td>
+                                                <td>{{ $key+1 }}</td>
                                                 <td>{{ $section->name  }}</td>
                                                 <td>
                                                     @if($section->status == 1)
