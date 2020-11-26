@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -108,4 +108,10 @@ Route::namespace('Front')->group(function() {
     Route::post('delete-cart-item', 'ProductsController@deleteCartItem');
     // Login/Register Page
     Route::get('/login-register', 'UserController@loginRegister');
+    // User login
+    Route::post('/login', 'UserController@userLogin');
+    // User Register
+    Route::post('/register', 'UserController@userRegister');
+    // User Logout
+    Route::get('/logout', 'UserController@userLogout');
 });

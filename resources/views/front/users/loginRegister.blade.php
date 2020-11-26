@@ -10,31 +10,39 @@
 	
 	<div class="row">
 		<div class="span4">
+            @if(Session::has('errorMessage'))
+                <div class="alert alert-danger" role="alert">
+                    {{ Session::get('errorMessage')  }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 			<div class="well">
                 <h5>CREATE YOUR ACCOUNT</h5>
-                <form action="register.html">
+                <form action="{{ url('/register') }}" method="post">@csrf
                     <div class="control-group">
                         <label class="control-label" for="name">Name</label>
                         <div class="controls">
-                            <input class="span3" type="text" id="name" placeholder="Name">
+                            <input class="span3" type="text" id="name" name="name" placeholder="Name">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="mobile">Mobile</label>
                         <div class="controls">
-                            <input class="span3" type="text" id="mobile" placeholder="Mobile">
+                            <input class="span3" type="text" id="mobile" name="mobile" placeholder="Mobile">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="email">Email</label>
                         <div class="controls">
-                            <input class="span3" type="text" id="email" placeholder="Email">
+                            <input class="span3" type="text" id="email" name="email" placeholder="Email">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="password">Password</label>
                         <div class="controls">
-                            <input class="span3" type="password" id="password" placeholder="Password">
+                            <input class="span3" type="password" id="password" name="password" placeholder="Password">
                         </div>
                     </div>
                     <div class="controls">

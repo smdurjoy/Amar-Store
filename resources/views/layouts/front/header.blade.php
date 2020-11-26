@@ -62,7 +62,12 @@ if(Auth::check()) {
 		          <ul class="nav pull-right">
 		            <li><a href="#">Contact</a></li>
 		            <li class="divider-vertical"></li>
-		            <li><a href="#">Login</a></li>
+					@if(Auth::check())
+						<li><a href="{{ url('account') }}">My Account</a></li>
+						<li><a href="{{ url('logout') }}">Logout</a></li>
+					@else
+						<li><a href="{{ url('login-register') }}">Login / Register</a></li>
+					@endif
 		          </ul>
 		        </div><!-- /.nav-collapse -->
 		      </div>
