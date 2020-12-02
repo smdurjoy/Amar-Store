@@ -112,6 +112,7 @@ Route::namespace('Front')->group(function() {
     Route::post('/login', 'UserController@userLogin');
     // User Register
     Route::post('/register', 'UserController@userRegister');
+    Route::match(['get', 'post'], '/check-email', 'UserController@checkEmail');
     // User Logout
     Route::get('/logout', 'UserController@userLogout');
 });

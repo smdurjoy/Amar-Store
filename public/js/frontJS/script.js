@@ -1,3 +1,10 @@
+function validation(form, rules, messages) {
+    $(form).validate({
+        rules: rules,
+        messages: messages,
+    });
+}
+
 $(document).ready(function() {
     $.ajaxSetup({
         headers: {
@@ -192,7 +199,27 @@ $(document).ready(function() {
                 error:function() {
                     alert('error')
                 }
-            })
+            });
         }
-    })
+    });
+
+    $("#registerForm").validate({
+        rules: {
+            name: "required",
+            mobile: {
+                required: true,
+                minlength: 11,
+                maxlength: 11,
+                digits: true,
+            },
+            email: {
+                required: true,
+                email: true,
+            },
+            password: {
+                required: true,
+                minlength: 6,
+            },
+        },
+    });
 });

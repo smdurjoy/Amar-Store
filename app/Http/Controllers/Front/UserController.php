@@ -14,6 +14,17 @@ class UserController extends Controller
         return view('front.users.loginRegister');
     }
 
+    function userLogin(Request $request) {
+        $data = $request->all();
+        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+            return redirect('/');
+        }else {
+            $message = "Invalid Email or Password";
+            Session::flash('errorMessage', $message);
+            return redirect()->back();
+        }
+    }
+
     function userRegister(Request $request) {
         $data = $request->all();
         // Check if user already exists
@@ -35,6 +46,16 @@ class UserController extends Controller
             if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 return redirect('/');
             }
+        }
+    }
+
+    function checkEmail(Request $request) {
+        $data = $request->all();
+        $emailCount = User::where('email', $data['email'])->count();
+        if($emailCount > 0) {
+            return 'false';
+        }else {
+            return 'true';
         }
     }
 

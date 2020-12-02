@@ -15,7 +15,9 @@ if(Auth::check()) {
 <div id="header">
 	<div class="container">
 		<div id="welcomeLine" class="row">
-			<div class="span6">Welcome!<strong> User</strong></div>
+			@if(Auth::check())
+				<div class="span6">Welcome<strong> {{ Auth::user()->name }}</strong></div>
+			@endif
 			<div class="span6">
 				<div class="pull-right">
 					<a href="{{ url('cart') }}"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ {{ $countCarts }} ] Items in your cart </span> </a>
