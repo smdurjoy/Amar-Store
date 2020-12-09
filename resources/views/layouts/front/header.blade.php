@@ -17,6 +17,8 @@ if(Auth::check()) {
 		<div id="welcomeLine" class="row">
 			@if(Auth::check())
 				<div class="span6">Welcome<strong> {{ Auth::user()->name }}</strong></div>
+			@else
+				<div class="span6"></div>
 			@endif
 			<div class="span6">
 				<div class="pull-right">

@@ -202,24 +202,4 @@ $(document).ready(function() {
             });
         }
     });
-
-    $("#registerForm").validate({
-        rules: {
-            name: "required",
-            mobile: {
-                required: true,
-                minlength: 11,
-                maxlength: 11,
-                digits: true,
-            },
-            email: {
-                required: true,
-                email: true,
-            },
-            password: {
-                required: true,
-                minlength: 6,
-            },
-        },
-    });
 });

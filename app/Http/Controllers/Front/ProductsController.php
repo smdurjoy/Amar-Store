@@ -183,9 +183,17 @@ class ProductsController extends Controller
             return redirect()->back();
         }
 
+        // Add user id if user logged in
+        if(Auth::check()) {
+            $user_id = Auth::user()->id;
+        }else {
+            $user_id = 0;
+        }
+
         $cart = new Cart;
         $cart->session_id = $sessionId;
-        $cart->product_id = $data['product_id'];
+        $cart->user_id = $user_id;
+        $cart->product_id = $data['product_id']; 
         $cart->size = $data['size'];
         $cart->quantity = $data['quantity'];
         $cart->save();

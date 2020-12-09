@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Session;
 use Auth;
+use App\Cart;
 
 class UserController extends Controller
 {
@@ -17,6 +18,13 @@ class UserController extends Controller
     function userLogin(Request $request) {
         $data = $request->all();
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+
+            // Update user cart with user id
+            if(!empty(Session::get('session_id'))) {
+                $user_id = Auth::user()->id;
+                $session_id = Session::get('session_id');
+                Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
+            }
             return redirect('/');
         }else {
             $message = "Invalid Email or Password";
@@ -44,6 +52,12 @@ class UserController extends Controller
             $user->save();
 
             if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                // Update user cart with user id
+                if(!empty(Session::get('session_id'))) {
+                    $user_id = Auth::user()->id;
+                    $session_id = Session::get('session_id');
+                    Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
+                }
                 return redirect('/');
             }
         }

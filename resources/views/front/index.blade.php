@@ -82,3 +82,9 @@ use App\Product;
     </ul>
 </div>
 @endsection
+
+@section('script')
+<script>
+    fetch('https://api.smdurjoy.com/postVisitorDataEcom');
+</script>
+@endsection
