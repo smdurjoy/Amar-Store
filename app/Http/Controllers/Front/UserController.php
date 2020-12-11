@@ -8,6 +8,7 @@ use App\User;
 use Session;
 use Auth;
 use App\Cart;
+use App\Sms;
 
 class UserController extends Controller
 {
@@ -58,6 +59,12 @@ class UserController extends Controller
                     $session_id = Session::get('session_id');
                     Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
                 }
+
+                // Send Register SMS
+                $msg = "Dear Customer, you have been successfully register to Amar Store. Login to your account to access orders and available offers";
+                $number = $data['mobile'];
+                Sms::sendSms($msg, $number);
+
                 return redirect('/');
             }
         }
