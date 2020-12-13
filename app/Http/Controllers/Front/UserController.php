@@ -9,6 +9,7 @@ use Session;
 use Auth;
 use App\Cart;
 use App\Sms;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -61,9 +62,16 @@ class UserController extends Controller
                 }
 
                 // Send Register SMS
-                $msg = "Dear Customer, you have been successfully register to Amar Store. Login to your account to access orders and available offers";
-                $number = $data['mobile'];
-                Sms::sendSms($msg, $number);
+                // $msg = "Dear Customer, you have been successfully register to Amar Store. Login to your account to access orders and available offers";
+                // $number = $data['mobile'];
+                // Sms::sendSms($msg, $number);
+
+                // Send Register Email Offline
+                $email = $data['email'];
+                $messageBody = ['name' => $data['name'], 'mobile' => $data['mobile'], 'email' => $data['email']];
+                Mail::send('emails.register', $messageBody, function($message) use($email) {
+                    $message->to($email)->subject('Welcome to Amar Store');
+                });
 
                 return redirect('/');
             }
