@@ -115,4 +115,6 @@ Route::namespace('Front')->group(function() {
     Route::match(['get', 'post'], '/check-email', 'UserController@checkEmail');
     // User Logout
     Route::get('/logout', 'UserController@userLogout');
+    // Email confirmation
+    Route::match(['get', 'post'], '/confirm/{code}', 'UserController@confirmAccount');
 });
