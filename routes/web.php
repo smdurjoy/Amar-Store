@@ -117,4 +117,6 @@ Route::namespace('Front')->group(function() {
     Route::get('/logout', 'UserController@userLogout');
     // Email confirmation
     Route::match(['get', 'post'], '/confirm/{code}', 'UserController@confirmAccount');
+    // Forgot pass
+    Route::match(['get', 'post'], '/forgot-password', 'UserController@forgotPass');
 });

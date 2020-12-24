@@ -48,7 +48,7 @@ class UserController extends Controller
         $userCount = User::where('email', $data['email'])->count();
         if($userCount > 0) {
             $message = 'Email Already Exists !';
-            session::flash('errorMessage', $message);
+            Session::flash('errorMessage', $message);
             return redirect()->back();
         } else {
             // Register user
@@ -121,5 +121,37 @@ class UserController extends Controller
     function userLogout() {
         Auth::logout();
         return redirect('/');
+    }
+
+    function forgotPass(Request $request) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            $email = $data['email'];
+
+            $emailCount = User::where('email', $email)->count();
+            if($emailCount == 0) {
+                Session::flash('errorMessage', 'Email does not exists !');
+                return redirect()->back();
+            }
+
+            // Generate new password
+            $randomPass = rand(11111, 99999);
+            $newPass = bcrypt($randomPass);
+            $name = User::where('email', $email)->first()->name;
+
+            // Update password
+            User::where('email', $email)->update(['password' => $newPass]);
+
+            // Send new pass in email
+            $messageBody = ['name' => $name, 'email' => $email, 'password' => $randomPass];
+            Mail::send('emails.forgotPass', $messageBody, function($message) use($email) {
+                $message->to($email)->subject('New Password - Amar Store');
+            });
+
+            $message = "Please check your email address for new password.";
+            Session::flash('successMessage', $message);
+            return redirect('/login-register');
+        }
+        return view('front.users.forgotPass');
     }
 }

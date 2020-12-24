@@ -30,13 +30,13 @@ class AdminController extends Controller
             $data = $request->all();
 
             $rules = [
-                'email' => 'required',
+                'email' => 'required|email',
                 'password' => 'required',
             ];
 
             $errorMessage = [
                 'email.required' => 'Please enter your email address',
-                'email.email' => 'Please enter valid email',
+                'email.email' => 'Please enter a valid email address',
                 'password.required' => 'Please enter your password',
             ];
 
