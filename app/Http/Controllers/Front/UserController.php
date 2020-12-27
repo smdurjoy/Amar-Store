@@ -10,6 +10,7 @@ use Auth;
 use App\Cart;
 use App\Sms;
 use Illuminate\Support\Facades\Mail;
+use App\Country;
 
 class UserController extends Controller
 {
@@ -153,5 +154,41 @@ class UserController extends Controller
             return redirect('/login-register');
         }
         return view('front.users.forgotPass');
+    }
+
+    function account(Request $request) {
+        $id = Auth::user()->id;
+        $userDetails = User::find($id)->toArray();
+        $countries = Country::where('status', 1)->get()->toArray();
+
+        if($request->isMethod('post')) {
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile' => 'required|numeric'
+            ];
+            $errorMessages = [
+                'name.required' => 'Name is required.',
+                'name.alpha' => 'Please enter valid name.',
+                'mobile.required' => 'Mobile Number is required.',
+                'mobile.numeric' => 'Please enter valid mobile number.'
+            ];
+
+            $this->validate($request, $rules, $errorMessages);
+
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->address = $request->address;
+            $user->mobile = $request->mobile;
+            $user->city = $request->city;
+            $user->pincode = $request->pincode;
+            $user->country = $request->country;
+            $user->state = $request->state;
+            $user->save();
+
+            Session::flash('successMessage', 'Account Information Updated Successfully.');
+            return redirect()->back();
+        }
+
+        return view('front.users.account')->with(compact('userDetails', 'countries'));
     }
 }

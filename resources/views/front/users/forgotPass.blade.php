@@ -32,7 +32,7 @@
                     <div class="control-group">
                     <label class="control-label" for="inputEmail1">E-mail address</label>
                     <div class="controls">
-                        <input class="span3" name="email" type="email" placeholder="Email">
+                        <input class="span3" name="email" type="email" placeholder="Email" required>
                     </div>
                     </div>
                     <div class="controls">
@@ -43,64 +43,4 @@
         </div>
     </div>	
 </div>
-@endsection
-
-@section('script')
-    <script>
-        const validationRules = Object.assign({
-                name: "required",
-                mobile: {
-                    required: true,
-                    minlength: 11,
-                    maxlength: 11,
-                    digits: true,
-                },
-                email: {
-                    required: true,
-                    email: true,
-                    remote: '/check-email'
-                },
-                password: {
-                    required: true,
-                    minlength: 6,
-                },
-        });
-
-        const validationMessages = Object.assign({
-                name: "Please enter your name",
-                mobile: {
-                    required: "Please enter your mobile number",
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 6 characters long"
-                },
-                email: {
-                    remote: "Email already exixts !",
-                },
-        });
-
-        validation('#registerForm', validationRules, validationMessages);
-
-        const rulesLogin = Object.assign({
-                email: {
-                    required: true,
-                    email: true,
-                },
-                password: {
-                    required: true,
-                },
-        });
-
-        const msgLogin = Object.assign({
-                email: {
-                    required: "Please enter your email",
-                },
-                password: {
-                    required: "Please enter your password",
-                },
-        });
-
-        validation('#loginForm', rulesLogin, msgLogin);
-    </script>
 @endsection

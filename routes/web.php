@@ -119,4 +119,6 @@ Route::namespace('Front')->group(function() {
     Route::match(['get', 'post'], '/confirm/{code}', 'UserController@confirmAccount');
     // Forgot pass
     Route::match(['get', 'post'], '/forgot-password', 'UserController@forgotPass');
+    // User account
+    Route::match(['get', 'post'], '/account', 'UserController@account');
 });
