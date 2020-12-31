@@ -71,7 +71,7 @@
                                     <option value="{{ $country['country_name'] }}"
                                     @if($country['country_name'] == $userDetails['country']) selected @endif
                                     >
-                                    {{ $country['country_name'] }}  
+                                    {{ $country['country_name'] }}
                                     </option>
                                 @endforeach
                             </select>
@@ -105,11 +105,12 @@
             <div class="span4">
                 <div class="well">
                 <h5>UPDATE PASSWORD</h5>
-                <form id="updatePass" action="{{ url('/login') }}" method="post">@csrf
+                <form id="updatePass" action="{{ url('/update-password') }}" method="post">@csrf
                     <div class="control-group">
                         <label class="control-label" for="currentPassword">Current Password</label>
                         <div class="controls">
-                            <input class="span3" type="text" id="currentPassword" name="current_password" placeholder="Current password">
+                            <input class="span3" type="password" id="currentPassword" name="current_password" placeholder="Current password"><br>
+                            <i><p id="chkCurrentPass" style="font-size: 14px"></p></i>
                         </div>
                     </div>
                     <div class="control-group">
@@ -119,14 +120,14 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="confNewPassword">Confim New Password</label>
+                        <label class="control-label" for="confNewPassword">Confirm New Password</label>
                         <div class="controls">
                             <input type="password" class="span3" id="confNewPassword" name="confirm_new_password" placeholder="Enter the password again">
                         </div>
                     </div>  
                     <div class="control-group">
                         <div class="controls">
-                            <a href="{{ url('/update-password') }}" class="btn">Update</a>
+                            <button class="btn" type="submit">Update</button>
                         </div>
                     </div>
                 </form>
@@ -138,6 +139,7 @@
 
 @section('script')
     <script>
+        // Update information validation
         const validationRules = Object.assign({
                 name: {
                     required: true,
@@ -160,5 +162,39 @@
         });
 
         validation('#accountForm', validationRules, validationMessages);
+
+        // Update password validation
+        const updatePassRules = Object.assign({
+                current_password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20,
+                },
+                new_password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20,
+                },
+                confirm_new_password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20,
+                    equalTo: '#newPassword'
+                },
+        });
+
+        const updatePassMsg = Object.assign({
+                current_password: {
+                    required: "Please enter your current password",
+                },
+                new_password: {
+                    required: "Please enter a new password",
+                },
+                confirm_new_password: {
+                    required: "Please retype your new password",
+                },
+        });
+
+        validation('#updatePass', updatePassRules, updatePassMsg);
     </script>
 @endsection

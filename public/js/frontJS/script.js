@@ -202,4 +202,23 @@ $(document).ready(function() {
             });
         }
     });
+
+    $(document).on('keyup', '#currentPassword', function() {
+        let currentPass = $(this).val();
+        $.ajax({
+            type: 'post',
+            url: '/check-current-pass',
+            data: {currentPass},
+            success:function (res) {
+                if ( res == "false" ) {
+                    $("#chkCurrentPass").html("<font color='red'>Password is incorrect.</font>");
+                } else if ( res == "true" ) {
+                    $("#chkCurrentPass").html("<font color='green'>Password is correct.</font>");
+                }
+            },
+            error:function (err) {
+                alert(err.messages);
+            }
+        });
+    });
 });

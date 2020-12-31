@@ -57,7 +57,6 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::post('update-product-status', 'ProductController@updateProductStatus');
         Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductController@addEditProduct');
         Route::get('delete-product/{id}', 'ProductController@deleteProduct');
-        Route::match(['get', 'post'], '/add-edit-product/{id?}', 'ProductController@addEditProduct');
         Route::get('delete-product-image/{id}', 'ProductController@deleteProductImage');
         Route::get('delete-product-video/{id}', 'ProductController@deleteProductVideo');
 
@@ -119,6 +118,13 @@ Route::namespace('Front')->group(function() {
     Route::match(['get', 'post'], '/confirm/{code}', 'UserController@confirmAccount');
     // Forgot pass
     Route::match(['get', 'post'], '/forgot-password', 'UserController@forgotPass');
-    // User account
-    Route::match(['get', 'post'], '/account', 'UserController@account');
+
+    Route::group(['middleware' => 'auth'], function (){
+        // User account
+        Route::match(['get', 'post'], '/account', 'UserController@account');
+        // Check current password
+        Route::post('/check-current-pass', 'UserController@checkCurrentPass');
+        // Update password
+        Route::post('/update-password', 'UserController@updatePassword');
+    });
 });

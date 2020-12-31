@@ -10,6 +10,7 @@ use Auth;
 use App\Cart;
 use App\Sms;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 use App\Country;
 
 class UserController extends Controller
@@ -190,5 +191,31 @@ class UserController extends Controller
         }
 
         return view('front.users.account')->with(compact('userDetails', 'countries'));
+    }
+
+    function checkCurrentPass(Request $request) {
+        $user_id = Auth::user()->id;
+        $currentPass = User::where('id', $user_id)->first()->password;
+
+        if(Hash::check($request->currentPass, $currentPass)) {
+            return 'true';
+        }else {
+            return 'false';
+        }
+    }
+
+    function updatePassword(Request $request) {
+        $user_id = Auth::user()->id;
+        $currentPass = User::where('id', $user_id)->first()->password;
+
+        if(Hash::check($request->current_password, $currentPass)) {
+            $new_pass = bcrypt($request->new_password);
+            User::where('id', $user_id)->update(['password' => $new_pass]);
+            Session::flash('successMessage', 'Password Updated Successfully.');
+            return redirect()->back();
+        }else {
+            Session::flash('errorMessage', 'Your Current Password is Incorrect !');
+            return redirect()->back();
+        }
     }
 }

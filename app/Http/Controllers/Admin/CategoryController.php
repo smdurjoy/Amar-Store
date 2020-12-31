@@ -81,6 +81,12 @@ class CategoryController extends Controller
                     // generate new image name
                     $imageName = rand(111, 99999).'.'.$extension;
                     $imagePath = 'images/categoryImages/'.$imageName;
+                    
+                    $categoryImagePath = "images/categoryImages/";
+                    if(file_exists($categoryImagePath.$category->category_image) AND !empty($category->category_image)) {
+                        unlink($categoryImagePath.$category->category_image);
+                    }
+
                     //upload the image
                     Image::make($imageTmp)->save($imagePath);
                     //save image in db
