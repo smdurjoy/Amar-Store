@@ -1,15 +1,8 @@
 <?php
 use App\Section;
-use App\Cart;
 use Illuminate\Support\Facades\Auth;
 
 $sections = Section::section();
-if(Auth::check()) {
-    $countCarts = Cart::where('user_id', Auth::user()->id)->count();
-} else {
-    $countCarts = Cart::where('session_id', \Illuminate\Support\Facades\Session::get('session_id'))->count();
-}
-
 ?>
 
 <div id="header">
@@ -22,7 +15,7 @@ if(Auth::check()) {
 			@endif
 			<div class="span6">
 				<div class="pull-right">
-					<a href="{{ url('cart') }}"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ {{ $countCarts }} ] Items in your cart </span> </a>
+					<a href="{{ url('cart') }}"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ <span class="totalCartItems">{{ totalCartItems() }}</span> ] Items in your cart </span> </a>
 				</div>
 			</div>
 		</div>

@@ -1,13 +1,3 @@
-<?php 
-    use App\Cart; 
-    use Illuminate\Support\Facades\Auth;
-
-    if(Auth::check()) {
-        $countCarts = Cart::where('user_id', Auth::user()->id)->count();
-    } else {
-        $countCarts = Cart::where('session_id', \Illuminate\Support\Facades\Session::get('session_id'))->count();
-    }
-?>
 @extends('layouts.front.front')
 
 @section('content')
@@ -16,39 +6,8 @@
             <li><a href="index.html">Home</a> <span class="divider">/</span></li>
             <li class="active"> SHOPPING CART</li>
         </ul>
-        <h3>  SHOPPING CART [ <small>{{ $countCarts }} Item(s) </small>]<a href="{{ url('/') }}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
+        <h3>  SHOPPING CART [ <small><span class="totalCartItems">{{ totalCartItems() }}</span> Item(s) </small>]<a href="{{ url('/') }}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
         <hr class="soft"/>
-        <table class="table table-bordered">
-            <tr><th> I AM ALREADY REGISTERED  </th></tr>
-            <tr>
-                <td>
-                    <form class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label" for="inputUsername">Username</label>
-                            <div class="controls">
-                                <input type="text" id="inputUsername" placeholder="Username">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="inputPassword1">Password</label>
-                            <div class="controls">
-                                <input type="password" id="inputPassword1" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <button type="submit" class="btn">Sign in</button> OR <a href="register.html" class="btn">Register Now!</a>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <a href="#" style="text-decoration:underline">Forgot password ?</a>
-                            </div>
-                        </div>
-                    </form>
-                </td>
-            </tr>
-        </table>
         @if(Session::has('successMessage'))
             <div class="alert alert-success" role="alert">
                 {{ Session::get('successMessage')  }}

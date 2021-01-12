@@ -229,8 +229,10 @@ class ProductsController extends Controller
 
             Cart::where('id', $data['cartId'])->update(['quantity' => $data['qty']]);
             $userCartItems = Cart::userCartItems();
+            $totalCartItems = totalCartItems();
             return response()->json([
                 'status' => true,
+                'totalCartItems' => $totalCartItems,
                 'view' => (String)View('front.products.cartItems')->with(compact('userCartItems'))
             ]);
         }
@@ -241,7 +243,9 @@ class ProductsController extends Controller
             $data = $request->all();
             Cart::where('id',$data['id'])->delete();
             $userCartItems = Cart::userCartItems();
+            $totalCartItems = totalCartItems();
             return response()->json([
+                'totalCartItems' => $totalCartItems,
                 'view' => (String)View('front.products.cartItems')->with(compact('userCartItems'))
             ]);
         }

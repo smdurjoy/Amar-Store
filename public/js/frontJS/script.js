@@ -177,6 +177,7 @@ $(document).ready(function() {
                     alert('Product stock is not available !')
                 } else {
                     $('#appendCartItems').html(response.view);
+                    $('.totalCartItems').html(response.totalCartItems);
                 }
             },
             error:function() {
@@ -195,6 +196,7 @@ $(document).ready(function() {
                 type: 'post',
                 success:function(response) {
                     $('#appendCartItems').html(response.view);
+                    $('.totalCartItems').html(response.totalCartItems);
                 },
                 error:function() {
                     alert('error')
