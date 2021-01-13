@@ -77,9 +77,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::post('update-banner-status', 'BannersController@updateBannerStatus');
         Route::get('delete-banner/{id}', 'BannersController@deleteBanner');
         Route::get('delete-banner-image/{id}', 'BannersController@deleteImage');
+
+        // Coupons
+        Route::get('coupons', 'CouponsController@index');
     });
 });
-
 
 
 // Frontend Routes
