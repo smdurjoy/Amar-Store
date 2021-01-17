@@ -80,6 +80,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
 
         // Coupons
         Route::get('coupons', 'CouponsController@index');
+        Route::post('update-coupon-status', 'CouponsController@updateCouponStatus');
+        Route::match(['get', 'post'], 'add-edit-coupon/{id?}', 'CouponsController@addEditCoupon');
     });
 });
 

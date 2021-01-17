@@ -22,11 +22,20 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    @if(Session::has('successMessage'))
+                        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                            {{ Session::get('successMessage')  }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">Coupons</h3>
+                                    <a href="{{ url('admin/add-edit-coupon ') }}" class="btn btn-dark btn-sm" style="float: right">Add Coupon</a>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -56,7 +65,7 @@
                                                         Tk
                                                     @endif
                                                 </td>
-                                                <td>{{ $coupon['expiry_date'] }}</td>
+                                                <td>{{ $coupon['expiry_date'] }}</td>   
                                                 <td>
                                                     @if($coupon['status'] == 1)
                                                         <a class="updateStatus" record="coupon" href="javascript:void(0)" record_id="{{ $coupon['id']  }}"> <span id="coupon-{{$coupon['id']}}" class="badge badge-primary">Active</span> </a>

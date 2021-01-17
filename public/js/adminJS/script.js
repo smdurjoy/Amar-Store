@@ -100,4 +100,13 @@ $(document).ready(function () {
             x--; //Decrement field counter
         });
     });
+
+    // Show/Hide Coupon fields for Manual/Automatic
+    $(document).on('click', '#manualCoupon', function() {
+        $('#couponField').show();
+    });
+
+    $(document).on('click', '#automaticCoupon', function() {
+        $('#couponField').hide();
+    });
 });
