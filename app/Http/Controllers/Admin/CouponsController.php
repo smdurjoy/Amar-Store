@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Coupon;
 use App\Section;
 use App\User;
+use Intervention\Image\Facades\Image;
 
 class CouponsController extends Controller
 {
@@ -35,17 +36,22 @@ class CouponsController extends Controller
         if($id == "") {
             // Add Coupon
             $coupon = new Coupon;
+            $selectCats = array();
+            $selectUsers = array();
             $title = "Add Coupon";
             $message = "Coupon added successfully.";
         }else { 
             // Edit Coupon
             $coupon = Coupon::find($id);
+            $selectCats = explode(',', $coupon['categories']);
+            $selectUsers = explode(',', $coupon['users']);
             $title = "Edit Coupon";
             $message = "Coupon updated successfully.";
         }   
 
         if($request->isMethod('post')) {
             $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
 
             // Coupon add validation
             $rules = [
@@ -102,6 +108,14 @@ class CouponsController extends Controller
         $categories = Section::with('categories')->get()->toArray();
         $users = User::where('status', 1)->get()->toArray();
 
-        return view('admin.addEditCoupons')->with(compact('title', 'coupon', 'categories', 'users'));
+        return view('admin.addEditCoupons')->with(compact('title', 'coupon', 'categories', 'users', 'selectCats', 'selectUsers'));
+    }
+
+    function deleteCoupon($id) {
+        Coupon::where('id', $id)->delete();
+
+        $message = "Coupon Deleted Successfully!";
+        Session::flash('successMessage', $message);
+        return redirect()->back();
     }
 }
