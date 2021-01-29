@@ -131,5 +131,7 @@ Route::namespace('Front')->group(function() {
         Route::post('/check-current-pass', 'UserController@checkCurrentPass');
         // Update password
         Route::post('/update-password', 'UserController@updatePassword');
+        // Apply coupon
+        Route::post('/apply-coupon', 'ProductsController@applyCoupon');
     });
 });

@@ -223,4 +223,34 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Apply coupon
+    $('#applyCoupon').on('submit', function(e) {
+        e.preventDefault();
+        const user = $(this).attr('user');
+        if(user == 1) {
+            // do nothing
+        }else {
+            alert('Please login to apply coupon.');
+            return false;
+        }
+        const code = $("#couponCode").val();
+        $.ajax({
+            type: "post",
+            data:{code},
+            url: "/apply-coupon",
+            success: function(response) {
+                if(response.message !== "") {
+                    alert(response.message)
+                }
+                $('#appendCartItems').html(response.view);
+                $('.totalCartItems').html(response.totalCartItems);
+                $('.couponAmount').text("Tk. "+response.couponAmount);
+                $('.grandTotal').text("Tk. "+response.grandTotal);
+            },
+            error: function() {
+                alert("Something Went Wrong !");
+            }
+        })
+    });
 });

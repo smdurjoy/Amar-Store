@@ -36,12 +36,18 @@
             <td> Tk.{{ $totalPrice }}</td>
         </tr>
         <tr>
-            <td colspan="6" style="text-align:right">Voucher Discount: </td>
-            <td> Tk.0.00</td>
+            <td colspan="6" style="text-align:right">Coupon Discount: </td>
+            <td class="couponAmount">
+                @if(Session::has('couponAmount'))
+                    Tk. {{ Session::get('couponAmount') }}
+                @else
+                    Tk. 0
+                @endif
+            </td>
         </tr>
         <tr>
             <td colspan="6" style="text-align:right"><strong>GRAND TOTAL</strong></td>
-            <td class="label label-important" style="display:block"> <strong> Tk.{{ $totalPrice }} </strong></td>
+            <td class="label label-important grandTotal" style="display:block"> <strong> Tk.{{ $totalPrice - Session::get('couponAmount') }} </strong></td>
         </tr>
     </tbody>
 </table>
