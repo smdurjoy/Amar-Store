@@ -19,6 +19,8 @@
 	<link href="{{asset('js/frontJS/google-code-prettify/prettify.css')}}" rel="stylesheet"/>
 	<!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+	<!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 	<!-- fav and touch icons -->
 	<link rel="shortcut icon" href="{{asset('images/frontImages/ico/favicon.ico')}}">
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('images/frontImages/ico/apple-touch-icon-144-precomposed.png')}}">
@@ -58,6 +60,8 @@
 <script src="{{asset('js/frontJS/front.js')}}"></script>
 <script src="{{asset('js/frontJS/script.js')}}"></script>
 <script src="{{asset('js/frontJS/jquery.lightbox-0.5.js')}}"></script>
+<!-- sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 @yield('script')
 </body>
 </html>

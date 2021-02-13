@@ -14,7 +14,7 @@ class CouponsController extends Controller
 {
     function index() {
         Session::put('page', 'coupons');
-        $coupons = Coupon::get()->toArray();
+        $coupons = Coupon::orderBy('id', 'desc')->get()->toArray();
         return view('admin.coupons')->with(compact('coupons'));
     }
 

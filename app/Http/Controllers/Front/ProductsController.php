@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use App\Coupon;
 use App\User;
+use App\DeliveryAddress;
 
 class ProductsController extends Controller
 {
@@ -285,11 +286,13 @@ class ProductsController extends Controller
                 $categoryArray = explode(',', $couponDetails['categories']);
 
                 // Check if coupon belongs to logged in user
-                $usersArray = explode(',', $couponDetails->users);
-                // get user id of all selected users
-                foreach ($usersArray as $key => $user) {
-                    $getUserId = User::select('id')->where('email', $user)->first()->toArray();
-                    $userId[] = $getUserId['id'];
+                if(!empty($couponDetails->user)) {
+                    $usersArray = explode(',', $couponDetails->users);
+                    // get user id of all selected users
+                    foreach ($usersArray as $key => $user) {
+                        $getUserId = User::select('id')->where('email', $user)->first()->toArray();
+                        $userId[] = $getUserId['id'];
+                    } 
                 }
 
                 $totalAmount = 0;
@@ -298,9 +301,12 @@ class ProductsController extends Controller
                     if(!in_array($item['product']['category_id'], $categoryArray)) {
                         $message = "This coupon is not for one of the selected products.";
                     }
-                    // Check if coupon belongs to logged in user
-                    if(!in_array($item['user_id'], $userId)) {
-                        $message = "This coupon is not for you !";  
+
+                    if(!empty($couponDetails->user)) {
+                        // Check if coupon belongs to logged in user
+                        if(!in_array($item['user_id'], $userId)) {
+                            $message = "This coupon is not for you !";  
+                        }
                     }
 
                     // Get cart total amount
@@ -343,5 +349,11 @@ class ProductsController extends Controller
                 }
             }
         }
+    }
+
+    function checkout() {
+        $userCartItems = Cart::userCartItems();
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses'));
     }
 }

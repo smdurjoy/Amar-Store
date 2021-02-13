@@ -39,9 +39,9 @@
             <td colspan="6" style="text-align:right">Coupon Discount: </td>
             <td class="couponAmount">
                 @if(Session::has('couponAmount'))
-                    Tk. {{ Session::get('couponAmount') }}
+                    Tk.{{ Session::get('couponAmount') }}
                 @else
-                    Tk. 0
+                    Tk.0
                 @endif
             </td>
         </tr>

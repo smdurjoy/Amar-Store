@@ -96,7 +96,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div>  
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Coupon Type:</label>
@@ -115,7 +115,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="users">Select Users</label>
-                                        <select name="users[]" id="users" class="form-control select2 "multiple="" data-live-search="true" required>
+                                        <select name="users[]" id="users" class="form-control select2 "multiple="" data-live-search="true">
                                             @foreach($users as $user)
                                                 <option value="{{ $user['email'] }}" @if(in_array($user['email'], $selectUsers)) selected @endif>{{ $user['email'] }}</option>
                                             @endforeach

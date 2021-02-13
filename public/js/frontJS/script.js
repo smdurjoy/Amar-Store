@@ -242,15 +242,37 @@ $(document).ready(function() {
             success: function(response) {
                 if(response.message !== "") {
                     alert(response.message)
+                    $('#applyCoupon').trigger('reset');
                 }
                 $('#appendCartItems').html(response.view);
                 $('.totalCartItems').html(response.totalCartItems);
-                $('.couponAmount').text("Tk. "+response.couponAmount);
-                $('.grandTotal').text("Tk. "+response.grandTotal);
+                if(response.couponAmount > 0) {
+                    $('.couponAmount').text("Tk. "+response.couponAmount);
+                    $('.grandTotal').text("Tk. "+response.grandTotal);
+                } 
             },
-            error: function() {
+            error: function() { 
                 alert("Something Went Wrong !");
             }
         })
+    });
+
+    // Common delete method for all action !!
+    $(document).on('click', '.confirmDelete', function() {
+        const record = $(this).attr("record");
+        const recordId = $(this).attr("recordId");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                window.location.href = "/delete-"+record+"/"+recordId;
+            }
+        });
     });
 });

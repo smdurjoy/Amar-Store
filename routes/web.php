@@ -133,5 +133,11 @@ Route::namespace('Front')->group(function() {
         Route::post('/update-password', 'UserController@updatePassword');
         // Apply coupon
         Route::post('/apply-coupon', 'ProductsController@applyCoupon');
+        // Apply coupon
+        Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
+        // Add edit delivery address
+        Route::match(['GET', 'POST'], '/add-edit-delivery-address/{id?}', 'AddressController@addEditDeliveryAddress');
+        // Delete delivery address
+        Route::get('/delete-address/{id}', 'AddressController@deleteAddress');
     });
 });

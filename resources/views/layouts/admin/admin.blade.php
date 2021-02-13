@@ -110,9 +110,9 @@
 <script src="{{asset('js/adminJS/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('js/adminJS/demo.js')}}"></script>
-{{--custom admin js--}}
+<!-- custom admin js -->
 <script src="{{asset('js/adminJS/script.js')}}"></script>
-{{--sweetalert--}}
+<!-- sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/js/mdb.min.js"></script>
