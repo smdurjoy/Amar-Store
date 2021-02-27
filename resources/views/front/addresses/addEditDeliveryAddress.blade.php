@@ -68,7 +68,7 @@
                             <select class='form-control select2' style='width: 100%;' id='country' name='country'>
                                 <option value="">Select</option>
                                 @foreach($countries as $country)
-                                    <option value="{{ $country['country_name'] }}" @if(!empty($addressData['country']) && $addressData['country'] == $country['country_name']) selected @endif>
+                                    <option value="{{ $country['country_name'] }}" @if(!empty($addressData['country']) && $addressData['country'] == $country['country_name']) selected @elseif($country['country_name'] == old('country')) selected @endif>
                                     {{ $country['country_name'] }}
                                     </option>
                                 @endforeach
@@ -115,6 +115,9 @@
                     required: true,
                     minlength: 11,
                     maxlength: 11,
+                    digits: true,
+                },
+                pincode: {
                     digits: true,
                 },
         });

@@ -247,8 +247,8 @@ $(document).ready(function() {
                 $('#appendCartItems').html(response.view);
                 $('.totalCartItems').html(response.totalCartItems);
                 if(response.couponAmount > 0) {
-                    $('.couponAmount').text("Tk. "+response.couponAmount);
-                    $('.grandTotal').text("Tk. "+response.grandTotal);
+                    $('.couponAmount').text("Tk."+response.couponAmount);
+                    $('.grandTotal').text("Tk."+response.grandTotal);
                 } 
             },
             error: function() { 

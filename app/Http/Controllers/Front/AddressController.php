@@ -30,17 +30,21 @@ class AddressController extends Controller
 
             $rules = [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'mobile' => 'required|numeric',
+                'mobile' => 'required|numeric|digits:11',
                 'address' => 'required',
-                'city' => 'required',
+                'city' => 'required|regex:/^[\pL\s\-]+$/u',
+                'state' => 'regex:/^[\pL\s\-]+$/u',
+                'pincode' => 'numeric',
             ];
             $errorMessages = [
                 'name.required' => 'Name is required.',
-                'name.alpha' => 'Please enter valid name.',
+                'name.regex' => 'Please enter valid name.',
                 'mobile.required' => 'Mobile Number is required.',
                 'mobile.numeric' => 'Please enter valid mobile number.',
                 'address.required' => 'Address is required.',
                 'city.required' => 'City is required.',
+                'city.regex' => 'Please enter valid city name.',
+                'state.regex' => 'Please enter valid state name.',
             ];
 
             $this->validate($request, $rules, $errorMessages);

@@ -19,7 +19,9 @@ Route::get('/', function () {
 
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/404_not_found', function () {
+    return view('404');
+});
 
 // Admin routes
 Route::prefix('/admin')->namespace('Admin')->group(function() {
@@ -133,11 +135,13 @@ Route::namespace('Front')->group(function() {
         Route::post('/update-password', 'UserController@updatePassword');
         // Apply coupon
         Route::post('/apply-coupon', 'ProductsController@applyCoupon');
-        // Apply coupon
+        // Checkout
         Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
         // Add edit delivery address
         Route::match(['GET', 'POST'], '/add-edit-delivery-address/{id?}', 'AddressController@addEditDeliveryAddress');
         // Delete delivery address
         Route::get('/delete-address/{id}', 'AddressController@deleteAddress');
+        // Thanks for order page
+        Route::get('/thanks', 'ProductsController@thanks');
     });
 });
