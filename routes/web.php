@@ -143,5 +143,9 @@ Route::namespace('Front')->group(function() {
         Route::get('/delete-address/{id}', 'AddressController@deleteAddress');
         // Thanks for order page
         Route::get('/thanks', 'ProductsController@thanks');
+        // User orders
+        Route::get('/orders', 'OrdersController@index');
+        // User orders details
+        Route::get('/orders/{id}', 'OrdersController@orderDetails');
     });
 });
