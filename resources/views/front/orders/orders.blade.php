@@ -10,6 +10,7 @@
 
 	<div class="row">
 		<div class="span8">
+            @if(count($orders) > 0)
             <table class="table table-striped table-bordered">
                 <thead>
                     <th>Order ID</th>
@@ -22,7 +23,7 @@
                 <tbody>
                     @foreach($orders as $order)
                         <tr>
-                            <td>{{ $order['id'] }}</td>
+                            <td>#{{ $order['id'] }}</td>
                             <td>
                                 @foreach($order['order_products'] as $product)
                                     {{ $product['product_code'] }} <br>
@@ -36,6 +37,9 @@
                     @endforeach
                 </tbody>
             </table>
+            @else
+                <h3>Be fast to order your first product. Go to <a style="color:blue; text-decoration:underline" href="{{ url('/') }}">shopping page</a></h3>
+            @endif
 		</div>
 	</div>	
 </div>

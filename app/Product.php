@@ -65,4 +65,8 @@ class Product extends Model
         }
         return array('product_price' => $proAttrPrice['price'], 'final_price' => round($final_price), 'discount' => $discount);
     }
+
+    public static function getProductImage($product_id) {
+        return Product::where('id', $product_id)->select('product_image')->first()->product_image;
+    }
 }

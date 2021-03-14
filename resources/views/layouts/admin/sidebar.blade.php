@@ -39,7 +39,7 @@
                 </li>
 
                 <!-- Catalogues -->
-                @if(Session::get('page') == 'sections' || Session::get('page') == 'brands' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'coupons')
+                @if(Session::get('page') == 'sections' || Session::get('page') == 'brands' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'coupons' || Session::get('page') == 'banners' || Session::get('page') == 'orders')
                     <?php $active = "active"; $menuOpen = "menu-open";?>
                 @else
                     <?php $active = ""; $menuOpen = "";?>
@@ -53,6 +53,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        <!-- sections -->
                         @if(Session::get('page') == "sections")
                             <?php $active = "active"; ?>
                         @else
@@ -65,6 +66,7 @@
                             </a>
                         </li>
 
+                        <!-- brands -->
                         @if(Session::get('page') == "brands")
                             <?php $active = "active"; ?>
                         @else
@@ -77,6 +79,7 @@
                             </a>
                         </li>
 
+                        <!-- categories -->
                         @if(Session::get('page') == "categories")
                             <?php $active = "active"; ?>
                         @else
@@ -89,6 +92,7 @@
                             </a>
                         </li>
 
+                        <!-- products -->
                         @if(Session::get('page') == "products")
                             <?php $active = "active"; ?>
                         @else
@@ -101,6 +105,7 @@
                             </a>
                         </li>
 
+                        <!-- banners -->
                         @if(Session::get('page') == "banners")
                             <?php $active = "active"; ?>
                         @else
@@ -112,6 +117,8 @@
                                 <p>Banners</p>
                             </a>
                         </li>
+
+                        <!-- coupons -->
                         @if(Session::get('page') == "coupons")
                             <?php $active = "active"; ?>
                         @else
@@ -121,6 +128,18 @@
                             <a href="{{ url('/admin/coupons') }}" class="nav-link {{ $active }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Coupons</p>
+                            </a>
+                        </li>
+                        <!-- orders -->
+                        @if(Session::get('page') == "orders")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/orders') }}" class="nav-link {{ $active }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Orders</p>
                             </a>
                         </li>
                     </ul>

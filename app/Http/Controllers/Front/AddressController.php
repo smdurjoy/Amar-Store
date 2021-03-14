@@ -33,8 +33,8 @@ class AddressController extends Controller
                 'mobile' => 'required|numeric|digits:11',
                 'address' => 'required',
                 'city' => 'required|regex:/^[\pL\s\-]+$/u',
-                'state' => 'regex:/^[\pL\s\-]+$/u',
-                'pincode' => 'numeric',
+                'state' => 'nullable|regex:/^[\pL\s\-]+$/u',
+                'pincode' => 'nullable|numeric',
             ];
             $errorMessages = [
                 'name.required' => 'Name is required.',

@@ -1,3 +1,4 @@
+<?php use App\Product; ?>
 @extends('layouts.front.front')
 @section('content')
 <div class="span9">
@@ -5,7 +6,7 @@
 		<li><a href="{{ url('/') }}">Home</a> <span class="divider">/</span></li>
 		<li><a href="{{ url('/orders') }}">Orders</a></li>
     </ul>
-	<h3>Order #{{ $order->id }} Details</h3>	
+	<h3>Order #{{ $order->id }} Details</h3>
 	<hr class="soft"/>
 
     <div class="row">
@@ -49,7 +50,7 @@
 		<div class="span4">
             <table class="table table-striped table-bordered">
                 <tr>
-                    <td colspan="2"><strong>Delivery Informations</strong></td>
+                    <td colspan="2"><strong>Delivery Information</strong></td>
                 </tr>
                 <tr>
                     <td>Name</td>
@@ -93,16 +94,25 @@
 		<div class="span8">
             <table class="table table-striped table-bordered">
                 <thead>
-                    <th>Product Code</th>
-                    <th>Product Name</th>
-                    <th>Product Size</th>
-                    <th>Product Color</th>
-                    <th>Product Price</th>
-                    <th>Product Quantity</th>
+                    <tr>
+                        <th>Product Image</th>
+                        <th>Product Code</th>
+                        <th>Product Name</th>
+                        <th>Product Size</th>
+                        <th>Product Color</th>
+                        <th>Product Price</th>
+                        <th>Product Quantity</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach($order->order_products as $product)
                         <tr>
+                            <td>
+                                <?php $productImage = Product::getProductImage($product['product_id']);
+                                // echo $productImage; die;
+                                ?>
+                                <a target="_blank" href="{{ url('/product/'.$product['product_id'].'/'.$product['product_name']) }}"><img style="width:80px" src="{{ asset('images/productImages/small/'.$productImage) }}" alt="{{ $product['product_id'] }}"></a>
+                            </td>
                             <td>{{ $product['product_code'] }}</td>
                             <td>{{ $product['product_name'] }}</td>
                             <td>{{ $product['product_size'] }}</td>
@@ -114,6 +124,6 @@
                 </tbody>
             </table>
 		</div>
-	</div>	
+	</div>
 </div>
 @endsection
