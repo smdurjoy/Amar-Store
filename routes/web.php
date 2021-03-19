@@ -89,6 +89,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         // Orders
         Route::get('orders', 'OrdersController@index');
         Route::get('orders/{id}', 'OrdersController@orderDetails');
+        Route::post('update-order-status', 'OrdersController@updateOrderStatus');
     });
 });
 

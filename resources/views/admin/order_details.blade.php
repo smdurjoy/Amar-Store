@@ -23,6 +23,14 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                @if(Session::has('successMessage'))
+                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                        {{ Session::get('successMessage')  }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -149,7 +157,7 @@
                         <!-- /.card -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Update Order Status</h3>
+                                <h3 class="card-title">Order Status</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -157,12 +165,16 @@
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <select class="form-control" name="order_status" required>
-                                                <option>Select Status</option>
-                                                <option>New</option>
-                                                <option>Pending</option>
-                                            </select>
-                                            <button class="btn btn-primary btn-sm">Update</button>
+                                            <form action="{{ url('admin/update-order-status') }}" method="post">@csrf
+                                                <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                                <select class="form-control select2" name="order_status" required>
+                                                    <option value="">Select</option>
+                                                    @foreach($orderStatuses as $status)
+                                                        <option value="{{ $status->name }}" @if(isset($order->order_status) && $order->order_status == $status->name) selected @endif>{{ $status->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button class="btn btn-primary btn-sm" type="submit">Update</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     </tbody>

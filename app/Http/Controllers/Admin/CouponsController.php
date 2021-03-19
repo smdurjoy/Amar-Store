@@ -44,7 +44,7 @@ class CouponsController extends Controller
             // Edit Coupon
             $coupon = Coupon::find($id);
             $selectCats = explode(',', $coupon['categories']);
-            $selectUsers = explode(',', $coupon['users']);
+            $selectUsers = explode(',', $coupon['users']);  
             $title = "Edit Coupon";
             $message = "Coupon updated successfully.";
         }   
