@@ -49,6 +49,16 @@
                                         <td class="pl-2">Order Status</td>
                                         <td>{{ $order->order_status }}</td>
                                     </tr>
+                                    @if(!empty($order->courier_name) && !empty($order->tracking_number))
+                                        <tr>
+                                            <td>Courier Name</td>
+                                            <td>{{ $order->courier_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tracking Number</td>
+                                            <td>{{ $order->tracking_number }}</td>
+                                        </tr>
+                                    @endif
                                     <tr>
                                         <td class="pl-2">Total Amount</td>
                                         <td>{{ $order->grand_total }}</td>
@@ -167,16 +177,36 @@
                                         <td>
                                             <form action="{{ url('admin/update-order-status') }}" method="post">@csrf
                                                 <input type="hidden" name="order_id" value="{{ $order->id }}">
-                                                <select class="form-control select2" name="order_status" required>
+                                                <select class="form-control select2" name="order_status" id="orderStatus" required>
                                                     <option value="">Select</option>
                                                     @foreach($orderStatuses as $status)
                                                         <option value="{{ $status->name }}" @if(isset($order->order_status) && $order->order_status == $status->name) selected @endif>{{ $status->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <div class="@if(empty($order->courier_name) && empty($order->tracking_number)) d-none ctForm @endif">
+                                                    <div class="d-flex mt-2">
+                                                        <input class="form-control" type="text" name="courier_name" id="courierName" placeholder="Courier Name" value="{{ $order->courier_name }}"> 
+                                                        <input class="form-control ml-2" type="text" name="tracking_number" id="trackingNumber" placeholder="Tracking Number" value="{{ $order->tracking_number }}">
+                                                    </div>
+                                                </div>
                                                 <button class="btn btn-primary btn-sm" type="submit">Update</button>
                                             </form>
                                         </td>
                                     </tr>
+                                    </tbody>
+                                    <tbody>
+                                        @foreach($orderLogs as $log)
+                                            <tr>
+                                                <td colspan="2" class="px-2">
+                                                    <strong class="text-bold">{{ $log['order_status'] }}</strong>
+                                                    @if(date('Y') != date('Y', strtotime($log['created_at'])))
+                                                        <p>{{ date('F j, Y', strtotime($log['created_at'])) }} at {{ date('g:i a', strtotime($log['created_at'])) }}</p> 
+                                                    @else
+                                                        <p>{{ date('F j', strtotime($log['created_at'])) }} at {{ date('g:i a', strtotime($log['created_at'])) }}</p> 
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

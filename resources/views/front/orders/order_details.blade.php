@@ -23,6 +23,16 @@
                     <td>Order Status</td>
                     <td>{{ $order->order_status }}</td>
                 </tr>
+                @if(!empty($order->courier_name) && !empty($order->tracking_number))
+                    <tr>
+                        <td>Courier Name</td>
+                        <td>{{ $order->courier_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tracking Number</td>
+                        <td>{{ $order->tracking_number }}</td>
+                    </tr>
+                @endif
                 <tr>
                     <td>Total Amount</td>
                     <td>{{ $order->grand_total }}</td>

@@ -19,3 +19,4 @@ class OrdersController extends Controller
         return view('front.orders.order_details', compact('order'));
     }
 }
+    

@@ -13,7 +13,11 @@
             <td>Dear <strong>{{ $name }}</strong>,</td>
         </tr>
         <tr>
-            <td>Your order #{{ $order_id }} status has been updated to '{{ $order_status }}'. Your order details are as below :</td>
+            <td>Your order #{{ $order_id }} status has been updated to '{{ $order_status }}'. 
+            @if(!empty($courier_name) && !empty($tracking_number))
+                Courier name is {{ $courier_name }} and Tracking number is {{ $tracking_number }}.
+            @endif
+            Order details are as below :</td>
         </tr>
         <tr><td>&nbsp;</td></tr>
         <tr>

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Sms;
 use Illuminate\Support\Facades\Mail;
+use App\OrdersLog;
 
 class OrdersController extends Controller
 {
@@ -23,19 +24,25 @@ class OrdersController extends Controller
         $order = Order::with('order_products')->where('id', $id)->first();
         $customer = User::where('id', $order->user_id)->first();
         $orderStatuses = OrderStatus::where('status', 1)->get();
-        return view('admin.order_details', compact('order', 'customer', 'orderStatuses'));
+        $orderLogs = OrdersLog::where('order_id', $id)->orderBy('id', 'desc')->get()->toArray();
+        return view('admin.order_details', compact('order', 'customer', 'orderStatuses', 'orderLogs'));
     }
 
     function updateOrderStatus(Request $request) {
         Order::where('id', $request->order_id)->update(['order_status' => $request->order_status]);
+
+        if(!empty($request->courier_name) && !empty($request->tracking_number)) {
+            Order::where('id', $request->order_id)->update(['courier_name' => $request->courier_name, 'tracking_number' => $request->tracking_number]);
+        }
+
         Session::flash('successMessage', 'Order status has been updated successfully.');
 
         $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $request->order_id)->first();
 
         // Send order status update sms
-        $message = "Dear customer, Your order #".$request->order_id." status has been updated to '".$request->order_status."' placed with ecom.smdurjoy.com.";
-        $mobile = $deliveryDetails->mobile;
-        Sms::sendSms($message, $mobile);
+        // $message = "Dear customer, Your order #".$request->order_id." status has been updated to '".$request->order_status."' placed with ecom.smdurjoy.com.";
+        // $mobile = $deliveryDetails->mobile;
+        // Sms::sendSms($message, $mobile);
 
         // Send order status update email
         $orderDetails = Order::where('id', $request->order_id)->with('order_products')->first();
@@ -48,11 +55,19 @@ class OrdersController extends Controller
             'order_id' => $request->order_id,
             'order_status' => $request->order_status,
             'orderDetails' => $orderDetails,
+            'courier_name' => $request->courier_name,
+            'tracking_number' => $request->tracking_number,
         ];  
 
         Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
             $message->to($email)->subject('Order Status Updated - ecom.smdurjoy.com');
         });
+
+        // Order log
+        $log = new OrdersLog;
+        $log->order_id = $request->order_id;
+        $log->order_status = $request->order_status;
+        $log->save();   
 
         return redirect()->back();
     }

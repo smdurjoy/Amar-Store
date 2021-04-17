@@ -109,4 +109,13 @@ $(document).ready(function () {
     $(document).on('click', '#automaticCoupon', function() {
         $('#couponField').hide();
     });
+
+    // Order courier and tracking number field hide show
+    $(document).on('change', '#orderStatus', function() {
+        if(this.value == "Shipped") {
+            $(".ctForm").removeClass('d-none');
+        }else{
+            $(".ctForm").addClass('d-none');
+        }
+    });
 });
