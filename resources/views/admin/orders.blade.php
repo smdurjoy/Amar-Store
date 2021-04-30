@@ -1,4 +1,4 @@
-@extends('layouts/admin/admin')
+ @extends('layouts/admin/admin')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -67,7 +67,14 @@
                                             <td>{{ $order->grand_total }}</td>
                                             <td>{{ $order->order_status }}</td>
                                             <td>{{ $order->payment_method }}</td>
-                                            <td><a class="btn btn-success btn-sm deleteBtn" href="{{ url('admin/orders/'.$order['id']) }}" title="Order Details"><i class="fas fa-eye"></i></a></td>
+                                            <td>
+                                                <div style="display:flex">
+                                                    <a class="btn btn-success btn-sm" href="{{ url('admin/orders/'.$order['id']) }}" title="Order Details"><i class="fas fa-eye"></i></a> &nbsp;&nbsp;
+                                                    @if($order->order_status == "Shipped" || $order->order_status == "Delivered")
+                                                        <a class="btn btn-success btn-sm" target="_blank" href="{{ url('admin/view-order-invoice/'.$order['id']) }}" title="Order Invoice"><i class="fas fa-print"></i></a>
+                                                    @endif
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

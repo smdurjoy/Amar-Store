@@ -459,6 +459,9 @@ class ProductsController extends Controller
         }   
 
         $userCartItems = Cart::userCartItems();
+        if(count($userCartItems) == 0) {
+            Session::flash('errorMessage', 'Your cart is empty !  Please add products to cart for checkout !');
+        }
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses'));
     }

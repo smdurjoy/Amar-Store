@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Sms;
 use Illuminate\Support\Facades\Mail;
 use App\OrdersLog;
+use PDF;
 
 class OrdersController extends Controller
 {
@@ -70,5 +71,13 @@ class OrdersController extends Controller
         $log->save();   
 
         return redirect()->back();
+    }
+
+    function viewOrderInvoice($order_id) {
+        $order = Order::with('order_products')->where('id', $order_id)->first();   
+        $user = User::where('id', $order->user_id)->first();
+        $pdf = PDF::loadView('pdf.order_invoice_pdf', $order);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('document.pdf');
     }
 }   
