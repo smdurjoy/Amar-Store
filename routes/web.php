@@ -91,6 +91,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::get('orders/{id}', 'OrdersController@orderDetails');
         Route::post('update-order-status', 'OrdersController@updateOrderStatus');
         Route::get('view-order-invoice/{id}', 'OrdersController@viewOrderInvoice');
+
+        // Shipping Charges
+        Route::get('view-shipping-charges', 'ShippingController@viewShippingCharges');
+        Route::match(['get', 'post'], 'edit-shipping-charge/{id}', 'ShippingController@editShippingCharge');
+        Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
     });
 });
 

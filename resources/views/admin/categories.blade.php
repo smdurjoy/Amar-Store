@@ -73,7 +73,7 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary deleteBtn" title="Edit Category" href="{{ url('admin/add-edit-category/'.$category->id) }}"><i class="fas fa-edit"></i></a>
-                                                <a title="Delete Brand" class="btn btn-danger deleteBtn confirmDelete" record="category" recordId="{{ $category->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                                <a title="Delete Category" class="btn btn-danger deleteBtn confirmDelete" record="category" recordId="{{ $category->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

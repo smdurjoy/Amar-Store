@@ -22,5 +22,6 @@ class VerifyCsrfToken extends Middleware
         "/admin/update-brand-status",
         "/admin/update-banner-status",
         "/admin/update-coupon-status",
+        "/admin/update-shipping-status",
     ];
 }

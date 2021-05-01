@@ -39,7 +39,7 @@
                 </li>
 
                 <!-- Catalogues -->
-                @if(Session::get('page') == 'sections' || Session::get('page') == 'brands' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'coupons' || Session::get('page') == 'banners' || Session::get('page') == 'orders')
+                @if(Session::get('page') == 'sections' || Session::get('page') == 'brands' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'coupons' || Session::get('page') == 'banners' || Session::get('page') == 'orders' || Session::get('page') == 'shipping')
                     <?php $active = "active"; $menuOpen = "menu-open";?>
                 @else
                     <?php $active = ""; $menuOpen = "";?>
@@ -130,6 +130,7 @@
                                 <p>Coupons</p>
                             </a>
                         </li>
+
                         <!-- orders -->
                         @if(Session::get('page') == "orders")
                             <?php $active = "active"; ?>
@@ -140,6 +141,19 @@
                             <a href="{{ url('/admin/orders') }}" class="nav-link {{ $active }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Orders</p>
+                            </a>
+                        </li>
+
+                        <!-- shipping charges -->
+                        @if(Session::get('page') == "shipping")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/view-shipping-charges') }}" class="nav-link {{ $active }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Shipping Charges</p>
                             </a>
                         </li>
                     </ul>

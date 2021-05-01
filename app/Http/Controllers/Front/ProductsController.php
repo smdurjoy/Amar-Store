@@ -300,6 +300,14 @@ class ProductsController extends Controller
                     } 
                 }
 
+                // Check if coupon single times or not
+                if($couponDetails->coupon_type == "Single") {
+                    $couponCount = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count();
+                    if($countCoupon > 0) {
+                        $message = "This coupon code is already availed by you !";
+                    }
+                }
+
                 $totalAmount = 0;
                 foreach ($userCartItems as $key => $item) {
                     // Check if any item belong to coupon category
@@ -363,11 +371,11 @@ class ProductsController extends Controller
                 'payment_gateway' => 'required',
             ];
             $errorMessages = [
-                'address_id.required' => 'Please select a delivery address.',
+                'address_id.required' => 'Please add or select a delivery address.',
                 'payment_gateway.required' => 'Please select a payment method.',
             ];
 
-            $this->validate($request, $rules, $errorMessages);
+        $this->validate($request, $rules, $errorMessages);
 
             DB::beginTransaction();
 

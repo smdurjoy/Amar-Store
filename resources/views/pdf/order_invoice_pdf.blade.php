@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 1</title>
+    <title>Order #{{ $id }} Invoice</title>
     <style>
       .clearfix:after {
         content: "";
