@@ -16,7 +16,11 @@ class CreateShippingChargesTable extends Migration
         Schema::create('shipping_charges', function (Blueprint $table) {
             $table->id();
             $table->string('country');
-            $table->integer('shipping_charge');
+            $table->integer('0_500g');
+            $table->integer('501_1000g');
+            $table->integer('1001_2000g');
+            $table->integer('2001_5000g');
+            $table->integer('above_5000g');
             $table->tinyInteger('status');
             $table->timestamps();
         });

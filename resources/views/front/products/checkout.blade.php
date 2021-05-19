@@ -43,7 +43,7 @@
                 <tr>
                     <td>
                         <div class="control-group" style="float:left; margin-top:-2px; margin-right:5px;">
-                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" required>
+                            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charge="{{ $address['shipping_charge'] }}" total_price="{{ $totalPrice }}" coupon_amount="{{ Session::get('couponAmount') }}" required>
                         </div>
                         <div class="control-group" style="float:right;">
                             <span><a href="{{ url('/add-edit-delivery-address/'.$address['id']) }}" title="Edit Address"><span class="btn btn-mini btn-info"><i class="fas fa-edit"></i></span></a></span>
@@ -63,11 +63,11 @@
                     <tr>
                         <th>Product</th>
                         <th>Description</th>
-                        <th>Size/Code</th>
+                        <th>Unit Price</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Discount</th>
-                        <th>Sub Total</th>
+                        <th style="text-align:right">Sub Total</th>
                     </tr>
                 </thead>
 
@@ -77,23 +77,23 @@
                     <?php $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);?>
                         <tr>
                             <td> <img width="60" src="{{ asset('images/productImages/small/'.$item['product']['product_image']) }}" alt=""/></td>
-                            <td>{{ $item['product']['product_name'] }}<br/>Color : {{ $item['product']['product_color'] }}</td>
-                            <td>{{ $item['size'] }}<br/>Code : {{ $item['product']['product_code'] }}</td>
+                            <td>{{ $item['product']['product_name'] }}<br/>Color : {{ $item['product']['product_color'] }} <br/>{{ $item['size'] }}<br/>Code : {{ $item['product']['product_code'] }}</td>
+                            <td>Tk.{{ $attrPrice['product_price'] }}</td>
                             <td>{{ $item['quantity'] }}</td>
                             <td>Tk.{{ $attrPrice['product_price'] * $item['quantity'] }}</td> 
                             <td>Tk.{{ $attrPrice['discount'] * $item['quantity'] }}</td>
-                            <td>Tk.{{ $attrPrice['final_price'] * $item['quantity'] }}</td>
+                            <td style="text-align:right">Tk.{{ $attrPrice['final_price'] * $item['quantity'] }}</td>
                         </tr>
-                        <?php $totalPrice += ($attrPrice['final_price'] * $item['quantity'])?>
+                        <?php $totalPrice += ($attrPrice['final_price'] * $item['quantity']); ?>
                     @endforeach
 
                     <tr>
                         <td colspan="6" style="text-align:right">Total Price: </td>
-                        <td> Tk.{{ $totalPrice }}</td>
+                        <td style="text-align:right"> Tk.{{ $totalPrice }}</td>
                     </tr>
                     <tr>
                         <td colspan="6" style="text-align:right">Coupon Discount: </td>
-                        <td class="couponAmount">
+                        <td class="couponAmount" style="text-align:right">
                             @if(Session::has('couponAmount'))
                                 Tk.{{ Session::get('couponAmount') }}
                             @else
@@ -102,8 +102,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="6" style="text-align:right">Shipping Charges: </td>
+                        <td class="shippingCharges" style="text-align:right">Tk.0</td>
+                    </tr> 
+                    <tr>
                         <td colspan="6" style="text-align:right"><strong>GRAND TOTAL</strong></td>
-                        <td class="label label-important grandTotal" style="display:block"> 
+                        <td class="label label-important grandTotal" style="display:block; text-align:right"> 
                             <strong> Tk.{{ $grand_total = $totalPrice - Session::get('couponAmount') }} </strong>
                             <?php Session::put('grand_total', $grand_total); ?>
                         </td>

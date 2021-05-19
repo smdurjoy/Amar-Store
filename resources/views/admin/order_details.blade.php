@@ -43,7 +43,7 @@
                                     <tbody>
                                     <tr>
                                         <td class="pl-2">Order Date</td>
-                                        <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
+                                        <td>{{ date("F j, Y", strtotime($order->created_at)) }} at {{ date("g:i a", strtotime($order->created_at)) }}</td>
                                     </tr>
                                     <tr>
                                         <td class="pl-2">Order Status</td>
@@ -61,11 +61,11 @@
                                     @endif
                                     <tr>
                                         <td class="pl-2">Total Amount</td>
-                                        <td>{{ $order->grand_total }}</td>
+                                        <td>Tk.{{ $order->grand_total }}</td>
                                     </tr>
                                     <tr>
                                         <td class="pl-2">Shipping Charges</td>
-                                        <td>{{ $order->shipping_charges }}</td>
+                                        <td>Tk.{{ $order->shipping_charges }}</td>
                                     </tr>
                                     @if($order->coupon_amount > 0)
                                         <tr>
@@ -74,7 +74,7 @@
                                         </tr>
                                         <tr>
                                             <td class="pl-2">Coupon Amount</td>
-                                            <td>{{ $order->coupon_amount }}</td>
+                                            <td>Tk.{{ $order->coupon_amount }}</td>
                                         </tr>
                                     @endif
                                     <tr>

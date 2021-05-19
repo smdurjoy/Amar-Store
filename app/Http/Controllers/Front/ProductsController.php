@@ -22,6 +22,7 @@ use App\Order;
 use App\OrderProduct;
 use App\Sms;
 use Illuminate\Support\Facades\Mail;
+use App\ShippingCharge;
 
 class ProductsController extends Controller
 {
@@ -267,6 +268,8 @@ class ProductsController extends Controller
                 // If coupon not exists
                 $userCartItems = Cart::userCartItems();
                 $totalCartItems = totalCartItems();
+                Session::forget('couponCode');
+                Session::forget('couponAmount');
                 return response()->json([
                     'status' => false,
                     'message' => 'Invalid Coupon !',
@@ -365,6 +368,26 @@ class ProductsController extends Controller
     }
 
     function checkout(Request $request) {
+        $userCartItems = Cart::userCartItems();
+        if(count($userCartItems) == 0) {
+            Session::flash('errorMessage', 'Your cart is empty !  Please add products to cart for checkout !');
+        }
+        
+        $totalPrice = 0;
+        $totalWeight = 0;
+        foreach($userCartItems as $item) {
+            $product_weight = $item['product']['product_weight'];
+            $totalWeight += $product_weight;
+            $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);
+            $totalPrice += ($attrPrice['final_price'] * $item['quantity']);
+        }
+
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        foreach($deliveryAddresses as $key => $value) {
+            $shippingCharge = ShippingCharge::getShippingCharge($value['country'], $totalWeight);
+            $deliveryAddresses[$key]['shipping_charge'] = $shippingCharge;
+        }
+
         if($request->isMethod('post')) {
             $rules = [
                 'address_id' => 'required',
@@ -375,7 +398,7 @@ class ProductsController extends Controller
                 'payment_gateway.required' => 'Please select a payment method.',
             ];
 
-        $this->validate($request, $rules, $errorMessages);
+            $this->validate($request, $rules, $errorMessages);
 
             DB::beginTransaction();
 
@@ -386,8 +409,14 @@ class ProductsController extends Controller
                 echo "Coming soon"; die;
             }
             // Get delivery address from address id
-            $deliveryAddress = DeliveryAddress::find($request->address_id)->first();
+            $deliveryAddress = DeliveryAddress::where('id', $request->address_id)->first();
             $userId = Auth::user()->id;
+
+            // Get shipping charges
+            $shippingCharge = ShippingCharge::getShippingCharge($deliveryAddress->country, $totalWeight);
+
+            $grandTotal = Session::get('grand_total') + $shippingCharge;
+            Session::put('grand_total', $grandTotal);
 
             // Insert arder details
             $order = new Order;
@@ -400,13 +429,13 @@ class ProductsController extends Controller
             $order->pincode = $deliveryAddress->pincode;
             $order->mobile = $deliveryAddress->mobile;
             $order->email = Auth::user()->email;
-            $order->shipping_charges = 0;
+            $order->shipping_charges = $shippingCharge;
             $order->coupon_code = Session::get('couponCode');
             $order->coupon_amount = Session::get('couponAmount');
             $order->order_status = 'New';
             $order->payment_method = $payment_method;
             $order->payment_gateway = $request->payment_gateway;
-            $order->grand_total = Session::get('grand_total');
+            $order->grand_total = $grandTotal;
             $order->save();
 
             // last inserted order id
@@ -444,9 +473,9 @@ class ProductsController extends Controller
 
             if($request->payment_gateway == "COD") {
                 // Send order sms
-                $message = "Dear customer, your order #".$order_id." has been successfully placed with ecom.smdurjoy.com. We will intimate you once your order is shipped.";
-                $number = Auth::user()->mobile;
-                Sms::sendSms($message, $number);        
+                // $message = "Dear customer, your order #".$order_id." has been successfully placed with ecom.smdurjoy.com. We will intimate you once your order is shipped.";
+                // $number = Auth::user()->mobile;
+                // Sms::sendSms($message, $number);        
 
                 $orderDetails = Order::where('id', $order_id)->with('order_products')->first();
 
@@ -466,12 +495,7 @@ class ProductsController extends Controller
             return redirect('/thanks');
         }   
 
-        $userCartItems = Cart::userCartItems();
-        if(count($userCartItems) == 0) {
-            Session::flash('errorMessage', 'Your cart is empty !  Please add products to cart for checkout !');
-        }
-        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
-        return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses'));
+        return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses', 'totalPrice'));
     }
 
     function thanks() {

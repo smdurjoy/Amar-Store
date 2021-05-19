@@ -27,8 +27,9 @@
                         <td>Code</td>
                         <td>Size</td>
                         <td>Color</td>
+                        <td>Unit Price</td>
                         <td>Quantity</td>
-                        <td>Price</td>
+                        <td>Total Price</td>
                     </tr>
                     @foreach($orderDetails['order_products'] as $order)
                         <tr>
@@ -36,21 +37,22 @@
                             <td>{{ $order->product_code }}</td>
                             <td>{{ $order->product_size }}</td>
                             <td>{{ $order->product_color }}</td>
+                            <td>{{ $order->product_price }}</td>
                             <td>{{ $order->product_qty }}</td>
-                            <td>Tk {{ $order->product_price }}</td>
+                            <td>Tk {{ $order->product_price * $order->product_qty }}</td>
                         </tr>
                         <tr>
-                            <td colspan="5" style="text-align: right;">Shipping Charges:</td>
+                            <td colspan="6" style="text-align: right;">Shipping Charges:</td>
                             <td>Tk {{ $orderDetails->shipping_charges }}</td>
                         </tr>
                         @if($orderDetails->coupon_amount > 0)
                             <tr>
-                                <td colspan="5" style="text-align: right;">Coupon Discount:</td>
+                                <td colspan="6" style="text-align: right;">Coupon Discount:</td>
                                 <td>Tk {{ $orderDetails->coupon_amount }}</td>
                             </tr>
                         @endif
                         <tr>
-                            <td colspan="5" style="text-align: right;">Grand Total:</td>
+                            <td colspan="6" style="text-align: right;">Grand Total:</td>
                             <td>Tk {{ $orderDetails->grand_total }}</td>
                         </tr>
                     @endforeach
@@ -63,18 +65,10 @@
                 <table>
                     <tr><td><strong>Delivery Address: </strong></td></tr>
                     <tr><td>{{ $orderDetails->name }}</td></tr>
-                    <tr><td>{{ $orderDetails->email }}</td></tr>
-                    <tr><td>{{ $orderDetails->mobile }}</td></tr>
-                    <tr><td>{{ $orderDetails->address }}</td></tr>
-                    <tr><td>{{ $orderDetails->city }}</td></tr>
-                    @if(!empty($orderDetails->state))
-                        <tr><td>{{ $orderDetails->state }}</td></tr>
-                    @endif
-                    @if(!empty($orderDetails->pincode))
-                        <tr><td>{{ $orderDetails->pincode }}</td></tr>
-                    @endif
-                    @if(!empty($orderDetails->country))
-                        <tr><td>{{ $orderDetails->country }}</td></tr>
+                    <tr><td>{{ $orderDetails->mobile }}, {{ $orderDetails->email }}</td></tr>
+                    <tr><td>{{ $orderDetails->address }}, {{ $orderDetails->city }} @if(!empty($orderDetails->pincode)) - {{ $orderDetails->pincode }} @endif</td></tr>
+                    @if(!empty($orderDetails->state) || !empty($orderDetails->country))
+                        <tr><td>{{ $orderDetails->state }}  @if(!empty($orderDetails->state) && !empty($orderDetails->country)), @endif{{ $orderDetails->country }}</td></tr>
                     @endif
                 </table>
             </td>

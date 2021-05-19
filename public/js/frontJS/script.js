@@ -275,4 +275,16 @@ $(document).ready(function() {
             }
         });
     });
+
+    $("input[name=address_id]").bind('change', function() {
+        const shipping_charge = $(this).attr('shipping_charge');
+        const total_price = $(this).attr('total_price');
+        let coupon_amount = $(this).attr('coupon_amount');
+        if(coupon_amount == "") {
+            coupon_amount = 0;
+        }
+        $('.shippingCharges').html('Tk.'+shipping_charge)
+        const grand_total = parseInt(total_price) + parseInt(shipping_charge) - parseInt(coupon_amount)
+        $('.grandTotal').html('Tk.'+grand_total)
+    });
 });

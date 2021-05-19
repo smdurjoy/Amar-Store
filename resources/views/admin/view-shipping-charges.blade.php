@@ -43,7 +43,11 @@
                                     <tr>
                                         <th class="text-bold">SL</th>
                                         <th class="text-bold">Country</th>
-                                        <th class="text-bold">Shipping Charge</th>
+                                        <th class="text-bold">0-500g</th>
+                                        <th class="text-bold">501-1000g</th>
+                                        <th class="text-bold">1001-2000g</th>
+                                        <th class="text-bold">2001-5000g</th>
+                                        <th class="text-bold">Above 1000g</th>
                                         <th class="text-bold">Status</th>
                                         <th class="text-bold">Updated at</th>
                                         <th class="text-bold">Action</th>
@@ -54,7 +58,11 @@
                                         <tr>
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $shipping->country }}</td>
-                                            <td>{{ $shipping->shipping_charge }}</td>
+                                            <td>Tk.{{ $shipping['0_500g'] }}</td>
+                                            <td>Tk.{{ $shipping['501_1000g'] }}</td>
+                                            <td>Tk.{{ $shipping['1001_2000g'] }}</td>
+                                            <td>Tk.{{ $shipping['2001_5000g'] }}</td>
+                                            <td>Tk.{{ $shipping['above_5000g'] }}</td>
                                             <td>
                                                 @if($shipping->status == 1)
                                                     <a class="updateStatus" record="shipping" href="javascript:void(0)" record_id="{{ $shipping->id  }}"> <span id="shipping-{{$shipping->id}}" class="badge badge-primary">Active</span> </a>

@@ -12,6 +12,7 @@
         <div align="center">
             <h3>YOUR ORDER HAS BEEN PLACED SUCCESSFULLY.</h3>
             <h5>Order number is {{ Session::get('order_id') }} and total amount TK.{{ Session::get('grand_total') }}</h5>
+            <a href="{{ url('orders/'.Session::get('order_id')) }}">View Details</a>
         </div>
     </div>
 @endsection
@@ -19,4 +20,6 @@
 <?php
     Session::forget('grand_total');
     Session::forget('order_id');
+    Session::forget('couponCode');
+    Session::forget('couponAmount');
 ?>

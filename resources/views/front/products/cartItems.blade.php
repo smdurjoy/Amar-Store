@@ -5,7 +5,7 @@
         <tr>
             <th>Product</th>
             <th>Description</th>
-            <th>Size/Code</th>
+            <th>Unit Price</th>
             <th>Quantity/Update</th>
             <th>Price</th>
             <th>Discount</th>
@@ -19,8 +19,8 @@
         <?php $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);?>
             <tr>
                 <td> <img width="60" src="{{ asset('images/productImages/small/'.$item['product']['product_image']) }}" alt=""/></td>
-                <td>{{ $item['product']['product_name'] }}<br/>Color : {{ $item['product']['product_color'] }}</td>
-                <td>{{ $item['size'] }}<br/>Code : {{ $item['product']['product_code'] }}</td>
+                <td>{{ $item['product']['product_name'] }}<br/>Color : {{ $item['product']['product_color'] }}<br/>{{ $item['size'] }}<br/>Code : {{ $item['product']['product_code'] }}</td>
+                <td>Tk.{{ $attrPrice['product_price'] }}</td>
                 <td>
                     <div class="input-append"><input class="span1" style="max-width:34px" value="{{ $item['quantity'] }}" id="appendedInputButtons" size="16" type="text"><button class="btn cartItemUpdate qtyMinus" type="button" data-id="{{ $item['id'] }}"><i class="icon-minus"></i></button><button class="btn cartItemUpdate qtyPlus" type="button" data-id="{{ $item['id'] }}"><i class="icon-plus"></i></button><button class="btn btn-danger cartItemDelete" data-id="{{ $item['id'] }}" type="button"><i class="icon-remove icon-white"></i></button>	</div>
                 </td>

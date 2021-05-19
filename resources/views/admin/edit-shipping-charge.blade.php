@@ -54,12 +54,37 @@
                                         <label for="country">Country</label>
                                         <input type="text" class="form-control" name="country" id="country" value="{{ $shipping_charge->country }}" readonly>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="charge">Shipping Charge</label>
-                                        <input type="text" class="form-control" name="charge" id="charge" placeholder="Enter Shipping Charge" value="{{ $shipping_charge->shipping_charge }}" required>
+                                        <label for="0_500g">Shipping Charge (0-500g)</label>
+                                        <input type="text" class="form-control" name="0_500g" id="0_500g" placeholder="Enter Shipping Charge" value="{{ $shipping_charge['0_500g'] }}">
                                     </div>
                                 </div>
-                                <!-- /.col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="501_1000g">Shipping Charge (501-1000g)</label>
+                                        <input type="text" class="form-control" name="501_1000g" id="501_1000g" placeholder="Enter Shipping Charge" value="{{ $shipping_charge['501_1000g'] }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="1001_2000g">Shipping Charge (1001-2000g)</label>
+                                        <input type="text" class="form-control" name="1001_2000g" id="1001_2000g" placeholder="Enter Shipping Charge" value="{{ $shipping_charge['1001_2000g'] }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="2001_5000g">Shipping Charge (2001-5000g)</label>
+                                        <input type="text" class="form-control" name="2001_5000g" id="2001_5000g" placeholder="Enter Shipping Charge" value="{{ $shipping_charge['2001_5000g'] }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="above_5000g">Shipping Charge (Above 5000g)</label>
+                                        <input type="text" class="form-control" name="above_5000g" id="above_5000g" placeholder="Enter Shipping Charge" value="{{ $shipping_charge['above_5000g'] }}">
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.row -->  
                         </div>
