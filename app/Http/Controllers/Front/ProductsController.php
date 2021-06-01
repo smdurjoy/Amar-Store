@@ -405,8 +405,7 @@ class ProductsController extends Controller
             if($request->payment_gateway == "COD") {
                 $payment_method = "COD";
             }else {
-                $payment_method = "Prepaid";
-                echo "Coming soon"; die;
+                $payment_method = "Prepaid";    
             }
             // Get delivery address from address id
             $deliveryAddress = DeliveryAddress::where('id', $request->address_id)->first();
@@ -471,7 +470,7 @@ class ProductsController extends Controller
 
             DB::commit();
 
-            if($request->payment_gateway == "COD") {
+            if ($request->payment_gateway == "COD") {
                 // Send order sms
                 // $message = "Dear customer, your order #".$order_id." has been successfully placed with ecom.smdurjoy.com. We will intimate you once your order is shipped.";
                 // $number = Auth::user()->mobile;
@@ -491,6 +490,11 @@ class ProductsController extends Controller
                 Mail::send('emails.order', $messageData, function ($message) use ($email) {
                     $message->to($email)->subject('Order Placed - ecom.smdurjoy.com');
                 });
+            } else if ($request->payment_gateway == "paypal") {
+                // redirect user to paypal page
+                return redirect('paypal');
+            } else {
+                echo "Coming soon"; die;
             }
             return redirect('/thanks');
         }   

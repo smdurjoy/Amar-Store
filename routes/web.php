@@ -158,5 +158,10 @@ Route::namespace('Front')->group(function() {
         Route::get('/orders', 'OrdersController@index');
         // User orders details
         Route::get('/orders/{id}', 'OrdersController@orderDetails');
+        // paypal
+        Route::get('/paypal', 'PaypalController@index');
+        Route::get('/paypal/success', 'PaypalController@success');
+        Route::get('/paypal/fail', 'PaypalController@fail');
+        Route::post('/paypal/ipn', 'PaypalController@ipn');
     });
 });
