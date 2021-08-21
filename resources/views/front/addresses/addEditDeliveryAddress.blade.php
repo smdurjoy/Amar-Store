@@ -1,42 +1,45 @@
 @extends('layouts.front.front')
 @section('content')
-<div class="span9">
-    <ul class="breadcrumb">
-		<li><a href="{{ url('/') }}">Home</a> <span class="divider">/</span></li>
-		<li class="active">Delivery Address</li>
-    </ul>
-	<h3>{{ $title }}</h3>	
-	<hr class="soft"/>
-    @if(Session::has('successMessage'))
-        <div class="alert alert-success" role="alert">
-            {{ Session::get('successMessage')  }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    @if(Session::has('errorMessage'))
-        <div class="alert alert-danger" role="alert">
-            {{ Session::get('errorMessage')  }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    @if($errors->any())
-        <div class="alert alert-danger mt-3" role="alert">
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
             <ul>
-                @foreach( $errors->all() as $error )
-                    <li>{{ $error }}</li>
-                @endforeach
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li class="active"> Delivery Address</li>
             </ul>
         </div>
-    @endif
-
-	<div class="row">   
-		<div class="span4">
-			<div class="well">
-                <h5>Delivery Address Details</h5>
+    </div>
+</div>
+<div class="content-wraper pt-60 pb-60 pt-sm-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <h3>{{ $title }}</h3>	
+            @if(Session::has('successMessage'))
+                <div class="alert alert-success" role="alert">
+                    {{ Session::get('successMessage')  }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if(Session::has('errorMessage'))
+                <div class="alert alert-danger" role="alert">
+                    {{ Session::get('errorMessage')  }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if($errors->any())
+                <div class="alert alert-danger mt-3" role="alert">
+                    <ul>
+                        @foreach( $errors->all() as $error )
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                 <form id="deliveryAddressForm" @if(empty($addressData['id'])) action="{{ url('/add-edit-delivery-address') }}" @else action="{{ url('/add-edit-delivery-address/'.$addressData['id']) }}" @endif method="post">@csrf
                     <div class="control-group">
                         <label class="control-label" for="name">Name</label>
@@ -88,13 +91,12 @@
                         </div>
                     </div>
                     <div class="controls">
-                        <button type="submit" class="btn block btn-info">Submit</button>
-                        <a href="{{ url('/checkout') }}" class="btn block">Go Back</a>
+                        <button type="submit" class="btn common-btn">Submit</button>
                     </div>
                 </form>
-		    </div>
-		</div>
-	</div>	
+            </div>
+        </div>  
+    </div>
 </div>
 @endsection
 

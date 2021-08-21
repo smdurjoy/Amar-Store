@@ -1,53 +1,64 @@
 <?php use App\Product; ?>
 
-<table class="table table-bordered">
+<table class="table">
     <thead>
         <tr>
-            <th>Product</th>
-            <th>Description</th>
-            <th>Unit Price</th>
-            <th>Quantity/Update</th>
-            <th>Price</th>
-            <th>Discount</th>
-            <th>Sub Total</th>
+            <th class="li-product-remove">Remove</th>
+            <th class="li-product-thumbnail">Image</th>
+            <th class="cart-product-name">Description</th>
+            <th class="li-product-price">Unit Price</th>
+            <th class="li-product-quantity">Quantity</th>
+            <th class="li-product-subtotal">Total</th>
+            <th class="li-product-subtotal">Discount</th>
+            <th class="li-product-subtotal">Sub Total</th>
         </tr>
     </thead>
-
     <tbody>
         <?php $totalPrice = 0;?>
-        @foreach($userCartItems as $item)
-        <?php $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);?>
+        @foreach($userCartItems as $key => $item)
+            <?php $attrPrice = Product::getDiscountedAttrPrice($item['product_id'], $item['size']);?>
             <tr>
-                <td> <img width="60" src="{{ asset('images/productImages/small/'.$item['product']['product_image']) }}" alt=""/></td>
-                <td>{{ $item['product']['product_name'] }}<br/>Color : {{ $item['product']['product_color'] }}<br/>{{ $item['size'] }}<br/>Code : {{ $item['product']['product_code'] }}</td>
-                <td>Tk.{{ $attrPrice['product_price'] }}</td>
-                <td>
-                    <div class="input-append"><input class="span1" style="max-width:34px" value="{{ $item['quantity'] }}" id="appendedInputButtons" size="16" type="text"><button class="btn cartItemUpdate qtyMinus" type="button" data-id="{{ $item['id'] }}"><i class="icon-minus"></i></button><button class="btn cartItemUpdate qtyPlus" type="button" data-id="{{ $item['id'] }}"><i class="icon-plus"></i></button><button class="btn btn-danger cartItemDelete" data-id="{{ $item['id'] }}" type="button"><i class="icon-remove icon-white"></i></button>	</div>
+                <td class="li-product-remove"><a class="cartItemDelete" style="cursor:pointer" data-id="{{ $item['id'] }}" type="button">✖</a></td>
+                <td class="li-product-thumbnail"><img style="width:120px; height:120px;" src="{{ asset('images/productImages/small/'.$item['product']['product_image']) }}" alt="Li's Product Image"></td>
+                <td class="li-product-name">
+                    <a href="#">
+                    {{ $item['product']['product_name'] }}<br/>Color : {{ $item['product']['product_color'] }}<br/>Size: {{ $item['size'] }}<br/>Code : {{ $item['product']['product_code'] }}
+                    </a>
                 </td>
-                <td>Tk.{{ $attrPrice['product_price'] * $item['quantity'] }}</td> 
-                <td>Tk.{{ $attrPrice['discount'] * $item['quantity'] }}</td>
-                <td>Tk.{{ $attrPrice['final_price'] * $item['quantity'] }}</td>
+                <td class="li-product-price"><span class="amount">Tk. {{ $attrPrice['product_price'] }}</span></td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <input class="qtyBox qt__{{ $key }}" type="text" value="{{ $item['quantity'] }}" id="appendedInputButtons">
+                        <div class="d-flex flex-column">
+                            <button class="cartItemUpdate qtyBtn qtyPlus" data-index="{{ $key }}" type="button" data-id="{{ $item['id'] }}"><i class="fa fa-angle-up"></i></button>
+                            <button class="cartItemUpdate qtyBtn qtyMinus" data-index="{{ $key }}" type="button" data-id="{{ $item['id'] }}"><i class="fa fa-angle-down"></i></button>
+                        </div>
+                    </div>
+                </td>
+                <td class="product-subtotal"><span class="amount">Tk. {{ $attrPrice['product_price'] * $item['quantity'] }}</span></td>
+                <td class="product-subtotal"><span class="amount">Tk. {{ $attrPrice['discount'] * $item['quantity'] }}</span></td>
+                <td class="li-product-price"><span class="amount">Tk. {{ $attrPrice['final_price'] * $item['quantity'] }}</span></td>
             </tr>
             <?php $totalPrice += ($attrPrice['final_price'] * $item['quantity'])?>
         @endforeach
 
         <tr>
-            <td colspan="6" style="text-align:right">Total Price: </td>
-            <td> Tk.{{ $totalPrice }}</td>
+            <td colspan="7" style="text-align:right; font-weight:500; font-size:15px">Total Price: </td>
+            <td class="li-product-price"><span class="amount">Tk. {{ $totalPrice }}</span></td>
         </tr>
         <tr>
-            <td colspan="6" style="text-align:right">Coupon Discount: </td>
-            <td class="couponAmount">
+            <td colspan="7" style="text-align:right; font-weight:500; font-size:15px">Coupon Discount: </td>
+            <td class="li-product-price couponAmount">
                 @if(Session::has('couponAmount'))
-                    Tk.{{ Session::get('couponAmount') }}
+                    <span class="amount">Tk. {{ Session::get('couponAmount') }}</span>
                 @else
-                    Tk.0
+                    <span class="amount">Tk. 0</span>
                 @endif
             </td>
         </tr>
         <tr>
-            <td colspan="6" style="text-align:right"><strong>GRAND TOTAL</strong></td>
-            <td class="label label-important grandTotal" style="display:block"> <strong> Tk.{{ $totalPrice - Session::get('couponAmount') }} </strong></td>
+            <td colspan="7" style="text-align:right; font-weight:500; font-size:15px"><strong>GRAND TOTAL </strong></td>
+            <td class="li-product-price grandTotal" style="background-color: #ffdf50;"> <span class="amount"> Tk. {{ $totalPrice - Session::get('couponAmount') }}</span></td>
         </tr>
     </tbody>
 </table>

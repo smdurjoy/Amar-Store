@@ -11,16 +11,8 @@ class HomeController extends Controller
 {
     function index() {
         $page_name = 'index';
-        // Get featured products
-        $featuredItemsCount = Product::where('is_featured', 'Yes')->where('status', 1)->count();
-        $featuredItems = Product::where('is_featured', 'Yes')->where('status', 1)->select('id', 'product_name', 'product_image', 'product_price')->get()->toArray();
-        $featuredItemsChunk = array_chunk($featuredItems, 4);
-        // dd($featuredItemsChunk); die;
-
-        // Get latest products
-        $latestProducts = Product::where('status', 1)->orderBy('id', 'desc')->with('brand')->select('id', 'product_name', 'product_image', 'product_price', 'brand_id')->limit(6)->get()->toArray();
-//         echo '<pre>'; print_r($latestProducts); die;
-
-        return view('front.index')->with(compact('page_name', 'featuredItemsCount', 'featuredItemsChunk', 'latestProducts'));
+        $featuredItems = Product::where('is_featured', 'Yes')->where('status', 1)->with('brand')->select('id', 'brand_id', 'product_name', 'product_image', 'product_price', 'product_discount', 'created_at')->get()->toArray();
+        $latestProducts = Product::where('status', 1)->orderBy('id', 'desc')->with('brand')->select('id', 'brand_id', 'product_name', 'product_image', 'product_price', 'product_discount')->limit(6)->get()->toArray();
+        return view('front.index')->with(compact('page_name', 'featuredItems', 'latestProducts'));
     }
 }

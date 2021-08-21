@@ -1,89 +1,113 @@
 @extends('layouts.front.front')
 @section('content')
-<div class="span9">
-    <ul class="breadcrumb">
-		<li><a href="{{ url('/') }}">Home</a> <span class="divider">/</span></li>
-		<li class="active">Login</li>
-    </ul>
-	<h3> Login / Register</h3>	
-	<hr class="soft"/>
-    @if(Session::has('successMessage'))
-        <div class="alert alert-success" role="alert">
-            {{ Session::get('successMessage')  }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li class="active">Login Register</li>
+            </ul>
         </div>
-    @endif
-    @if(Session::has('errorMessage'))
-        <div class="alert alert-danger" role="alert">
-            {{ Session::get('errorMessage')  }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-	<div class="row">   
-		<div class="span4">
-			<div class="well">
-                <h5>CREATE YOUR ACCOUNT</h5>
-                <form id="registerForm" action="{{ url('/register') }}" method="post">@csrf
-                    <div class="control-group">
-                        <label class="control-label" for="name">Name</label>
-                        <div class="controls">
-                            <input class="span3" type="text" id="name" name="name" placeholder="Name">
+    </div>
+</div>
+    <!-- Begin Login Content Area -->
+    <div class="page-section mb-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @if(Session::has('successMessage'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('successMessage')  }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                    @if(Session::has('errorMessage'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('errorMessage')  }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="mobile">Mobile</label>
-                        <div class="controls">
-                            <input class="span3" type="text" id="mobile" name="mobile" placeholder="Mobile">
+                    @endif
+                    @if($errors->any())
+                        <div class="alert alert-danger mt-3" role="alert">
+                            <ul>
+                                @foreach( $errors->all() as $error )
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="email">Email</label>
-                        <div class="controls">
-                            <input class="span3" type="text" id="email" name="email" placeholder="Email">
+                    @endif
+                </div>
+                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+                    <!-- Login Form s-->
+                    <form id="loginForm" action="{{ url('/login') }}" method="post">@csrf
+                        <div class="login-form">
+                            <h4 class="login-title">Login</h4>
+                            <div class="row">
+                                <div class="col-md-12 col-12 mb-20">
+                                    <label>Email Address*</label>
+                                    <input class="mb-0" id="loginEmail" name="email" type="email" placeholder="Email Address">
+                                </div>
+                                <div class="col-12 mb-20">
+                                    <label>Password</label>
+                                    <input class="mb-0" type="password" id="loginPass" name="password" placeholder="Password">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
+                                        <input type="checkbox" id="remember_me">
+                                        <label for="remember_me">Remember me</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
+                                    <a href="{{ url('/forgot-password') }}"> Forgotten pasward?</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="register-button mt-0" type="submit">Login</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="password">Password</label>
-                        <div class="controls">
-                            <input class="span3" type="password" id="password" name="password" placeholder="Password">
+                    </form>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                    <form id="registerForm" action="{{ url('/register') }}" method="post">@csrf
+                        <div class="login-form">
+                            <h4 class="login-title">Register</h4>
+                            <div class="row">
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>Name</label>
+                                    <input class="mb-0" type="text" id="name" name="name" placeholder="Name">
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>Mobile</label>
+                                    <input class="mb-0" type="text" id="mobile" name="mobile" placeholder="Mobile">
+                                </div>
+                                <div class="col-md-12 mb-20">
+                                    <label>Email Address</label>
+                                    <input class="mb-0" type="email" id="email" name="email" placeholder="Email Address">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Password</label>
+                                    <input class="mb-0" type="password" id="password" name="password" placeholder="Password">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Confirm Password</label>
+                                    <input class="mb-0" type="password" placeholder="Confirm Password">
+                                </div>
+                                <div class="col-12">
+                                    <button class="register-button mt-0">Register</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="controls">
-                        <button type="submit" class="btn block">Create Your Account</button>
-                    </div>
-                </form>
-		    </div>
-		</div>
-		<div class="span1"> &nbsp;</div>
-            <div class="span4">
-                <div class="well">
-                <h5>ALREADY REGISTERED ?</h5>
-                <form id="loginForm" action="{{ url('/login') }}" method="post">@csrf
-                    <div class="control-group">
-                        <label class="control-label" for="inputEmail1">Email</label>
-                        <div class="controls">
-                            <input class="span3"  type="text" id="loginEmail" name="email" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="inputPassword1">Password</label>
-                        <div class="controls">
-                            <input type="password" class="span3"  id="loginPass" name="password" placeholder="Password">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <button type="submit" class="btn">Sign in</button> <a href="{{ url('/forgot-password') }}">Forget password?</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-		</div>
-	</div>	
+        </div>
+    </div>
+    <!-- Login Content Area End Here -->
 </div>
 @endsection
 
