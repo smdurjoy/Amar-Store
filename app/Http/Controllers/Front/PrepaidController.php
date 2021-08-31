@@ -67,164 +67,152 @@ class PrepaidController extends Controller
             print_r($payment_options);
             $payment_options = array();
         }
-
-        Session::put('transaction', true);
     }
 
     public function success(Request $request) {
-            $tran_id = $request->input('tran_id');
-            $amount = $request->input('amount');
-            $currency = $request->input('currency');
-            $type = $request->input('card_issuer');
-            $method = $request->input('card_brand');
+        $tran_id = $request->input('tran_id');
+        $amount = $request->input('amount');
+        $currency = $request->input('currency');
+        $type = $request->input('card_issuer');
+        $method = $request->input('card_brand');
 
-            $sslc = new SslCommerzNotification();
-            $transaction = DB::table('transactions')
+        $sslc = new SslCommerzNotification();
+        $transaction = DB::table('transactions')
+            ->where('transaction_id', $tran_id)
+            ->select('order_id', 'transaction_id', 'status', 'currency', 'total_amount')->first();
+
+        $order = Order::where('id', $transaction->order_id)->first();
+        $status = true;
+        $message = "TRANSACTION HAS BEEN COMPLETED SUCCESSFULLY.";
+        if ($transaction->status == 'Pending') {
+            $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
+
+            if ($validation == TRUE) {
+                /*
+                That means IPN did not work or IPN URL was not set in your merchant panel. Here you need to update order status
+                in order table as Processing or Complete.
+                Here you can also send sms or email for successful transaction to customer
+                */
+                $update_product = DB::table('transactions')
+                    ->where('transaction_id', $tran_id)
+                    ->update(['status' => 'Processing', 'type' => $type, 'method' => $method]);
+
+                $order->status = 1;
+                $order->save();
+            } else {
+                /*
+                That means IPN did not work or IPN URL was not set in your merchant panel and Transaction validation failed.
+                Here you need to update order status as Failed in order table.
+                */
+                $update_product = DB::table('transactions')
+                    ->where('transaction_id', $tran_id)
+                    ->update(['status' => 'Failed', 'type' => $type, 'method' => $method]);
+                $message = "SOMETHING WENT WRONG.";
+                $status = false;
+            }
+        } else if ($transaction->status == 'Processing' || $transaction->status == 'Complete') {
+            /*
+             That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to update database.
+             */
+            $order->status = 1;
+            $order->save();
+        } else {
+            #That means something wrong happened. You can redirect customer to your product page.
+            $message = "SOMETHING WENT WRONG.";
+            $status = false;
+        }
+        return view('front.sslcommerz.status', compact('message', 'status'));
+    }
+
+    public function fail(Request $request) {
+        $status = false;
+        $tran_id = $request->input('tran_id');
+        $transaction = DB::table('transactions')
+            ->where('transaction_id', $tran_id)
+            ->select('transaction_id', 'status', 'currency', 'total_amount')->first();
+        if ($transaction->status == 'Pending') {
+            $update_product = DB::table('transactions')
                 ->where('transaction_id', $tran_id)
-                ->select('order_id', 'transaction_id', 'status', 'currency', 'total_amount')->first();
+                ->update(['status' => 'Failed']);
+            $message = "Transaction is failed";
+        } else if ($transaction->status == 'Processing' || $transaction->status == 'Complete') {
+            $message = "Transaction is already Successful";
+        } else {
+            $message = "Invalid Transaction";
+        }
+        return view('front.sslcommerz.status', compact('message', 'status'));
+    }
 
-            $order = Order::where('id', $transaction->order_id)->first();
-            $status = true;
-            $message = "TRANSACTION HAS BEEN COMPLETED SUCCESSFULLY.";
-            if ($transaction->status == 'Pending') {
-                $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
+    public function cancel(Request $request) {
+        $status = false;
+        $tran_id = $request->input('tran_id');
+        $transaction = DB::table('transactions')
+            ->where('transaction_id', $tran_id)
+            ->select('transaction_id', 'status', 'currency', 'total_amount')->first();
 
+        if ($transaction->status == 'Pending') {
+            $update_product = DB::table('transactions')
+                ->where('transaction_id', $tran_id)
+                ->update(['status' => 'Canceled']);
+            $message = "Transaction has been canceled!";
+        } else if ($transaction->status == 'Processing' || $transaction->status == 'Complete') {
+            $message = "Transaction is already Successful";
+        } else {
+            $message = "Invalid Transaction";
+        }
+        return view('front.sslcommerz.status', compact('message', 'status'));
+    }
+
+    public function ipn(Request $request) {
+        #Received all the payement information from the gateway
+        if ($request->input('tran_id')) { #Check transaction id is posted or not.
+            $tran_id = $request->input('tran_id');
+            #Check order status in order tabel against the transaction id or order id.
+            $order_details = DB::table('transactions')
+                ->where('transaction_id', $tran_id)
+                ->select('transaction_id', 'status', 'currency', 'total_amount')->first();
+
+            if ($order_details->status == 'Pending') {
+                $sslc = new SslCommerzNotification();
+                $validation = $sslc->orderValidate($request->all(), $tran_id, $order_details->amount, $order_details->currency);
                 if ($validation == TRUE) {
                     /*
-                    That means IPN did not work or IPN URL was not set in your merchant panel. Here you need to update order status
+                    That means IPN worked. Here you need to update order status
                     in order table as Processing or Complete.
-                    Here you can also send sms or email for successful transaction to customer
+                    Here you can also sent sms or email for successful transaction to customer
                     */
                     $update_product = DB::table('transactions')
                         ->where('transaction_id', $tran_id)
-                        ->update(['status' => 'Processing', 'type' => $type, 'method' => $method]);
+                        ->update(['status' => 'Processing']);
 
-                    $order->status = 1;
-                    $order->save();
+                    $status = true;
+                    $message = "Transaction has been completed successfully.";
                 } else {
                     /*
-                    That means IPN did not work or IPN URL was not set in your merchant panel and Transaction validation failed.
+                    That means IPN worked, but Transation validation failed.
                     Here you need to update order status as Failed in order table.
                     */
                     $update_product = DB::table('transactions')
                         ->where('transaction_id', $tran_id)
-                        ->update(['status' => 'Failed', 'type' => $type, 'method' => $method]);
-                    $message = "SOMETHING WENT WRONG.";
+                        ->update(['status' => 'Failed']);
+
                     $status = false;
+                    $message = "Validation Failed!";
                 }
-            } else if ($transaction->status == 'Processing' || $transaction->status == 'Complete') {
-                /*
-                 That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to update database.
-                 */
-                $order->status = 1;
-                $order->save();
+
+            } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
+                #That means Order status already updated. No need to udate database.
+                $status = false;
+                $message = "Transaction is already successfully Completed";
             } else {
                 #That means something wrong happened. You can redirect customer to your product page.
-                $message = "SOMETHING WENT WRONG.";
                 $status = false;
-            }
-            return view('front.sslcommerz.status', compact('message', 'status'));
-    }
-
-    public function fail(Request $request) {
-        if (Session::has('transaction')) {
-            $status = false;
-            $tran_id = $request->input('tran_id');
-            $transaction = DB::table('transactions')
-                ->where('transaction_id', $tran_id)
-                ->select('transaction_id', 'status', 'currency', 'total_amount')->first();
-            if ($transaction->status == 'Pending') {
-                $update_product = DB::table('transactions')
-                    ->where('transaction_id', $tran_id)
-                    ->update(['status' => 'Failed']);
-                $message = "Transaction is failed";
-            } else if ($transaction->status == 'Processing' || $transaction->status == 'Complete') {
-                $message = "Transaction is already Successful";
-            } else {
                 $message = "Invalid Transaction";
             }
-            return view('front.sslcommerz.status', compact('message', 'status'));
-        }
-        return abort(404);
-    }
-
-    public function cancel(Request $request) {
-        if (Session::has('transaction')) {
+        } else {
             $status = false;
-            $tran_id = $request->input('tran_id');
-            $transaction = DB::table('transactions')
-                ->where('transaction_id', $tran_id)
-                ->select('transaction_id', 'status', 'currency', 'total_amount')->first();
-
-            if ($transaction->status == 'Pending') {
-                $update_product = DB::table('transactions')
-                    ->where('transaction_id', $tran_id)
-                    ->update(['status' => 'Canceled']);
-                $message = "Transaction has been canceled!";
-            } else if ($transaction->status == 'Processing' || $transaction->status == 'Complete') {
-                $message = "Transaction is already Successful";
-            } else {
-                $message = "Invalid Transaction";
-            }
-            return view('front.sslcommerz.status', compact('message', 'status'));
+            $message = "Invalid Data";
         }
-        return abort(404);
-    }
-
-    public function ipn(Request $request) {
-        if (Session::has('transaction')) {
-            #Received all the payement information from the gateway
-            if ($request->input('tran_id')) #Check transation id is posted or not.
-            {
-                $tran_id = $request->input('tran_id');
-                #Check order status in order tabel against the transaction id or order id.
-                $order_details = DB::table('transactions')
-                    ->where('transaction_id', $tran_id)
-                    ->select('transaction_id', 'status', 'currency', 'total_amount')->first();
-
-                if ($order_details->status == 'Pending') {
-                    $sslc = new SslCommerzNotification();
-                    $validation = $sslc->orderValidate($request->all(), $tran_id, $order_details->amount, $order_details->currency);
-                    if ($validation == TRUE) {
-                        /*
-                        That means IPN worked. Here you need to update order status
-                        in order table as Processing or Complete.
-                        Here you can also sent sms or email for successful transaction to customer
-                        */
-                        $update_product = DB::table('transactions')
-                            ->where('transaction_id', $tran_id)
-                            ->update(['status' => 'Processing']);
-
-                        $status = true;
-                        $message = "Transaction has been completed successfully.";
-                    } else {
-                        /*
-                        That means IPN worked, but Transation validation failed.
-                        Here you need to update order status as Failed in order table.
-                        */
-                        $update_product = DB::table('transactions')
-                            ->where('transaction_id', $tran_id)
-                            ->update(['status' => 'Failed']);
-
-                        $status = false;
-                        $message = "Validation Failed!";
-                    }
-
-                } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
-                    #That means Order status already updated. No need to udate database.
-                    $status = false;
-                    $message = "Transaction is already successfully Completed";
-                } else {
-                    #That means something wrong happened. You can redirect customer to your product page.
-                    $status = false;
-                    $message = "Invalid Transaction";
-                }
-            } else {
-                $status = false;
-                $message = "Invalid Data";
-            }
-            return view('front.sslcommerz.status', compact('message', 'status'));
-        }
-        return abort(404);
+        return view('front.sslcommerz.status', compact('message', 'status'));
     }
 }
