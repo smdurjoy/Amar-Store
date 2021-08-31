@@ -158,6 +158,12 @@ Route::namespace('Front')->group(function() {
         Route::get('/orders', 'OrdersController@index');
         // User orders details
         Route::get('/orders/{id}', 'OrdersController@orderDetails');
+        // ssl prepaid
+        Route::post('pay-prepaid', 'PrepaidController@ssl');
+        Route::post('prepaid/success', 'PrepaidController@success');
+        Route::post('prepaid/fail', 'PrepaidController@fail');
+        Route::post('prepaid/cancel', 'PrepaidController@cancel');
+        Route::post('prepaid/ipn', 'PrepaidController@ipn');
         // paypal
         Route::get('/paypal', 'PaypalController@index');
         Route::get('/paypal/success', 'PaypalController@success');
@@ -165,3 +171,10 @@ Route::namespace('Front')->group(function() {
         Route::post('/paypal/ipn', 'PaypalController@ipn');
     });
 });
+
+Route::any('{catchall}', [
+    function () {
+        return abort(404);
+    }
+])->where('catchall', '.*');
+

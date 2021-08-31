@@ -202,7 +202,7 @@ class ProductsController extends Controller
         $cart = new Cart;
         $cart->session_id = $sessionId;
         $cart->user_id = $user_id;
-        $cart->product_id = $data['product_id']; 
+        $cart->product_id = $data['product_id'];
         $cart->size = $data['size'];
         $cart->quantity = $data['quantity'];
         $cart->save();
@@ -222,7 +222,7 @@ class ProductsController extends Controller
         if($request->ajax()) {
             $data = $request->all();
 
-            // get cart details 
+            // get cart details
             $cartDetails = Cart::find($data['cartId']);
 
             // check available product stock
@@ -300,7 +300,7 @@ class ProductsController extends Controller
                     foreach ($usersArray as $key => $user) {
                         $getUserId = User::select('id')->where('email', $user)->first()->toArray();
                         $userId[] = $getUserId['id'];
-                    } 
+                    }
                 }
 
                 // Check if coupon single times or not
@@ -321,7 +321,7 @@ class ProductsController extends Controller
                     if(!empty($couponDetails->user)) {
                         // Check if coupon belongs to logged in user
                         if(!in_array($item['user_id'], $userId)) {
-                            $message = "This coupon is not for you !";  
+                            $message = "This coupon is not for you !";
                         }
                     }
 
@@ -346,7 +346,7 @@ class ProductsController extends Controller
                         $couponAmount = $totalAmount * ($couponDetails->amount/100);
                     }
                     $grandTotal = $totalAmount - $couponAmount;
-                    
+
                     // Add coupon code and amount in session variables
                     Session::put('couponCode', $data['code']);
                     Session::put('couponAmount', $couponAmount);
@@ -373,7 +373,7 @@ class ProductsController extends Controller
             Session::flash('errorMessage', 'Your cart is empty !  Please add products to cart for checkout !');
             return redirect()->back();
         }
-        
+
         $totalPrice = 0;
         $totalWeight = 0;
         foreach($userCartItems as $item) {
@@ -403,10 +403,12 @@ class ProductsController extends Controller
 
             DB::beginTransaction();
 
-            if($request->payment_gateway == "COD") {
+            if ($request->payment_gateway == "COD") {
                 $payment_method = "COD";
-            }else {
-                $payment_method = "Prepaid";    
+                $status = 1;
+            } else {
+                $payment_method = "Prepaid";
+                $status = 0;
             }
             // Get delivery address from address id
             $deliveryAddress = DeliveryAddress::where('id', $request->address_id)->first();
@@ -436,6 +438,7 @@ class ProductsController extends Controller
             $order->payment_method = $payment_method;
             $order->payment_gateway = $request->payment_gateway;
             $order->grand_total = $grandTotal;
+            $order->status = $status;
             $order->save();
 
             // last inserted order id
@@ -454,7 +457,7 @@ class ProductsController extends Controller
 
                 // get other product details
                 $productDetails = Product::where('id', $item['product_id'])->select('product_name', 'product_code', 'product_color')->first();
-                
+
                 $orderProduct->product_name = $productDetails->product_name;
                 $orderProduct->product_code = $productDetails->product_code;
                 $orderProduct->product_color = $productDetails->product_color;
@@ -465,7 +468,7 @@ class ProductsController extends Controller
                 $orderProduct->product_price = $getDiscountedAttrPrice['final_price'];
                 $orderProduct->save();
             }
-            
+
             // put order id in session variable
             Session::put('order_id', $order_id);
 
@@ -475,7 +478,7 @@ class ProductsController extends Controller
                 // Send order sms
                 // $message = "Dear customer, your order #".$order_id." has been successfully placed with ecom.smdurjoy.com. We will intimate you once your order is shipped.";
                 // $number = Auth::user()->mobile;
-                // Sms::sendSms($message, $number);        
+                // Sms::sendSms($message, $number);
 
                 $orderDetails = Order::where('id', $order_id)->with('order_products')->first();
 
@@ -486,7 +489,7 @@ class ProductsController extends Controller
                     'name' => Auth::user()->name,
                     'order_id' => $order_id,
                     'orderDetails' => $orderDetails,
-                ];  
+                ];
 
                 Mail::send('emails.order', $messageData, function ($message) use ($email) {
                     $message->to($email)->subject('Order Placed - ecom.smdurjoy.com');
@@ -494,11 +497,10 @@ class ProductsController extends Controller
             } else if ($request->payment_gateway == "paypal") {
                 // redirect user to paypal page
                 return redirect('paypal');
-            } else {
-                echo "Coming soon"; die;
             }
+            Session::put('order_status', $status);
             return redirect('/thanks');
-        }   
+        }
 
         return view('front.products.checkout')->with(compact('userCartItems', 'deliveryAddresses', 'totalPrice'));
     }

@@ -10,7 +10,7 @@
                     <li class="active">Checkout</li>
                 </ul>
             </div>
-        </div>  
+        </div>
     </div>
     <div class="breadcrumb-area">
         <div class="container">
@@ -47,7 +47,7 @@
             </div>
         @endif
     </div>
-    <form id="checkoutForm" action="{{ url('/checkout') }}" method="post">@csrf 
+    <form id="checkoutForm" action="{{ url('/checkout') }}" method="post">@csrf
         <div class="Shopping-cart-area pt-10 pb-40">
             <div class="container">
                 <div class="row">
@@ -65,11 +65,11 @@
                                                 <ul>
                                                     <li>
                                                         <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charge="{{ $address['shipping_charge'] }}" total_price="{{ $totalPrice }}" coupon_amount="{{ Session::get('couponAmount') }}" required>
-                                                        <label class="control-label" for="address{{ $address['id'] }}">{{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }}</label> 
+                                                        <label class="control-label" for="address{{ $address['id'] }}">{{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }}</label>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>   
+                                            <div>
                                                 <span><a href="{{ url('/add-edit-delivery-address/'.$address['id']) }}" title="Edit Address"><span class="btn"><i class="fas fa-edit"></i></span></a></span>
                                                 <span><a class="confirmDelete" href="javascript:void(0)" title="Delete Address" record="address" recordId="{{ $address['id'] }}"><span class="btn"><i class="fas fa-trash"></i></span></a></span>
                                             </div>
@@ -138,7 +138,7 @@
                                 <?php Session::put('grand_total', $grand_total); ?>
                             </tr>
                         </tbody>
-                    </table>    
+                    </table>
 
                     <table class="table table-bordered">
                         <tbody>
@@ -146,11 +146,15 @@
                                 <td>
                                     <div class="filter-sub-area d-flex justify-content-between">
                                         <div class="categori-checkbox">
-                                            <ul class="d-flex align-items-center"> 
+                                            <ul class="d-flex align-items-center">
                                                 <label class="mr-4"><strong> PAYMENT METHODS: </strong> </label>
                                                 <li>
                                                     <input type="radio" name="payment_gateway" id="COD" value="COD" required>
                                                     <label for="COD" style="margin-left:5px; cursor:pointer;"><strong>COD </strong>(Cash on delivery)</label>
+                                                </li>
+                                                <li class="ml-4">
+                                                    <input type="radio" name="payment_gateway" id="paypal" value="prepaid" required>
+                                                    <label for="paypal" style="margin-left:5px; cursor:pointer;"><strong>Prepaid</strong> ( Card, Mobile Banking, Internet Banking )</label>
                                                 </li>
                                                 <li class="ml-4">
                                                     <input type="radio" name="payment_gateway" id="paypal" value="paypal" required>
@@ -169,4 +173,4 @@
             </div>
         </div>
     </form>
-@endsection	
+@endsection

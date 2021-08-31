@@ -23,5 +23,10 @@ class VerifyCsrfToken extends Middleware
         "/admin/update-banner-status",
         "/admin/update-coupon-status",
         "/admin/update-shipping-status",
+        "/pay-prepaid",
+        "/prepaid/success",
+        "/prepaid/fail",
+        "/prepaid/cancel",
+        "/prepaid/ipn",
     ];
 }
