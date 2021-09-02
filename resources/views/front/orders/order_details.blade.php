@@ -7,7 +7,8 @@
         <div class="breadcrumb-content">
             <ul>
                 <li><a href="{{ url('/') }}">Home</a></li>
-                <li class="active"> orders</li>
+                <li><a href="{{ url('/orders') }}">orders</a></li>
+                <li class="active"> order details</li>
             </ul>
         </div>
     </div>
@@ -106,7 +107,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-12 mt-3">    
+                    <div class="col-md-12 mt-3">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>

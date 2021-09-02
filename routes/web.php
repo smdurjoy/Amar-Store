@@ -156,6 +156,7 @@ Route::namespace('Front')->group(function() {
         Route::get('/thanks', 'ProductsController@thanks');
         // User orders
         Route::get('/orders', 'OrdersController@index');
+        Route::get('orders/unconfirmed', 'OrdersController@unconfirmedOrders');
         // User orders details
         Route::get('/orders/{id}', 'OrdersController@orderDetails');
         // ssl prepaid

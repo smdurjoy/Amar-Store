@@ -5,7 +5,7 @@
         <div class="breadcrumb-content">
             <ul>
                 <li><a href="{{ url('/') }}">Home</a></li>
-                <li class="active"> Orders</li>
+                <li class="active"> orders</li>
             </ul>
         </div>
     </div>
@@ -14,7 +14,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="mb-4">Your Orders</h3>
+                <div class="d-flex justify-content-between align-content-center mb-4">
+                    <h3>Your Orders</h3>
+                    <a class="btn common-btn" href="{{ url('orders/unconfirmed') }}" style="margin-top: 0; padding: 5px 10px">Unconfirmed Orders</a>
+                </div>
                 @if(count($orders) > 0)
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -37,7 +40,10 @@
                                 <td>{{ $order['payment_method'] }}</td>
                                 <td>Tk.{{ $order['grand_total'] }}</td>
                                 <td>{{ date('d-m-Y', strtotime($order['created_at'])) }}</td>
-                                <td><a href="{{ url('orders/'.$order['id']) }}" title="Order Details"><span class="btn">View Details</span></a></td>
+                                <td>
+                                    <a href="{{ url('orders/'.$order['id']) }}" title="Order Details"><span class="btn">View Details</span></a> |
+                                    <a href="{{ url('orders/'.$order['id'].'/track') }}" title="Track This Order"><span class="btn">Track Order</span></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
