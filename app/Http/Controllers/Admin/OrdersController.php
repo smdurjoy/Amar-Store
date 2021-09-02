@@ -17,7 +17,7 @@ class OrdersController extends Controller
 {
     function index() {
         Session::put('page', 'orders');
-        $orders = Order::with('order_products')->orderBy('id', 'desc')->get();
+        $orders = Order::where('status', 1)->with('order_products')->orderBy('id', 'desc')->get();
         return view('admin.orders', compact('orders'));
     }
 
@@ -58,7 +58,7 @@ class OrdersController extends Controller
             'orderDetails' => $orderDetails,
             'courier_name' => $request->courier_name,
             'tracking_number' => $request->tracking_number,
-        ];  
+        ];
 
         Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
             $message->to($email)->subject('Order Status Updated - ecom.smdurjoy.com');
@@ -68,16 +68,16 @@ class OrdersController extends Controller
         $log = new OrdersLog;
         $log->order_id = $request->order_id;
         $log->order_status = $request->order_status;
-        $log->save();   
+        $log->save();
 
         return redirect()->back();
     }
 
     function viewOrderInvoice($order_id) {
-        $order = Order::with('order_products')->where('id', $order_id)->first();   
+        $order = Order::with('order_products')->where('id', $order_id)->first();
         $user = User::where('id', $order->user_id)->first();
         $pdf = PDF::loadView('pdf.order_invoice_pdf', $order);
         $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
-}   
+}

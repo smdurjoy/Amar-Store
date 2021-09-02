@@ -467,6 +467,12 @@ class ProductsController extends Controller
 
                 $orderProduct->product_price = $getDiscountedAttrPrice['final_price'];
                 $orderProduct->save();
+
+                if($request->payment_gateway == "COD") {
+                    $currentStock = ProductsAttribute::where(['product_id' => $item['product_id'], 'size' => $item['size']])->first();
+                    $currentStock->stock -= $item['quantity'];
+                    $currentStock->save();
+                }
             }
 
             // put order id in session variable

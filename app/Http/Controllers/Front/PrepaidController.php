@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Library\SslCommerz\SslCommerzNotification;
 use App\Order;
+use App\ProductsAttribute;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class PrepaidController extends Controller
@@ -93,18 +96,39 @@ class PrepaidController extends Controller
                 in order table as Processing or Complete.
                 Here you can also send sms or email for successful transaction to customer
                 */
-                $update_product = DB::table('transactions')
+                DB::table('transactions')
                     ->where('transaction_id', $tran_id)
                     ->update(['status' => 'Processing', 'type' => $type, 'method' => $method]);
 
                 $order->status = 1;
                 $order->save();
+
+                $orderDetails = Order::where('id', $transaction->order_id)->with('order_products')->first();
+
+                foreach ($orderDetails->order_products as $product) {
+                    $currentStock = ProductsAttribute::where(['product_id' => $product['product_id'], 'size' => $product['product_size']])->first();
+                    $currentStock->stock -= $product['product_qty'];
+                    $currentStock->save();
+                }
+
+                // Send order email
+                $email = Auth::user()->email;
+                $messageData = [
+                    'email' => $email,
+                    'name' => Auth::user()->name,
+                    'order_id' => $transaction->order_id,
+                    'orderDetails' => $orderDetails,
+                ];
+
+                Mail::send('emails.order', $messageData, function ($message) use ($email) {
+                    $message->to($email)->subject('Order Placed - ecom.smdurjoy.com');
+                });
             } else {
                 /*
                 That means IPN did not work or IPN URL was not set in your merchant panel and Transaction validation failed.
                 Here you need to update order status as Failed in order table.
                 */
-                $update_product = DB::table('transactions')
+                DB::table('transactions')
                     ->where('transaction_id', $tran_id)
                     ->update(['status' => 'Failed', 'type' => $type, 'method' => $method]);
                 $message = "SOMETHING WENT WRONG.";
