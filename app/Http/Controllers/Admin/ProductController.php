@@ -16,18 +16,18 @@ use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
-    function index() {
+    function index()
+    {
         Session::put('page', 'products');
         $products = Product::with(['category', 'brand', 'section'])->orderBy('id', 'desc')->get();
-        // $products = json_decode(json_encode($products), true);
-        // echo "<pre>"; print_r($products); die();
         return view('admin.products')->with(compact('products'));
     }
 
-    function updateProductStatus(Request $request) {
-        if($request->ajax()) {
+    function updateProductStatus(Request $request)
+    {
+        if ($request->ajax()) {
             $data = $request->all();
-            if($data['status'] == "Active") {
+            if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
@@ -38,7 +38,8 @@ class ProductController extends Controller
         }
     }
 
-    function deleteProduct($id) {
+    function deleteProduct($id)
+    {
         Product::where('id', $id)->delete();
 
         $message = "Product Deleted Successfully!";
@@ -46,8 +47,9 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    function addEditProduct(Request $request, $id=null) {
-        if($id == "") {
+    function addEditProduct(Request $request, $id = null)
+    {
+        if ($id == "") {
             $title = "Add Product";
             $products = new Product;
             $productData = array();
@@ -57,14 +59,12 @@ class ProductController extends Controller
             $title = "Edit Product";
             $productData = Product::find($id);
             $productData = json_decode(json_encode($productData), true);
-//            echo "<pre>"; print_r($productData); die();
             $products = Product::find($id);
             $message = "Product Updated Successfully";
         }
 
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $data = $request->all();
-        //    echo "<pre>"; print_r($data); die;
 
             //Add product validation
             $rules = [
@@ -91,29 +91,29 @@ class ProductController extends Controller
             $this->validate($request, $rules, $errorMessages);
 
             //is featured?
-            if(empty($data['is_featured'])) {
+            if (empty($data['is_featured'])) {
                 $is_featured = "No";
             } else {
                 $is_featured = "Yes";
             }
 
             //upload image
-            if($request->hasFile('product_image')) {
+            if ($request->hasFile('product_image')) {
                 // take the image
                 $imageTmp = $request->file('product_image');
                 // if image is valid
-                if($imageTmp->isValid()) {
+                if ($imageTmp->isValid()) {
                     // get image original name
                     $image_name = $imageTmp->getClientOriginalName();
                     // get image extension
                     $imageExtension = $imageTmp->getClientOriginalExtension();
                     // generate new image name
-                    $imageName = $image_name.'-'.rand(111, 99999).'.'.$imageExtension;
+                    $imageName = $image_name . '-' . rand(111, 99999) . '.' . $imageExtension;
 //                    echo "<pre>"; print_r($imageName); die;
                     // set image path for both large, medium and small image
-                    $largeImagePath = 'images/productImages/large/'.$imageName;
-                    $mediumImagePath = 'images/productImages/medium/'.$imageName;
-                    $smallImagePath = 'images/productImages/small/'.$imageName;
+                    $largeImagePath = 'images/productImages/large/' . $imageName;
+                    $mediumImagePath = 'images/productImages/medium/' . $imageName;
+                    $smallImagePath = 'images/productImages/small/' . $imageName;
                     // resize and save the image into that paths
                     Image::make($imageTmp)->save($largeImagePath);
                     Image::make($imageTmp)->resize(520, 600)->save($mediumImagePath);
@@ -124,12 +124,12 @@ class ProductController extends Controller
             }
 
             //upload video
-            if($request->hasFile('product_video')) {
+            if ($request->hasFile('product_video')) {
                 $videoTmp = $request->file('product_video');
-                if($videoTmp->isValid()) {
+                if ($videoTmp->isValid()) {
                     $video_name = $videoTmp->getClientOriginalName();
                     $videoExtension = $videoTmp->getClientOriginalExtension();
-                    $videoName = $video_name.'-'.rand(111, 99999).'.'.$videoExtension;
+                    $videoName = $video_name . '-' . rand(111, 99999) . '.' . $videoExtension;
                     $videoPath = 'videos/productVideos/';
                     $videoTmp->move($videoPath, $videoName);
                     // save video in db
@@ -139,7 +139,7 @@ class ProductController extends Controller
 
             //save product details to product table
             $categoryDetails = Category::find($data['category_id']);
-        //    echo "<pre>"; print_r($data); die;
+            //    echo "<pre>"; print_r($data); die;
             $products->section_id = $categoryDetails['section_id'];
             $products->category_id = $data['category_id'];
             $products->brand_id = $data['brand_id'];
@@ -183,10 +183,11 @@ class ProductController extends Controller
         $brands = Brand::where('status', 1)->get();
         $brands = json_decode(json_encode($brands), true);
 
-        return view('admin.addEditProduct')->with(compact('title',  'fabricArray', 'sleeveArray','patternArray', 'fitArray', 'occasionArray', 'categories', 'productData', 'brands'));
+        return view('admin.addEditProduct')->with(compact('title', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'productData', 'brands'));
     }
 
-    function deleteProductImage($id) {
+    function deleteProductImage($id)
+    {
         // Get product image
         $productImage = Product::select('product_image')->where('id', $id)->first();
 
@@ -196,14 +197,14 @@ class ProductController extends Controller
         $largeImagePath = "images/productImages/large/";
 
         // if the images exists then delete from folder
-        if(file_exists($smallImagePath.$productImage->product_image)) {
-            unlink($smallImagePath.$productImage->product_image);
+        if (file_exists($smallImagePath . $productImage->product_image)) {
+            unlink($smallImagePath . $productImage->product_image);
         }
-        if(file_exists($mediumImagePath.$productImage->product_image)) {
-            unlink($mediumImagePath.$productImage->product_image);
+        if (file_exists($mediumImagePath . $productImage->product_image)) {
+            unlink($mediumImagePath . $productImage->product_image);
         }
-        if(file_exists($largeImagePath.$productImage->product_image)) {
-            unlink($largeImagePath.$productImage->product_image);
+        if (file_exists($largeImagePath . $productImage->product_image)) {
+            unlink($largeImagePath . $productImage->product_image);
         }
 
         // Delete image from products table
@@ -213,7 +214,8 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    function deleteProductVideo($id) {
+    function deleteProductVideo($id)
+    {
         // Get product video
         $productVideo = Product::select('product_video')->where('id', $id)->first();
 
@@ -221,8 +223,8 @@ class ProductController extends Controller
         $videoPath = "videos/productVideos/";
 
         // if the videos exists then delete from folder
-        if(file_exists($videoPath.$productVideo->product_video)) {
-            unlink($videoPath.$productVideo->product_video);
+        if (file_exists($videoPath . $productVideo->product_video)) {
+            unlink($videoPath . $productVideo->product_video);
         }
 
         // Delete video from products table
@@ -232,17 +234,18 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    function addAttributes(Request $request, $id) {
-        if($request->isMethod('post')) {
+    function addAttributes(Request $request, $id)
+    {
+        if ($request->isMethod('post')) {
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
             foreach ($data['sku'] as $key => $value) {
-                if(!empty($value)) {
+                if (!empty($value)) {
 
                     // If sku already exist
                     $attrCountSku = ProductsAttribute::where('sku', $value)->count();
-                    if($attrCountSku > 0) {
+                    if ($attrCountSku > 0) {
                         $msg = 'SKU already exists ! Please try another one.';
                         Session::flash('errorMessage', $msg);
                         return redirect()->back();
@@ -250,7 +253,7 @@ class ProductController extends Controller
 
                     // If size already exist of the same product id
                     $attrCountSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
-                    if($attrCountSize > 0) {
+                    if ($attrCountSize > 0) {
                         $msg = 'Size already exists of this product ! Please try another one.';
                         Session::flash('errorMessage', $msg);
                         return redirect()->back();
@@ -277,12 +280,13 @@ class ProductController extends Controller
         return view('admin.addAttributes')->with(compact('productData', 'title'));
     }
 
-    function editAttributes(Request $request, $id) {
-        if($request->isMethod('post')) {
+    function editAttributes(Request $request, $id)
+    {
+        if ($request->isMethod('post')) {
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
-            foreach($data['attrId'] as $key => $attr) {
-                if(!empty($attr)) {
+            foreach ($data['attrId'] as $key => $attr) {
+                if (!empty($attr)) {
                     ProductsAttribute::where(['id' => $data['attrId'][$key]])->update(['price' => $data['price'][$key], 'stock' => $data['stock'][$key]]);
                 }
             }
@@ -292,17 +296,19 @@ class ProductController extends Controller
         }
     }
 
-    function deleteAttribute($id) {
+    function deleteAttribute($id)
+    {
         ProductsAttribute::find($id)->delete();
         $message = "Product Attribute Deleted Successfully!";
         Session::flash('successMessage', $message);
         return redirect()->back();
     }
 
-    function updateAttributeStatus(Request $request) {
-        if($request->ajax()) {
+    function updateAttributeStatus(Request $request)
+    {
+        if ($request->ajax()) {
             $data = $request->all();
-            if($data['status'] == "Active") {
+            if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
@@ -313,9 +319,10 @@ class ProductController extends Controller
         }
     }
 
-    function addImages(Request $request, $id) {
-        if($request->isMethod('post')) {
-            if($request->hasFile('images')) {
+    function addImages(Request $request, $id)
+    {
+        if ($request->isMethod('post')) {
+            if ($request->hasFile('images')) {
                 $images = $request->file('images');
                 // echo "<pre>"; print_r($images); die;
                 foreach ($images as $key => $image) {
@@ -323,12 +330,12 @@ class ProductController extends Controller
                     $imageTmp = Image::make($image);
                     $originalImgName = $image->getClientOriginalName();
                     $extension = $image->getClientOriginalExtension();
-                    $imageName = $originalImgName.'-'.time().'.'.$extension;
+                    $imageName = $originalImgName . '-' . time() . '.' . $extension;
 
                     // set image path for both large, medium and small image
-                    $largeImagePath = 'images/productImages/large/'.$imageName;
-                    $mediumImagePath = 'images/productImages/medium/'.$imageName;
-                    $smallImagePath = 'images/productImages/small/'.$imageName;
+                    $largeImagePath = 'images/productImages/large/' . $imageName;
+                    $mediumImagePath = 'images/productImages/medium/' . $imageName;
+                    $smallImagePath = 'images/productImages/small/' . $imageName;
                     // resize and save the image into that paths
                     Image::make($imageTmp)->save($largeImagePath);
                     Image::make($imageTmp)->resize(520, 600)->save($mediumImagePath);
@@ -350,10 +357,11 @@ class ProductController extends Controller
         return view('admin.addProductImages')->with(compact('productData'));
     }
 
-    function updateProductImageStatus(Request $request) {
-        if($request->ajax()) {
+    function updateProductImageStatus(Request $request)
+    {
+        if ($request->ajax()) {
             $data = $request->all();
-            if($data['status'] == "Active") {
+            if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
@@ -364,7 +372,8 @@ class ProductController extends Controller
         }
     }
 
-    function deleteImage($id) {
+    function deleteImage($id)
+    {
         // Get product image
         $productImage = ProductsImage::select('image')->where('id', $id)->first();
 
@@ -374,14 +383,14 @@ class ProductController extends Controller
         $largeImagePath = "images/productImages/large/";
 
         // if the images exists then delete from folder
-        if(file_exists($smallImagePath.$productImage->image)) {
-            unlink($smallImagePath.$productImage->image);
+        if (file_exists($smallImagePath . $productImage->image)) {
+            unlink($smallImagePath . $productImage->image);
         }
-        if(file_exists($mediumImagePath.$productImage->image)) {
-            unlink($mediumImagePath.$productImage->image);
+        if (file_exists($mediumImagePath . $productImage->image)) {
+            unlink($mediumImagePath . $productImage->image);
         }
-        if(file_exists($largeImagePath.$productImage->image)) {
-            unlink($largeImagePath.$productImage->image);
+        if (file_exists($largeImagePath . $productImage->image)) {
+            unlink($largeImagePath . $productImage->image);
         }
 
         // Delete image from products table

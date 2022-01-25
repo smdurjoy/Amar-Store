@@ -10,7 +10,9 @@ use App\Product;
             <div class="breadcrumb-content">
                 <ul>
                     <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ url('/'.$productDetails['category']['url']) }}">{{ $productDetails['category']['category_name'] }}</a></li>
+                    <li>
+                        <a href="{{ url('/'.$productDetails['category']['url']) }}">{{ $productDetails['category']['category_name'] }}</a>
+                    </li>
                     <li class="active">{{ $productDetails['product_name'] }}</li>
                 </ul>
             </div>
@@ -25,22 +27,33 @@ use App\Product;
                     <div class="product-details-left sp-tab-style-left-page">
                         <div class="product-details-images slider-navigation-1">
                             <div class="lg-image">
-                                <a class="popup-img venobox vbox-item" href="{{ asset('images/productImages/medium/'.$productDetails['product_image']) }}" data-gall="myGallery">
-                                    <img src="{{ asset('images/productImages/large/'.$productDetails['product_image']) }}" style="width:100%" alt="image!"/>
+                                <a class="popup-img venobox vbox-item"
+                                   href="{{ asset('images/productImages/medium/'.$productDetails['product_image']) }}"
+                                   data-gall="myGallery">
+                                    <img
+                                        src="{{ asset('images/productImages/large/'.$productDetails['product_image']) }}"
+                                        style="width:100%" alt="image!"/>
                                 </a>
                             </div>
                             @foreach($productDetails['images'] as $image)
                                 <div class="lg-image">
-                                    <a class="popup-img venobox vbox-item" href="{{ asset('images/productImages/medium/'.$image['image']) }}" data-gall="myGallery">
-                                        <img src="{{ asset('images/productImages/medium/'.$image['image']) }}" alt="product image">
+                                    <a class="popup-img venobox vbox-item"
+                                       href="{{ asset('images/productImages/medium/'.$image['image']) }}"
+                                       data-gall="myGallery">
+                                        <img src="{{ asset('images/productImages/medium/'.$image['image']) }}"
+                                             alt="product image">
                                     </a>
                                 </div>
                             @endforeach
                         </div>
                         <div class="tab-style-left">
-                            <div class="sm-image"><img src="{{ asset('images/productImages/large/'.$productDetails['product_image']) }}" alt="product image thumb"></div>
+                            <div class="sm-image"><img
+                                    src="{{ asset('images/productImages/large/'.$productDetails['product_image']) }}"
+                                    alt="product image thumb"></div>
                             @foreach($productDetails['images'] as $image)
-                                <div class="sm-image"><img src="{{ asset('images/productImages/medium/'.$image['image']) }}" alt="product image thumb"></div>
+                                <div class="sm-image"><img
+                                        src="{{ asset('images/productImages/medium/'.$image['image']) }}"
+                                        alt="product image thumb"></div>
                             @endforeach
                         </div>
                     </div>
@@ -68,7 +81,8 @@ use App\Product;
                         <div class="product-info">
                             <h2>{{ $productDetails['product_name'] }}</h2>
                             <div class="d-flex align-items-center">
-                                <span class="product-details-ref mr-2">Brand: {{ $productDetails['brand']['name'] }}</span>  
+                                <span
+                                    class="product-details-ref mr-2">Brand: {{ $productDetails['brand']['name'] }}</span>
                                 @if($totalStock > 0)
                                     <span class="text-success"> -  In stock</span>
                                 @else
@@ -92,7 +106,8 @@ use App\Product;
                                     <div class="price-box">
                                         <del>Tk {{ $productDetails['product_price'] }}</del>
                                         <span class="new-price new-price-2">Tk {{ $discountPrice }}</span>
-                                        <span class="discount-percentage">-{{ $productDetails['product_discount'] }}%</span>
+                                        <span
+                                            class="discount-percentage">-{{ $productDetails['product_discount'] }}%</span>
                                     </div>
                                 @else
                                     <div class="price-box">
@@ -112,33 +127,39 @@ use App\Product;
                                         <label>Size</label>
                                         <select class="nice-select" name="size" required>
                                             @foreach($productDetails['attributes'] as $attribute)
-                                                <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>  
+                                                <option
+                                                    value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="single-add-to-cart">
                                     <div class="quantity d-flex flex-column">
-                                        <p style="color:#626262; font-size:15px; font-weight:bold; margin-top:1rem">Quantity</p>
+                                        <p style="color:#626262; font-size:15px; font-weight:bold; margin-top:1rem">
+                                            Quantity</p>
                                         <div class="d-flex">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" name="quantity" value="1" type="text">
-                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                        </div>
-                                        <button class="add-to-cart" type="submit">Add to cart</button>
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" name="quantity" value="1"
+                                                       type="text">
+                                                <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                                <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                            </div>
+                                            <button class="add-to-cart" type="submit">Add to cart</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <div class="product-additional-info pt-25">
-                                <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to
+                                    wishlist</a>
                                 <div class="product-social-sharing pt-25">
                                     <ul>
                                         <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
                                         <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
-                                        <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
-                                        <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                                        <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google
+                                                +</a></li>
+                                        <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -172,7 +193,7 @@ use App\Product;
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -185,10 +206,11 @@ use App\Product;
                 <div class="col-lg-12">
                     <div class="li-product-tab">
                         <ul class="nav li-product-menu">
-                            <li><a class="active" data-toggle="tab" href="#product-details"><span>Product Details</span></a></li>
+                            <li><a class="active" data-toggle="tab" href="#product-details"><span>Product Details</span></a>
+                            </li>
                             <li><a data-toggle="tab" href="#description"><span>Description</span></a></li>
                             <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
-                        </ul>               
+                        </ul>
                     </div>
                     <!-- Begin Li's Tab Menu Content Area -->
                 </div>
@@ -204,38 +226,38 @@ use App\Product;
                                 </tr>
                                 <tr>
                                     <td><strong>Color: </strong></td>
-                                    <td> <p> {{ $productDetails['product_color'] }}</p></td>
+                                    <td><p> {{ $productDetails['product_color'] }}</p></td>
                                 </tr>
-                                
+
                                 @if(!empty($productDetails['fabric']))
-                                <tr>
-                                    <td><strong>Fabric: </strong></td>
-                                    <td> <p> {{ $productDetails['fabric'] }}</p></td>
-                                </tr>
+                                    <tr>
+                                        <td><strong>Fabric: </strong></td>
+                                        <td><p> {{ $productDetails['fabric'] }}</p></td>
+                                    </tr>
                                 @endif
                                 @if(!empty($productDetails['pattern']))
-                                <tr>
-                                    <td><strong>Pattern: </strong></td>
-                                    <td> <p> {{ $productDetails['pattern'] }}</p></td>
-                                </tr>
+                                    <tr>
+                                        <td><strong>Pattern: </strong></td>
+                                        <td><p> {{ $productDetails['pattern'] }}</p></td>
+                                    </tr>
                                 @endif
                                 @if(!empty($productDetails['sleeve']))
-                                <tr>
-                                    <td><strong>Sleeve: </strong></td>
-                                    <td> <p> {{ $productDetails['sleeve'] }}</p></td>
-                                </tr>
+                                    <tr>
+                                        <td><strong>Sleeve: </strong></td>
+                                        <td><p> {{ $productDetails['sleeve'] }}</p></td>
+                                    </tr>
                                 @endif
                                 @if(!empty($productDetails['fit']))
-                                <tr>
-                                    <td><strong>Fit: </strong></td>
-                                    <td> <p> {{ $productDetails['fit'] }}</p></td>
-                                </tr>
+                                    <tr>
+                                        <td><strong>Fit: </strong></td>
+                                        <td><p> {{ $productDetails['fit'] }}</p></td>
+                                    </tr>
                                 @endif
                                 @if(!empty($productDetails['occasion']))
-                                <tr>
-                                    <td><strong>Occasion: </strong></td>
-                                    <td> <p> {{ $productDetails['occasion'] }}</p></td>
-                                </tr>
+                                    <tr>
+                                        <td><strong>Occasion: </strong></td>
+                                        <td><p> {{ $productDetails['occasion'] }}</p></td>
+                                    </tr>
                                 @endif
                             </table>
                         </div>
@@ -259,56 +281,61 @@ use App\Product;
                 <div id="reviews" class="tab-pane" role="tabpanel">
                     <div class="product-reviews">
                         <div class="product-details-comment-block">
-                            <div class="comment-review">
-                                <span>Grade</span>
-                                <ul class="rating">
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                </ul>
-                            </div>
-                            <div class="comment-author-infos pt-25">
-                                <span>HTML 5</span>
-                                <em>01-12-18</em>
-                            </div>
-                            <div class="comment-details">
-                                <h4 class="title-block">Demo</h4>
-                                <p>Plaza</p>
-                            </div>
-                            <div class="review-btn">
-                                <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Write Your Review!</a>
+                            {{--                            <div class="comment-review">--}}
+                            {{--                                <span>Grade</span>--}}
+                            {{--                                <ul class="rating">--}}
+                            {{--                                    <li><i class="fa fa-star-o"></i></li>--}}
+                            {{--                                    <li><i class="fa fa-star-o"></i></li>--}}
+                            {{--                                    <li><i class="fa fa-star-o"></i></li>--}}
+                            {{--                                    <li class="no-star"><i class="fa fa-star-o"></i></li>--}}
+                            {{--                                    <li class="no-star"><i class="fa fa-star-o"></i></li>--}}
+                            {{--                                </ul>--}}
+                            {{--                            </div>--}}
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="review-btn">
+                                        <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Write
+                                            Your
+                                            Review!</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    @if(!empty($productDetails['reviews']))
+                                        @foreach($productDetails['reviews'] as $review)
+                                            <div class="col-md-12">
+                                                <div class="comment-author-infos pt-25">
+                                                    <span>{{ $review['user']['name'] ?? 'User' }}</span>
+                                                    @for($i=1; (int)$i<=$review['rating']; $i++)
+                                                        <label style="color: #fdd838" for="5-stars" class="star">&#9733;</label>
+                                                    @endfor
+                                                    <em>{{ Carbon\Carbon::parse($review['created_at'])->diffForHumans() }}</em>
+                                                </div>
+                                                <div class="comment-details">
+                                                    <p>{{ $review['review'] }}</p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
                             </div>
                             <!-- Begin Quick View | Modal Area -->
-                            <div class="modal fade modal-wrapper" id="mymodal" >
+                            <div class="modal fade modal-wrapper" id="mymodal">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-body">
                                             <h3 class="review-page-title">Write Your Review</h3>
                                             <div class="modal-inner-area row">
-                                                <div class="col-lg-6">
-                                                    <div class="li-review-product">
-                                                        <img src="images/product/large-size/3.jpg" alt="Li's Product">
-                                                        <div class="li-review-product-desc">
-                                                            <p class="li-product-name">Today is a good day Framed poster</p>
-                                                            <p>
-                                                                <span>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream And Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Design </span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <div class="li-review-content">
-                                                        <!-- Begin Feedback Area -->
                                                         <div class="feedback-area">
                                                             <div class="feedback">
-                                                                <h3 class="feedback-title">Our Feedback</h3>
-                                                                <form action="#">
+                                                                <form action="{{ url('review') }}" method="post">@csrf
                                                                     <p class="your-opinion">
-                                                                        <label>Your Rating</label>
+                                                                        <label for="starRating">Your Rating</label>
                                                                         <span>
-                                                                            <select class="star-rating">
+                                                                            <select class="star-rating" id="starRating"
+                                                                                    name="rating">
                                                                                 <option value="1">1</option>
                                                                                 <option value="2">2</option>
                                                                                 <option value="3">3</option>
@@ -317,38 +344,32 @@ use App\Product;
                                                                             </select>
                                                                         </span>
                                                                     </p>
+                                                                    <input type="hidden"
+                                                                           value="{{ $productDetails['id'] }}"
+                                                                           name="product_id">
                                                                     <p class="feedback-form">
                                                                         <label for="feedback">Your Review</label>
-                                                                        <textarea id="feedback" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+                                                                        <textarea id="feedback" name="review" cols="45"
+                                                                                  rows="8"
+                                                                                  aria-required="true"></textarea>
                                                                     </p>
                                                                     <div class="feedback-input">
-                                                                        <p class="feedback-form-author">
-                                                                            <label for="author">Name<span class="required">*</span>
-                                                                            </label>
-                                                                            <input id="author" name="author" value="" size="30" aria-required="true" type="text">
-                                                                        </p>
-                                                                        <p class="feedback-form-author feedback-form-email">
-                                                                            <label for="email">Email<span class="required">*</span>
-                                                                            </label>
-                                                                            <input id="email" name="email" value="" size="30" aria-required="true" type="text">
-                                                                            <span class="required"><sub>*</sub> Required fields</span>
-                                                                        </p>
                                                                         <div class="feedback-btn pb-15">
-                                                                            <a href="#" class="close" data-dismiss="modal" aria-label="Close">Close</a>
-                                                                            <a href="#">Submit</a>
+                                                                            <a href="#" class="close"
+                                                                               data-dismiss="modal" aria-label="Close">Close</a>
+                                                                            <button type="submit">Submit</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                        <!-- Feedback Area End Here -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>   
+                            </div>
                             <!-- Quick View | Modal Area End Here -->
                         </div>
                     </div>
@@ -375,12 +396,16 @@ use App\Product;
                                     <!-- single-product-wrap start -->
                                     <div class="single-product-wrap">
                                         <div class="product-image">
-                                            <?php $productImagePath = 'images/productImages/small/'.$relatedProduct['product_image'] ?>
-                                            <a href="#">
+                                            <?php $productImagePath = 'images/productImages/small/' . $relatedProduct['product_image'] ?>
+                                            <a href="{{ url('product/'.$relatedProduct['id'].'/'.$relatedProduct['product_name']) }}">
                                                 @if(!empty($relatedProduct['product_image']) && file_exists($productImagePath))
-                                                    <img style="width: 180px; height: 180px" class="listingPageProductImage" src="{{ asset($productImagePath) }}" alt="">
+                                                    <img style="width: 180px; height: 180px"
+                                                         class="listingPageProductImage"
+                                                         src="{{ asset($productImagePath) }}" alt="">
                                                 @else
-                                                    <img class="listingPageProductImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}" alt="">
+                                                    <img class="listingPageProductImage"
+                                                         src="{{ asset('images/productImages/small/smallDummyImg.png') }}"
+                                                         alt="">
                                                 @endif
                                             </a>
                                             @if(now()->diffInDays($relatedProduct['created_at']) < 7)
@@ -405,25 +430,35 @@ use App\Product;
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <h4><a class="product_name" href="{{ url('product/'.$relatedProduct['id'].'/'.$relatedProduct['product_name']) }}">{{ $relatedProduct['product_name'] }}</a></h4>
+                                                <h4><a class="product_name"
+                                                       href="{{ url('product/'.$relatedProduct['id'].'/'.$relatedProduct['product_name']) }}">{{ $relatedProduct['product_name'] }}</a>
+                                                </h4>
                                                 <?php $discountPrice = Product::getDiscountedPrice($relatedProduct['id']);?>
                                                 @if($discountPrice > 0)
                                                     <div class="price-box">
-                                                        <span class="new-price new-price-2">Tk. {{ $discountPrice }}</span>
-                                                        <span class="old-price">{{ $relatedProduct['product_price'] }}</span>
+                                                        <span
+                                                            class="new-price new-price-2">Tk. {{ $discountPrice }}</span>
+                                                        <span
+                                                            class="old-price">{{ $relatedProduct['product_price'] }}</span>
                                                         <span class="discount-percentage">-{{ $relatedProduct['product_discount'] }}%</span>
                                                     </div>
                                                 @else
                                                     <div class="price-box">
-                                                        <span class="new-price">Tk. {{$relatedProduct['product_price']}}</span>
+                                                        <span
+                                                            class="new-price">Tk. {{$relatedProduct['product_price']}}</span>
                                                     </div>
                                                 @endif
                                             </div>
                                             <div class="add-actions">
                                                 <ul class="add-actions-link">
-                                                    <li class="add-cart active"><a href="{{ url('product/'.$relatedProduct['id'].'/'.$relatedProduct['product_name']) }}">Add to cart</a></li>
-                                                    <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                                    <li><a class="links-details" href="#"><i class="fa fa-heart-o"></i></a></li>
+                                                    <li class="add-cart active"><a
+                                                            href="{{ url('product/'.$relatedProduct['id'].'/'.$relatedProduct['product_name']) }}">Add
+                                                            to cart</a></li>
+                                                    <li><a href="#" title="quick view" class="quick-view-btn"
+                                                           data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                                class="fa fa-eye"></i></a></li>
+                                                    <li><a class="links-details" href="#"><i class="fa fa-heart-o"></i></a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>

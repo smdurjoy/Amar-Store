@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Category;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,10 +26,10 @@ Route::get('/404_not_found', function () {
 });
 
 // Admin routes
-Route::prefix('/admin')->namespace('Admin')->group(function() {
-    Route::match(['get', 'post'],'/', 'AdminController@login');
+Route::prefix('/admin')->namespace('Admin')->group(function () {
+    Route::match(['get', 'post'], '/', 'AdminController@login');
 
-    Route::group(['middleware' => ['admin']], function() {
+    Route::group(['middleware' => ['admin']], function () {
         // Admin routes
         Route::get('dashboard', 'AdminController@index');
         Route::get('settings', 'AdminController@settings');
@@ -101,14 +103,14 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
 
 
 // Frontend Routes
-Route::namespace('Front')->group(function() {
+Route::namespace('Front')->group(function () {
     // Homepage routes
     Route::get('/', 'HomeController@index');
 
     // Listing page route
     $categoryUrls = Category::where('status', 1)->select('url')->get()->pluck('url')->toArray();
     foreach ($categoryUrls as $url) {
-        Route::get('/'.$url, 'ProductsController@listing');
+        Route::get('/' . $url, 'ProductsController@listing');
     }
 
     // Product Detail Routes
@@ -137,7 +139,7 @@ Route::namespace('Front')->group(function() {
     // Forgot pass
     Route::match(['get', 'post'], '/forgot-password', 'UserController@forgotPass');
 
-    Route::group(['middleware' => 'auth'], function (){
+    Route::group(['middleware' => 'auth'], function () {
         // User account
         Route::match(['get', 'post'], '/account', 'UserController@account');
         // Check current password
@@ -170,6 +172,9 @@ Route::namespace('Front')->group(function() {
         Route::get('/paypal/success', 'PaypalController@success');
         Route::get('/paypal/fail', 'PaypalController@fail');
         Route::post('/paypal/ipn', 'PaypalController@ipn');
+
+        // product review
+        Route::post('review', [ReviewController::class, 'store']);
     });
 });
 

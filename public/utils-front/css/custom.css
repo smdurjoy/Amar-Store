@@ -21,6 +21,28 @@
     background-color:#F5F5F5 !important;
 }
 
+.feedback-btn button {
+    background: #242424;
+    color: #fff !important;
+    width: 80px;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    left: 110px;
+    right: auto;
+    top: 0;
+    display: block;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.feedback-btn button:hover {
+    background: #fed700;
+    text-decoration: none;
+}
+
 form.cmxform label.error, label.error {
     color: red;
     font-style: italic;
@@ -28,4 +50,4 @@ form.cmxform label.error, label.error {
 
 input.error {
     border: 1px dotted red;
-} 
+}
