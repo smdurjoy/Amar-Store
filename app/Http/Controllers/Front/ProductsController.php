@@ -134,7 +134,7 @@ class ProductsController extends Controller
     function productDetail($id, $name)
     {
         $productDetails = Product::with(['category', 'brand', 'reviews.user:id,name', 'reviews' => function ($q) {
-            $q->orderBy('id', 'desc')->limit(5);
+            $q->orderBy('id', 'desc')->where('status', 1)->limit(5);
         }, 'attributes' => function ($query) {
             $query->where('status', 1);
         }, 'images'])->find($id)->toArray();
@@ -154,8 +154,7 @@ class ProductsController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
-            $getDiscountedAttrPrice = Product::getDiscountedAttrPrice($data['id'], $data['size']);
-            return $getDiscountedAttrPrice;
+            return Product::getDiscountedAttrPrice($data['id'], $data['size']);
         }
     }
 

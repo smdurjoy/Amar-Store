@@ -19,6 +19,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedInteger('product_id');
             $table->text('review');
             $table->integer('rating');
+            $table->tinyInteger('status')->default(1)->comment('1 active 0 inactive');
             $table->timestamps();
         });
     }

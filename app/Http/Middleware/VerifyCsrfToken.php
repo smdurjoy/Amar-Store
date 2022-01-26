@@ -23,6 +23,7 @@ class VerifyCsrfToken extends Middleware
         "/admin/update-banner-status",
         "/admin/update-coupon-status",
         "/admin/update-shipping-status",
+        "/admin/update-review-status",
         "/pay-prepaid",
         "/prepaid/success",
         "/prepaid/fail",

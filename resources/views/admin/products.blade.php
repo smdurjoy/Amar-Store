@@ -19,7 +19,7 @@
             </div><!-- /.container-fluid -->
         </section>
 
-    <!-- Main content -->
+        <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 @if(Session::has('successMessage'))
@@ -35,7 +35,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Products</h3>
-                                <a href="{{ url('admin/add-edit-product') }}" class="btn btn-dark btn-sm" style="float: right"> Add Products</a>
+                                <a href="{{ url('admin/add-edit-product') }}" class="btn btn-dark btn-sm"
+                                   style="float: right"> Add Products</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -62,11 +63,13 @@
                                             <td>{{ $product->product_code }}</td>
                                             <td>{{ $product->product_color }}</td>
                                             <td>
-                                                <?php $imgPath = "images/productImages/small/".$product->product_image; ?>
+                                                <?php $imgPath = "images/productImages/small/" . $product->product_image; ?>
                                                 @if(!empty($product->product_image) && file_exists($imgPath))
-                                                    <img class="productImage" src="{{ asset('images/productImages/small/'.$product->product_image)  }}">
+                                                    <img class="productImage"
+                                                         src="{{ asset('images/productImages/small/'.$product->product_image)  }}">
                                                 @else
-                                                    <img class="productImage" src="{{ asset('images/productImages/small/smallDummyImg.png') }}">
+                                                    <img class="productImage"
+                                                         src="{{ asset('images/productImages/small/smallDummyImg.png') }}">
                                                 @endif
                                             </td>
                                             <td>{{ $product->brand['name'] }}</td>
@@ -74,17 +77,32 @@
                                             <td>{{ $product->section->name }}</td>
                                             <td>
                                                 @if($product->status == 1)
-                                                    <a class="updateStatus" record="product" href="javascript:void(0)" record_id="{{ $product->id  }}"> <span id="product-{{$product->id}}" class="badge badge-primary">Active</span> </a>
+                                                    <a class="updateStatus" record="product" href="javascript:void(0)"
+                                                       record_id="{{ $product->id  }}"> <span
+                                                            id="product-{{$product->id}}" class="badge badge-primary">Active</span>
+                                                    </a>
                                                 @else
-                                                    <a class="updateStatus" record="product" href="javascript:void(0)" record_id="{{ $product->id  }}"> <span id="product-{{$product->id}}" class="badge badge-primary">Inactive</span> </a>
+                                                    <a class="updateStatus" record="product" href="javascript:void(0)"
+                                                       record_id="{{ $product->id  }}"> <span
+                                                            id="product-{{$product->id}}" class="badge badge-primary">Inactive</span>
+                                                    </a>
                                                 @endif
                                             </td>
                                             <td class="text-center">
                                                 <div class="productActions">
-                                                    <a class="btn btn-dark btn-sm deleteBtn" title="Add Edit Attributes" href="{{ url('admin/add-attributes/'.$product->id) }}"><i class="fas fa-plus"></i></a>
-                                                    <a class="btn btn-info btn-sm deleteBtn" title="Add Images" href="{{ url('admin/add-images/'.$product->id) }}"><i class="fas fa-image"></i></a>
-                                                    <a class="btn btn-primary btn-sm deleteBtn" title="Edit Product" href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
-                                                    <a title="Delete Product" class="btn btn-danger confirmDelete deleteBtn" record="product" recordId="{{ $product->id }}" href="javascript:void(0)"><i class="fas fa-trash"></i></a>
+                                                    <a class="btn btn-dark btn-sm deleteBtn" title="Add Edit Attributes"
+                                                       href="{{ url('admin/add-attributes/'.$product->id) }}"><i
+                                                            class="fas fa-plus"></i></a>
+                                                    <a class="btn btn-info btn-sm deleteBtn" title="Add Images"
+                                                       href="{{ url('admin/add-images/'.$product->id) }}"><i
+                                                            class="fas fa-image"></i></a>
+                                                    <a class="btn btn-primary btn-sm deleteBtn" title="Edit Product"
+                                                       href="{{ url('admin/add-edit-product/'.$product->id) }}"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    <a title="Delete Product"
+                                                       class="btn btn-danger confirmDelete deleteBtn" record="product"
+                                                       recordId="{{ $product->id }}" href="javascript:void(0)"><i
+                                                            class="fas fa-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

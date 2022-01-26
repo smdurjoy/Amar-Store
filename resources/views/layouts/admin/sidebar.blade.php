@@ -12,7 +12,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ url('images/adminPhoto/'.Auth::guard('admin')->user()->image) }}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ url('images/adminPhoto/'.Auth::guard('admin')->user()->image) }}"
+                     class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ ucwords(Auth::guard('admin')->user()->name) }}</a>
@@ -39,7 +40,15 @@
                 </li>
 
                 <!-- Catalogues -->
-                @if(Session::get('page') == 'sections' || Session::get('page') == 'brands' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'coupons' || Session::get('page') == 'banners' || Session::get('page') == 'orders' || Session::get('page') == 'shipping')
+                @if(Session::get('page') == 'sections' ||
+                    Session::get('page') == 'brands' ||
+                    Session::get('page') == 'categories' ||
+                    Session::get('page') == 'products' ||
+                    Session::get('page') == 'coupons' ||
+                    Session::get('page') == 'banners' ||
+                    Session::get('page') == 'orders' ||
+                    Session::get('page') == 'reviews' ||
+                    Session::get('page') == 'shipping')
                     <?php $active = "active"; $menuOpen = "menu-open";?>
                 @else
                     <?php $active = ""; $menuOpen = "";?>
@@ -154,6 +163,19 @@
                             <a href="{{ url('/admin/view-shipping-charges') }}" class="nav-link {{ $active }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Shipping Charges</p>
+                            </a>
+                        </li>
+
+                        <!-- reviews -->
+                        @if(Session::get('page') == "reviews")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{ url('/admin/reviews') }}" class="nav-link {{ $active }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Reviews</p>
                             </a>
                         </li>
                     </ul>

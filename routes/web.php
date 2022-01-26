@@ -98,6 +98,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function () {
         Route::get('view-shipping-charges', 'ShippingController@viewShippingCharges');
         Route::match(['get', 'post'], 'edit-shipping-charge/{id}', 'ShippingController@editShippingCharge');
         Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
+
+        // Reviews
+        Route::get('reviews', [ReviewController::class, 'index']);
+        Route::post('update-review-status', [ReviewController::class, 'updateStatus']);
+        Route::get('delete-review/{review}', [ReviewController::class, 'delete']);
     });
 });
 

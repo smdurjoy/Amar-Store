@@ -11,18 +11,18 @@ use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
-    function index() {
+    function index()
+    {
         Session::put('page', 'categories');
         $categories = Category::with(['section', 'parentCategory'])->get();
-//        $categories = json_decode(json_encode($categories));
-//        echo "<pre>"; print_r($categories); die();
         return view('admin.categories')->with(compact('categories'));
     }
 
-    function updateCategoryStatus(Request $request) {
-        if($request->ajax()) {
+    function updateCategoryStatus(Request $request)
+    {
+        if ($request->ajax()) {
             $data = $request->all();
-            if($data['status'] == "Active") {
+            if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
@@ -33,8 +33,9 @@ class CategoryController extends Controller
         }
     }
 
-    function addEditCategory(Request $request, $id= null) {
-        if($id == "") {
+    function addEditCategory(Request $request, $id = null)
+    {
+        if ($id == "") {
             //add category functionality
             $title = "Add Category";
             $category = new Category;
@@ -45,14 +46,14 @@ class CategoryController extends Controller
             //edit category functionality
             $title = "Edit Category";
             $categoryData = Category::where('id', $id)->first();
-            $getCategories = Category::with('subCategories')->where(['parent_id' =>0, 'section_id' => $categoryData['section_id']])->get();
+            $getCategories = Category::with('subCategories')->where(['parent_id' => 0, 'section_id' => $categoryData['section_id']])->get();
             $category = Category::find($id);
             $successMessage = "Category Updated Successfully!";
             $getCategories = json_decode(json_encode($getCategories), true);
 //            echo "<pre>"; print_r($getCategories); die();
         }
 
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $data = $request->all();
 
             //Add category validation
@@ -73,18 +74,18 @@ class CategoryController extends Controller
             $this->validate($request, $rules, $errorMessages);
 
             //upload image
-            if($request->hasFile('category_image')) {
+            if ($request->hasFile('category_image')) {
                 $imageTmp = $request->file('category_image');
-                if($imageTmp->isValid()) {
+                if ($imageTmp->isValid()) {
                     //get image extension
                     $extension = $imageTmp->getClientOriginalExtension();
                     // generate new image name
-                    $imageName = rand(111, 99999).'.'.$extension;
-                    $imagePath = 'images/categoryImages/'.$imageName;
-                    
+                    $imageName = rand(111, 99999) . '.' . $extension;
+                    $imagePath = 'images/categoryImages/' . $imageName;
+
                     $categoryImagePath = "images/categoryImages/";
-                    if(file_exists($categoryImagePath.$category->category_image) AND !empty($category->category_image)) {
-                        unlink($categoryImagePath.$category->category_image);
+                    if (file_exists($categoryImagePath . $category->category_image) and !empty($category->category_image)) {
+                        unlink($categoryImagePath . $category->category_image);
                     }
 
                     //upload the image
@@ -95,19 +96,19 @@ class CategoryController extends Controller
             }
 
             // if fields are empty
-            if(empty($data['category_discount'])) {
+            if (empty($data['category_discount'])) {
                 $data['category_discount'] = "";
             }
-            if(empty($data['description'])) {
+            if (empty($data['description'])) {
                 $data['description'] = "";
             }
-            if(empty($data['meta_title'])) {
+            if (empty($data['meta_title'])) {
                 $data['meta_title'] = "";
             }
-            if(empty($data['meta_description'])) {
+            if (empty($data['meta_description'])) {
                 $data['meta_description'] = "";
             }
-            if(empty($data['meta_keywords'])) {
+            if (empty($data['meta_keywords'])) {
                 $data['meta_keywords'] = "";
             }
 
@@ -135,24 +136,26 @@ class CategoryController extends Controller
         return view('admin.addEditCategory')->with(compact('title', 'getSections', 'categoryData', 'getCategories'));
     }
 
-    function categoriesLevel(Request $request) {
-        if($request->ajax()) {
+    function categoriesLevel(Request $request)
+    {
+        if ($request->ajax()) {
             $data = $request->all();
 
-            $getCategories = Category::with('subCategories')->where(['section_id' => $data['section_id'], 'parent_id' => 0, 'status' => 1 ])->get();
+            $getCategories = Category::with('subCategories')->where(['section_id' => $data['section_id'], 'parent_id' => 0, 'status' => 1])->get();
             $getCategories = json_decode(json_encode($getCategories), true);
             return view('admin.categoriesLevel')->with(compact('getCategories'));
         }
     }
 
-    function deleteCategoryImage($id) {
+    function deleteCategoryImage($id)
+    {
         $categoryImage = Category::select('category_image')->where('id', $id)->first();
 
         $categoryImagePath = "images/categoryImages/";
 
         //if the image file exists delete image from folder
-        if(file_exists($categoryImagePath.$categoryImage->category_image)) {
-            unlink($categoryImagePath.$categoryImage->category_image);
+        if (file_exists($categoryImagePath . $categoryImage->category_image)) {
+            unlink($categoryImagePath . $categoryImage->category_image);
         }
 
         //delete image from database
@@ -163,7 +166,8 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
-    function deleteCategory($id) {
+    function deleteCategory($id)
+    {
         Category::where('id', $id)->delete();
 
         $message = "Category Deleted Successfully!";

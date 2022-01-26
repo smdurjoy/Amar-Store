@@ -29,4 +29,9 @@ class Review extends Model
     {
         return $this->belongsTo(User::class)->withDefault();
     }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class)->select('id', 'category_id', 'section_id', 'product_name', 'product_image')->withDefault();
+    }
 }

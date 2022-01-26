@@ -281,24 +281,22 @@ use App\Product;
                 <div id="reviews" class="tab-pane" role="tabpanel">
                     <div class="product-reviews">
                         <div class="product-details-comment-block">
-                            {{--                            <div class="comment-review">--}}
-                            {{--                                <span>Grade</span>--}}
-                            {{--                                <ul class="rating">--}}
-                            {{--                                    <li><i class="fa fa-star-o"></i></li>--}}
-                            {{--                                    <li><i class="fa fa-star-o"></i></li>--}}
-                            {{--                                    <li><i class="fa fa-star-o"></i></li>--}}
-                            {{--                                    <li class="no-star"><i class="fa fa-star-o"></i></li>--}}
-                            {{--                                    <li class="no-star"><i class="fa fa-star-o"></i></li>--}}
-                            {{--                                </ul>--}}
-                            {{--                            </div>--}}
-
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="review-btn">
-                                        <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Write
-                                            Your
-                                            Review!</a>
-                                    </div>
+                                    @if(auth()->check())
+                                        <div class="review-btn">
+                                            <a class="review-links" href="javascript:void(0)" data-toggle="modal"
+                                               data-target="#mymodal">
+                                                Write Your Review
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="review-btn">
+                                            <a class="review-links" href="{{ url('login-register') }}">
+                                                Log in to write your review
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-8">
                                     @if(!empty($productDetails['reviews']))
@@ -306,8 +304,9 @@ use App\Product;
                                             <div class="col-md-12">
                                                 <div class="comment-author-infos pt-25">
                                                     <span>{{ $review['user']['name'] ?? 'User' }}</span>
-                                                    @for($i=1; (int)$i<=$review['rating']; $i++)
-                                                        <label style="color: #fdd838" for="5-stars" class="star">&#9733;</label>
+                                                    @for($i=1; $i<=(int)$review['rating']; $i++)
+                                                        <label style="color: #fdd838" for="5-stars"
+                                                               class="star">&#9733;</label>
                                                     @endfor
                                                     <em>{{ Carbon\Carbon::parse($review['created_at'])->diffForHumans() }}</em>
                                                 </div>
