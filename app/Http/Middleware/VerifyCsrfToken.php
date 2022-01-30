@@ -24,6 +24,7 @@ class VerifyCsrfToken extends Middleware
         "/admin/update-coupon-status",
         "/admin/update-shipping-status",
         "/admin/update-review-status",
+        "/get-product",
         "/pay-prepaid",
         "/prepaid/success",
         "/prepaid/fail",

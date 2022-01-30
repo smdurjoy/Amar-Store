@@ -12,7 +12,7 @@ use App\Product;
             <div class="col-lg-12">
                 <ul class="nav li-product-menu active">
                     <li><a><span>Featured Products</span></a></li>
-                </ul>               
+                </ul>
             </div>
         </div>
         <div id="li-new-product" class="tab-pane active show" role="tabpanel">
@@ -130,7 +130,7 @@ use App\Product;
             <div class="col-lg-12">
                 <ul class="nav li-product-menu active">
                     <li><a><span>Latest Products</span></a></li>
-                </ul>               
+                </ul>
             </div>
         </div>
         <div id="li-new-product" class="tab-pane active show" role="tabpanel">
@@ -201,6 +201,29 @@ use App\Product;
 
 @section('script')
 <script>
-    // fetch('https://api.smdurjoy.com/postVisitorDataEcom');
+    $(document).on('keyup', '#searchInput', function (e) {
+        const query = e.target.value;
+        if (query.length >= 2) {
+            $('.searchList').empty().show()
+            $.ajax({
+                type: 'get',
+                url: `/get-product?search=${query}`,
+                success(response) {
+                    if (response.length > 0) {
+                        $.each(response, function (i) {
+                            $('<ul class="list-group list-group-flush">').html("<a href='#'><li class='list-group-item'>"+response[i].product_name+"</li></a>").appendTo('.searchList')
+                        })
+                    } else {
+                        $('<ul class="list-group list-group-flush">').html("<li class='list-group-item'>Nothing Found!</li>").appendTo('.searchList')
+                    }
+                },
+                error(error) {
+                    console.log(error)
+                }
+            })
+        } else {
+            $('.searchList').empty().hide()
+        }
+    })
 </script>
 @endsection

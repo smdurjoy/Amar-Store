@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommonAPIController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Category;
@@ -143,6 +144,8 @@ Route::namespace('Front')->group(function () {
     Route::match(['get', 'post'], '/confirm/{code}', 'UserController@confirmAccount');
     // Forgot pass
     Route::match(['get', 'post'], '/forgot-password', 'UserController@forgotPass');
+    // product api
+    Route::get('get-product', [CommonAPIController::class, 'getProduct']);
 
     Route::group(['middleware' => 'auth'], function () {
         // User account

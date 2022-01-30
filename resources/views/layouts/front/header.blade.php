@@ -82,27 +82,27 @@ $sections = Section::section();
 			<!-- Begin Header Middle Right Area -->
 			<div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
 				<!-- Begin Header Middle Searchbox Area -->
-				<form action="#" class="hm-searchbox">
-					<select class="nice-select select-search-category">
-						<option value="0">All</option>                         
-						<option value="10">Men</option>                     
-						<option value="17">- -  T-shirts</option>                    
-						<option value="20">- - - -  Formal T-shirts</option>                     
-						<option value="21">- - - -  Casual T-shirts</option>                                                    
-						<option value="11">Woman</option>                  
-						<option value="42">- -  Tops</option>                        
-						<option value="45">- - - -  Boxy top</option>                     
-						<option value="47">- - - -  Batwing top</option>                                                                  
-						<option value="42">- -  Salwar</option>                                                                
-						<option value="42">- -  T-shirts</option>                                                                
-						<option value="12">Kids</option>                  
-						<option value="66">- -  Shirt</option>                     
-						<option value="66">- -  Pants</option>                     
-						<option value="66">- -  Shoes</option>                     
-					</select>
-					<input type="text" placeholder="Enter your search key ...">
-					<button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
-				</form>
+                <div style="position: relative">
+                    <form class="hm-searchbox">
+                        <input type="text" id="searchInput" placeholder="Enter your search key ...">
+                        <button class="li-btn" type="button"><i class="fa fa-search"></i></button>
+                    </form>
+                    <div class="searchList">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a href="#">Test</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Dapibus ac facilisis in</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Morbi leo risus</a>
+                            </li>
+                            <li class="list-group-item">Porta ac consectetur ac</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                </div>
 				<!-- Header Middle Searchbox Area End Here -->
 				<!-- Begin Header Middle Right Area -->
 				<div class="header-middle-right">
@@ -214,7 +214,7 @@ $sections = Section::section();
 <!-- Header Bottom Area End Here -->
 <!-- Begin Mobile Menu Area -->
 <div class="mobile-menu-area d-lg-none d-xl-none col-12">
-	<div class="container"> 
+	<div class="container">
 		<div class="row">
 			<div class="mobile-menu">
 			</div>

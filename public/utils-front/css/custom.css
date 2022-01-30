@@ -43,6 +43,26 @@
     text-decoration: none;
 }
 
+.searchList {
+    position: absolute;
+    width: 72%;
+    background-color: #ffffff;
+    height: 400px;
+    overflow-y: auto;
+    z-index: 9;
+    border: 1px solid #DDD;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 3rem;
+    display: none;
+}
+
+.searchList a {
+    color: #0b0b0b;
+    transition: .4ms;
+}
+
 form.cmxform label.error, label.error {
     color: red;
     font-style: italic;
